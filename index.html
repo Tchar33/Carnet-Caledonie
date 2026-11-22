@@ -70,6 +70,7 @@ label{display:block;font-size:13px;color:var(--mut);margin:8px 0 3px}
 .swb.on{outline:3px solid var(--tx)}.swb.rs{background:var(--card);color:var(--tx);border:1px solid var(--bd)}
 dialog{max-height:88dvh;overflow:auto}
 .pin .cam{position:absolute;right:-10px;top:-12px;font-size:12px;width:19px;height:19px;line-height:19px;text-align:center;background:#fff;border-radius:50%;box-shadow:0 1px 3px #0006}
+#hbody details{border-bottom:1px solid var(--bd);padding:8px 0}#hbody summary{font-weight:700;cursor:pointer;font-size:16px}#hbody ul{padding-left:20px;margin:6px 0}#hbody li{font-size:15px;margin:6px 0}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" crossorigin="anonymous"></script>
@@ -83,6 +84,7 @@ dialog{max-height:88dvh;overflow:auto}
 <div class="bar">
 <input id="q" placeholder="Rechercher un lieu, une note…" style="flex:1 1 100%">
 <button id="loc">📍 Ma position</button>
+<button class="alt" id="hl">❓ Aide</button>
 <button class="alt" id="imp">Importer KML</button>
 <button class="alt" id="exp">Exporter KML</button>
 <button class="alt" id="expf">Publier pour la famille</button>
@@ -95,7 +97,7 @@ dialog{max-height:88dvh;overflow:auto}
 <button id="tb" class="mlist">📋 Liste</button>
 <div id="gps">GPS…</div>
 <div id="nb" class="card" style="display:none"></div>
-<div class="ctl"><button id="zi">+</button><button id="zo">−</button><button id="zl">📍</button><button id="zf">⤢</button><button id="zc">🏷️</button><button id="zk">👁️</button></div>
+<div class="ctl"><button id="zi">+</button><button id="zo">−</button><button id="zl">📍</button><button id="zf">⤢</button><button id="zc">🏷️</button><button id="zk">👁️</button><button id="zh">❓</button></div>
 <div id="pc" class="card"></div><div class="att">© OpenStreetMap contributors · Protomaps</div></div>
 <button class="fab" id="add">＋ Ajouter</button>
 
@@ -121,6 +123,7 @@ dialog{max-height:88dvh;overflow:auto}
 <dialog id="kdlg"><div style="font-weight:700;font-size:18px">Accès famille</div><div class="meta">Entrez le code d’accès que vous avez reçu.</div>
 <input id="kin" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Code d’accès" style="margin-top:8px"><div class="meta" id="kerr" style="margin:6px 0"></div>
 <div class="row"><button id="kok">Valider</button></div></dialog>
+<dialog id="hdlg"><div style="font-weight:700;font-size:18px;margin-bottom:6px">❓ Aide</div><div id="hbody"></div><div class="row"><button id="hx">Fermer</button></div></dialog>
 <dialog id="cdlg"><div style="font-weight:700;font-size:18px;margin-bottom:6px">Afficher sur la carte</div>
 <div class="meta">Mes lieux</div><div id="cc"></div>
 <div class="meta" style="margin-top:6px">Lieux connus (parcs, commerces, services…)</div><div id="pg"></div>
@@ -306,8 +309,81 @@ extra=bits.length?'<div class="note" style="margin:6px 0">'+bits.join('<br>')+'<
 KNOWN={name:p.n||'',lat:c[1],lng:c[0],kind:label,note:[p.a,p.p?'Tél. '+p.p:'',p.h?'Horaires : '+p.h:''].filter(Boolean).join('\n'),links:web}}
 else{name=p.name||'';label=kindLabel(p.kind);KNOWN={name:name,lat:c[1],lng:c[0],kind:label,note:'',links:''}}
 if(tmpMark){tmpMark.remove();tmpMark=null}const pc=$('pc');pc.style.display='block';
-pc.innerHTML='<b>'+em+esc(name||label)+'</b><div class="meta">'+esc(label)+'</div>'+extra+(web?'<div class="row">'+links(web)+'</div>':'')+'<div class="row">'+(FAMILY?'':'<button onclick="addKnown()">＋ Ajouter à mes lieux</button>')+'<a class="btn alt" href="https://www.google.com/maps/dir/?api=1&destination='+c[1]+','+c[0]+'" target="_blank" rel="noopener">↗️ Itinéraire</a><button class="alt" onclick="$(\'pc\').style.display=\'none\'">✕</button></div>'}
+pc.innerHTML='<b>'+em+esc(name||label)+'</b><div class="meta">'+esc(label)+'</div>'+extra+(web?'<div class="row">'+linksL(web)+'</div>':'')+'<div class="row">'+(FAMILY?'':'<button onclick="addKnown()">＋ Ajouter à mes lieux</button>')+'<a class="btn alt" href="https://www.google.com/maps/dir/?api=1&destination='+c[1]+','+c[0]+'" target="_blank" rel="noopener">↗️ Itinéraire</a><button class="alt" onclick="$(\'pc\').style.display=\'none\'">✕</button></div>'}
 function addKnown(){const k=KNOWN;if(!k)return;$('pc').style.display='none';openForm(null);$('f_name').value=k.name||k.kind;$('f_lat').value=k.lat.toFixed(6);$('f_lng').value=k.lng.toFixed(6);$('f_cat').value=cat==='Tous'?'':cat;$('f_note').value=k.note||'';$('f_links').value=k.links||''}
+const HELP_OWNER=`<details open><summary>🗺️ Découvrir la carte</summary><ul>
+<li>Déplacez la carte avec un doigt et zoomez en pinçant, ou avec les boutons <b>+</b> et <b>−</b>.</li>
+<li><b>📍</b> vous centre sur votre position, <b>⤢</b> affiche tous vos lieux. La pastille « GPS ± … m » indique la précision (vert = bonne).</li>
+<li><b>📋 Liste</b> (en haut à gauche) affiche vos lieux en liste, avec une barre de recherche, l’import et l’export.</li></ul></details>
+<details><summary>🏷️ Filtrer ce qui s’affiche</summary><ul>
+<li>Touchez <b>🏷️</b> : vous y trouvez vos catégories, les groupes de lieux connus et les couleurs.</li>
+<li><b>Mes lieux</b> : touchez une catégorie pour ne voir qu’elle, ses sous-catégories apparaissent sur une 2<sup>e</sup> ligne. Retouchez le bouton actif pour revenir en arrière.</li>
+<li><b>📷 Avec album photos/vidéos</b> : ne garde que les lieux qui ont un album.</li>
+<li><b>Lieux connus</b> : activez ou coupez chaque groupe (Nature, Restaurants, Commerces, Hébergement, Services, Transports, Culture, Autres). Le nombre de lieux est indiqué.</li>
+<li><b>👁️</b> affiche ou masque d’un coup tous les lieux connus.</li>
+<li>Un bouton 🏷️ entouré d’orange signale qu’un filtre est actif. Pour tout revoir : « Tous » et décochez 📷.</li>
+<li><b>Couleurs</b> : dans 🏷️ → « Couleurs de mes catégories », choisissez une couleur par catégorie (↺ = automatique).</li></ul></details>
+<details><summary>📍 Les lieux connus (parcs, commerces, services…)</summary><ul>
+<li>Touchez une pastille : la fiche montre le nom, le type, l’adresse, le téléphone (un appui appelle), les horaires et les liens du site ou des réseaux sociaux quand ils existent.</li>
+<li><b>＋ Ajouter à mes lieux</b> copie le lieu dans votre carnet avec ses informations.</li>
+<li>Les petits lieux (arrêts de bus, toilettes, parkings) n’apparaissent qu’en zoomant.</li>
+<li>Parkings : 💲 payant, 🏢 grand ou étagé, 🅿️ public.</li>
+<li>Les données viennent d’OpenStreetMap : elles peuvent être incomplètes ou dater un peu.</li></ul></details>
+<details><summary>➕ Ajouter mes propres lieux</summary><ul>
+<li>Touchez un endroit libre de la carte puis <b>＋ Ajouter ici</b>, ou le bouton <b>＋ Ajouter</b>.</li>
+<li>Renseignez le nom, la catégorie, vos notes et vos liens. Pour une sous-catégorie, écrivez <b>Rando &gt; Cascade</b>.</li>
+<li>Le Wi-Fi (nom et mot de passe) reste sur votre téléphone, jamais partagé.</li></ul></details>
+<details><summary>📷 Photos et vidéos</summary><ul>
+<li>Créez un album partagé (Google Photos, iCloud…), copiez son lien et collez-le dans le champ <b>Liens</b> du lieu.</li>
+<li>Un sigle 📷 apparaît alors à côté du nom du lieu, sur la carte et dans la liste.</li>
+<li>Touchez l’icône d’album dans la fiche pour l’ouvrir.</li>
+<li>Les nouvelles photos ajoutées à l’album apparaissent seules, sans rien republier.</li></ul></details>
+<details><summary>👨‍👩‍👧 Partager avec la famille</summary><ul>
+<li>Dans la fiche d’un lieu, cochez <b>Partager ce lieu avec la famille</b>.</li>
+<li>Dans la liste, touchez <b>Publier pour la famille</b> : choisissez un code long (12 caractères au moins), renseignez le jeton GitHub, puis <b>Publier maintenant</b>. Comptez 1 à 2 minutes.</li>
+<li>Envoyez le lien <b>famille.html</b> à vos proches et le code dans un autre message. Changer le code coupe l’accès aux anciens.</li></ul></details>
+<details><summary>🧭 Guidage</summary><ul>
+<li>Touchez un lieu puis <b>🚗 Guider</b> (ou 🚲, 🚶) : l’itinéraire se trace, avec consignes vocales (🔊 pour couper). Il faut du réseau pour le calculer.</li>
+<li>Sans réseau, l’appli indique seulement la direction et la distance à vol d’oiseau.</li>
+<li><b>↗️ Maps</b> ouvre Google Maps. Pour un guidage complet sans réseau, gardez Organic Maps.</li></ul></details>
+<details><summary>📴 Hors connexion</summary><ul>
+<li>Après la première ouverture, la carte, les lieux connus et vos lieux restent sur le téléphone.</li>
+<li>Il faut du réseau pour : les albums, les liens, le calcul d’itinéraire et les noms affichés sous les pastilles.</li></ul></details>
+<details><summary>💾 Sauvegarde</summary><ul>
+<li>Vos lieux sont enregistrés dans le téléphone. Dans la liste, <b>Exporter KML</b> en fait une copie de sécurité, <b>Importer KML</b> la restaure.</li>
+<li>Effacer les données du navigateur supprime vos lieux : exportez avant.</li></ul></details>
+<details><summary>🛠️ Un souci ?</summary><ul>
+<li>Une nouveauté n’apparaît pas : fermez complètement l’appli et rouvrez-la, ou supprimez et recréez le raccourci.</li>
+<li>Position imprécise : autorisez la localisation <b>précise</b> dans les réglages du navigateur et sortez en extérieur.</li>
+<li>Carte vide à la première ouverture : vérifiez la connexion (désactivez un VPN le temps du premier chargement).</li></ul></details>`;
+const HELP_FAM=`<details open><summary>🔑 Accès</summary><ul>
+<li>Entrez le code reçu à la première ouverture. Il est ensuite mémorisé sur votre téléphone.</li>
+<li>Gardez le lien et le code pour vous : l’accès est privé.</li></ul></details>
+<details><summary>🗺️ La carte</summary><ul>
+<li>Déplacez la carte avec un doigt, zoomez en pinçant ou avec <b>+</b> et <b>−</b>. <b>⤢</b> affiche tous les lieux.</li>
+<li>Les pastilles colorées sont les lieux partagés avec vous. Touchez-en une pour lire la note et ouvrir les liens.</li>
+<li><b>📋 Liste</b> (en haut à gauche) affiche les lieux en liste avec une barre de recherche.</li></ul></details>
+<details><summary>📷 Photos et vidéos</summary><ul>
+<li>Un sigle 📷 à côté du nom indique un lieu qui a un album photos ou vidéos.</li>
+<li>Touchez le lieu, puis l’icône d’album dans la fiche pour l’ouvrir.</li>
+<li>Il faut une connexion internet. Les nouvelles photos apparaissent dans l’album sans rien faire.</li></ul></details>
+<details><summary>🏷️ Filtrer</summary><ul>
+<li>Touchez <b>🏷️</b> : choisissez une catégorie (Rando, Plage, Cuisine…), ses sous-catégories apparaissent juste dessous. Retouchez le bouton actif pour revenir en arrière.</li>
+<li><b>📷 Avec album photos/vidéos</b> ne garde que les lieux qui ont des photos ou vidéos.</li>
+<li><b>👁️</b> affiche ou masque tous les lieux connus (commerces, parcs, services…). Dans 🏷️, vous pouvez aussi choisir les groupes à garder.</li>
+<li>Un bouton 🏷️ entouré d’orange signale un filtre actif.</li></ul></details>
+<details><summary>📍 Les lieux connus</summary><ul>
+<li>Touchez une pastille de la carte : nom, type, adresse, téléphone, horaires et liens du site ou des réseaux sociaux quand ils existent.</li>
+<li><b>↗️ Itinéraire</b> ouvre Google Maps pour s’y rendre.</li></ul></details>
+<details><summary>🔒 Vie privée</summary><ul>
+<li>L’application ne demande pas votre position et ne modifie rien : elle sert seulement à consulter.</li></ul></details>
+<details><summary>🛠️ Un souci ?</summary><ul>
+<li>Rien ne s’affiche : vérifiez la connexion, puis fermez complètement l’appli et rouvrez-la.</li>
+<li>« Code incorrect » : vérifiez les majuscules et les accents, ou redemandez le code.</li></ul></details>`;
+$('zh').onclick=$('hl').onclick=()=>{$('hbody').innerHTML=FAMILY?HELP_FAM:HELP_OWNER;$('hdlg').showModal()};$('hx').onclick=()=>$('hdlg').close();
+function linksL(t){return String(t||'').split(/\n+/).map(s=>s.trim()).filter(Boolean).map(u=>{u=/^https?:\/\//.test(u)?u:'https://'+u;let h=u;try{h=new URL(u).hostname.replace('www.','')}catch(e){}
+const lab=/facebook|fb\.com|fb\.me/.test(h)?'Facebook':/instagram/.test(h)?'Instagram':/youtube|youtu\.be/.test(h)?'YouTube':/tiktok/.test(h)?'TikTok':/wa\.me|whatsapp/.test(h)?'WhatsApp':h;
+return '<a class="btn alt" style="display:inline-flex;align-items:center;gap:6px;padding:6px 10px" href="'+esc(u)+'" target="_blank" rel="noopener">'+icoFor(h)+'<span>'+esc(lab)+'</span></a>'}).join('')}
 let KNOWN=null;
 function addPoiLayers(){try{if(!map||map.getLayer('poi')||!map.getSource('p'))return;const before=map.getLayer('pl')?'pl':undefined;
 map.addLayer({id:'poi',type:'circle',source:'p','source-layer':'pois',minzoom:11,paint:{'circle-radius':['interpolate',['linear'],['zoom'],11,2.5,16,6],'circle-color':POI_COLOR,'circle-stroke-color':'#ffffff','circle-stroke-width':1}},before);
