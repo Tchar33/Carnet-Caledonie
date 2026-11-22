@@ -60,6 +60,8 @@ label{display:block;font-size:13px;color:var(--mut);margin:8px 0 3px}
 #gps{position:absolute;left:112px;top:calc(18px + env(safe-area-inset-top,0px));z-index:4;font:600 12px system-ui,sans-serif;background:var(--card);padding:5px 9px;border-radius:99px;box-shadow:0 1px 4px #0003;color:var(--mut)}
 #nb{position:absolute;left:10px;right:62px;top:calc(58px + env(safe-area-inset-top,0px));z-index:5;padding:10px}
 #nb button{padding:8px 10px}
+.chips{display:block}.cr{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px}.chip.z{opacity:.55}
+.pin.tmp i{background:#f2a23a}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" crossorigin="anonymous"></script>
@@ -84,13 +86,13 @@ label{display:block;font-size:13px;color:var(--mut);margin:8px 0 3px}
 <button id="tb" class="mlist">📋 Liste</button>
 <div id="gps">GPS…</div>
 <div id="nb" class="card" style="display:none"></div>
-<div class="ctl"><button id="zi">+</button><button id="zo">−</button><button id="zl">📍</button><button id="zf">⤢</button></div>
+<div class="ctl"><button id="zi">+</button><button id="zo">−</button><button id="zl">📍</button><button id="zf">⤢</button><button id="zc">🏷️</button></div>
 <div id="pc" class="card"></div><div class="att">© OpenStreetMap contributors · Protomaps</div></div>
 <button class="fab" id="add">＋ Ajouter</button>
 
 <dialog id="dlg"><div id="ftitle" style="font-weight:700;font-size:18px">Point d’intérêt</div>
 <label>Nom</label><input id="f_name">
-<label>Catégorie</label><input id="f_cat" list="cats" placeholder="Plage, Rando, Resto…"><datalist id="cats"></datalist>
+<label>Catégorie (sous-catégorie : Rando &gt; Cascade)</label><input id="f_cat" list="cats" placeholder="Rando, Plage, Rando &gt; Cascade…"><datalist id="cats"></datalist>
 <div class="two"><div><label>Latitude</label><input id="f_lat" inputmode="decimal"></div><div><label>Longitude</label><input id="f_lng" inputmode="decimal"></div></div>
 <div class="row"><button class="alt" id="f_here" type="button">📍 Utiliser ma position</button></div>
 <label>Notes et conseils</label><textarea id="f_note" rows="3"></textarea>
@@ -99,6 +101,7 @@ label{display:block;font-size:13px;color:var(--mut);margin:8px 0 3px}
 <div class="row"><button id="f_ok">Enregistrer</button><button class="alt" id="f_x">Annuler</button><button class="alt" id="f_del" style="margin-left:auto">Supprimer</button></div>
 </dialog>
 
+<dialog id="cdlg"><div style="font-weight:700;font-size:18px;margin-bottom:8px">Afficher sur la carte</div><div id="cc"></div><div class="row"><button id="cx">Fermer</button></div></dialog>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
 const KEY='carnet-nc-v1';
@@ -110,6 +113,8 @@ let P=[],me=null,cat='Tous',editId=null;
 try{P=JSON.parse(localStorage.getItem(KEY)||'null')||SEED}catch(e){P=SEED}
 const $=id=>document.getElementById(id);
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(P))}catch(e){}};
+let CATS=null;try{CATS=JSON.parse(localStorage.getItem('carnet-nc-cats')||'null')}catch(e){}
+if(!CATS){CATS=['Rando','Plage','Point de vue','Cuisine','Hébergement','Culture'];try{localStorage.setItem('carnet-nc-cats',JSON.stringify(CATS))}catch(e){}}
 const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function dist(a,b){const R=6371,r=x=>x*Math.PI/180,dl=r(b.lat-a.lat),dg=r(b.lng-a.lng);const h=Math.sin(dl/2)**2+Math.cos(r(a.lat))*Math.cos(r(b.lat))*Math.sin(dg/2)**2;return 2*R*Math.asin(Math.sqrt(h))}
 const fmt=d=>d<1?Math.round(d*1000)+' m':d.toFixed(d<10?1:0)+' km';
@@ -117,11 +122,11 @@ function linkify(t){return esc(t).replace(/https?:\/\/[^\s<]+/g,u=>`<a href="${u
 function links(t){return String(t||'').split(/\n+/).map(s=>s.trim()).filter(Boolean).map(u=>{u=/^https?:\/\//.test(u)?u:'https://'+u;let h=u;try{h=new URL(u).hostname.replace('www.','')}catch(e){}
 const ic=/facebook|fb\.com/.test(h)?'📘':/instagram/.test(h)?'📷':'🌐';return `<a class="btn alt" href="${esc(u)}" target="_blank" rel="noopener">${ic} ${esc(h)}</a>`}).join('')}
 function render(){
-const cats=['Tous',...new Set(P.map(p=>p.cat).filter(Boolean))];
-$('chips').innerHTML=cats.map(c=>`<button class="chip${c===cat?' on':''}" data-c="${esc(c)}">${esc(c)}</button>`).join('');
-$('cats').innerHTML=cats.slice(1).map(c=>`<option value="${esc(c)}">`).join('');
+const AC=allCats();
+$('chips').innerHTML=chipsHTML();if($('cdlg').open)$('cc').innerHTML=chipsHTML();$('zc').style.outline=cat==='Tous'?'':'3px solid #f2a23a';
+$('cats').innerHTML=AC.map(c=>`<option value="${esc(c)}">`).join('');
 const q=$('q').value.toLowerCase();
-let L=P.filter(p=>(cat==='Tous'||p.cat===cat)&&(!q||(p.name+' '+p.note+' '+p.cat).toLowerCase().includes(q)));
+let L=P.filter(p=>inCat(p)&&(!q||(p.name+' '+p.note+' '+p.cat).toLowerCase().includes(q)));
 if(me)L.forEach(p=>p.d=dist(me,p));L.sort((a,b)=>me?a.d-b.d:a.name.localeCompare(b.name));
 shown=L;$('sub').textContent=P.length+' lieu(x)'+(me?' · triés par distance':'');if(view==='map')draw();
 $('list').innerHTML=L.map(p=>`<div class="card"><h3>${esc(p.name)}</h3><div class="meta">${esc(p.cat)}${me?' · '+fmt(p.d):''}</div>
@@ -132,7 +137,15 @@ ${p.note?`<div class="note">${linkify(p.note)}</div>`:''}
 <a class="btn alt" href="intent:#Intent;action=android.settings.WIFI_SETTINGS;end">📶 Wi-Fi</a>
 ${p.ssid?`<button class="alt" data-pw="${p.id}">Copier mot de passe « ${esc(p.ssid)} »</button>`:''}
 <button class="alt" data-e="${p.id}">✏️</button></div></div>`).join('')||'<div class="meta">Aucun lieu. Ajoutez-en ou importez un KML.</div>'}
-$('chips').onclick=e=>{const c=e.target.dataset.c;if(c){cat=c;render()}};
+const SEP=' > ';
+function allCats(){const s=new Set(CATS);P.forEach(p=>p.cat&&s.add(p.cat));[...s].forEach(c=>{const x=c.split(SEP);for(let i=1;i<x.length;i++)s.add(x.slice(0,i).join(SEP))});return[...s].sort((a,b)=>a.localeCompare(b,'fr'))}
+const inCat=p=>cat==='Tous'||p.cat===cat||(p.cat||'').startsWith(cat+SEP);
+const cnt=c=>P.filter(p=>p.cat===c||(p.cat||'').startsWith(c+SEP)).length;
+function chipsHTML(){const A=allCats(),tops=A.filter(c=>!c.includes(SEP)),cur=cat==='Tous'?null:cat.split(SEP)[0],subs=cur?A.filter(c=>c.startsWith(cur+SEP)&&c.split(SEP).length===2):[];
+const b=(c,l)=>`<button class="chip${c===cat?' on':''}${c!=='Tous'&&!cnt(c)?' z':''}" data-c="${esc(c)}">${esc(l)}${c==='Tous'?'':' · '+cnt(c)}</button>`;
+return'<div class="cr">'+b('Tous','Tous')+tops.map(c=>b(c,c)).join('')+'</div>'+(subs.length?'<div class="cr">'+subs.map(c=>b(c,c.split(SEP)[1])).join('')+'</div>':'')}
+function chipClick(e){const c=e.target.dataset.c;if(!c)return;cat=(c===cat)?(c.includes(SEP)?c.split(SEP)[0]:'Tous'):c;render()}
+$('chips').onclick=chipClick;
 $('q').oninput=render;
 $('list').onclick=e=>{const t=e.target;if(t.dataset.e)openForm(+t.dataset.e);
 if(t.dataset.pw){const p=P.find(x=>x.id==t.dataset.pw);navigator.clipboard&&navigator.clipboard.writeText(p.pwd||'').then(()=>{t.textContent='Copié ✓'}).catch(()=>{alert('Mot de passe : '+p.pwd)})}};
@@ -188,14 +201,21 @@ catch(e){style=rasterStyle();note='Fichier carte hors ligne introuvable : fond e
 map=new maplibregl.Map({container:'map',style,center:[165.6,-21.3],zoom:6,minZoom:3,maxZoom:18,attributionControl:false,dragRotate:false});
 map.touchZoomRotate.disableRotation();map.on('dragstart',()=>{if(nav)nav.follow=false});
 map.on('zoom',()=>mapEl.classList.toggle('z9',map.getZoom()>=9));
-map.on('click',()=>{sel=null;$('pc').style.display='none';draw()});
+map.on('click',e=>{sel=null;dropPin(e.lngLat);draw()});
 await Promise.race([new Promise(r=>map.once('load',r)),new Promise(r=>setTimeout(r,8000))]);
 ms.textContent=note;ms.style.display=note?'block':'none';fit();draw();maybeCenter()}
 catch(e){ms.textContent='Carte indisponible : '+(e.message||e)}
 initing=false}
-function showCard(b){const pc=$('pc');pc.style.display='block';pc.innerHTML=`<b>${esc(b.name)}</b><div class="meta">${esc(b.cat)}${me?' · '+fmt(dist(me,b)):''}</div>${b.note?`<div class="note" style="max-height:64px;overflow:auto">${linkify(b.note)}</div>`:''}<div class="row"><button onclick="startNav(${b.id},'car')">🚗 Guider</button><button onclick="startNav(${b.id},'bike')">🚲</button><button onclick="startNav(${b.id},'foot')">🚶</button><a class="btn alt" href="https://www.google.com/maps/dir/?api=1&destination=${b.lat},${b.lng}" target="_blank" rel="noopener">↗️ Maps</a><button class="alt" onclick="openForm(${b.id})">✏️</button><button class="alt" onclick="$('pc').style.display='none'">✕</button></div><div class="row">${links(b.links)}</div>`}
+let tmpMark=null;
+function catColor(c){let h=0;for(const ch of String(c||'').split(' > ')[0])h=(h*31+ch.charCodeAt(0))%360;return c?'hsl('+h+' 60% 38%)':''}
+function dropPin(ll){if(tmpMark)tmpMark.remove();const el=document.createElement('div');el.className='pin tmp';el.innerHTML='<i></i>';tmpMark=new maplibregl.Marker({element:el}).setLngLat([ll.lng,ll.lat]).addTo(map);
+const la=ll.lat.toFixed(6),lo=ll.lng.toFixed(6),pc=$('pc');pc.style.display='block';
+pc.innerHTML=`<b>Nouveau lieu</b><div class="meta">${la}, ${lo}${me?' · '+fmt(dist(me,{lat:ll.lat,lng:ll.lng})):''}</div><div class="row"><button onclick="addHere(${la},${lo})">＋ Ajouter ici</button><button class="alt" onclick="clearTmp()">✕</button></div>`}
+function clearTmp(){if(tmpMark){tmpMark.remove();tmpMark=null}$('pc').style.display='none'}
+function addHere(la,lo){clearTmp();openForm(null);$('f_lat').value=la;$('f_lng').value=lo;$('f_cat').value=cat==='Tous'?'':cat;$('f_name').focus()}
+function showCard(b){if(tmpMark){tmpMark.remove();tmpMark=null}const pc=$('pc');pc.style.display='block';pc.innerHTML=`<b>${esc(b.name)}</b><div class="meta">${esc(b.cat)}${me?' · '+fmt(dist(me,b)):''}</div>${b.note?`<div class="note" style="max-height:64px;overflow:auto">${linkify(b.note)}</div>`:''}<div class="row"><button onclick="startNav(${b.id},'car')">🚗 Guider</button><button onclick="startNav(${b.id},'bike')">🚲</button><button onclick="startNav(${b.id},'foot')">🚶</button><a class="btn alt" href="https://www.google.com/maps/dir/?api=1&destination=${b.lat},${b.lng}" target="_blank" rel="noopener">↗️ Maps</a><button class="alt" onclick="openForm(${b.id})">✏️</button><button class="alt" onclick="$('pc').style.display='none'">✕</button></div><div class="row">${links(b.links)}</div>`}
 function draw(){if(!map)return;marks.forEach(m=>m.remove());
-marks=shown.map(p=>{const el=document.createElement('div');el.className='pin'+(p.id===sel?' sel':'');el.innerHTML='<i></i><b></b>';el.lastChild.textContent=p.name;el.onclick=e=>{e.stopPropagation();sel=p.id;showCard(p);draw()};return new maplibregl.Marker({element:el}).setLngLat([p.lng,p.lat]).addTo(map)});
+marks=shown.map(p=>{const el=document.createElement('div');el.className='pin'+(p.id===sel?' sel':'');el.innerHTML='<i></i><b></b>';el.lastChild.textContent=p.name;el.firstChild.style.background=catColor(p.cat);el.onclick=e=>{e.stopPropagation();sel=p.id;showCard(p);draw()};return new maplibregl.Marker({element:el}).setLngLat([p.lng,p.lat]).addTo(map)});
 updateMe()}
 function circ(lng,lat,r){const pts=[];for(let i=0;i<=40;i++){const t=i/40*2*Math.PI;pts.push([lng+r*Math.cos(t)/(111320*Math.cos(lat*Math.PI/180)),lat+r*Math.sin(t)/110540])}return{type:'Feature',geometry:{type:'Polygon',coordinates:[pts]}}}
 const EMPTY={type:'FeatureCollection',features:[]};
@@ -209,7 +229,7 @@ const b=new maplibregl.LngLatBounds();shown.forEach(p=>b.extend([p.lng,p.lat]));
 function setView(v){view=v;document.body.classList.toggle('mapv',v==='map');$('list').style.display=v==='list'?'':'none';$('mw').style.display=v==='map'?'block':'none';$('tL').className=v==='list'?'':'alt';$('tM').className=v==='map'?'':'alt';
 if(v==='map'){if(!map&&!initing)initMap();else if(map){map.resize();fit();draw()}}else render()}
 $('tL').onclick=()=>setView('list');$('tb').onclick=()=>setView('list');$('tM').onclick=()=>setView('map');
-$('zi').onclick=()=>map&&map.zoomIn();$('zo').onclick=()=>map&&map.zoomOut();$('zf').onclick=fit;
+$('zi').onclick=()=>map&&map.zoomIn();$('zo').onclick=()=>map&&map.zoomOut();$('zf').onclick=fit;$('zc').onclick=()=>{$('cc').innerHTML=chipsHTML();$('cdlg').showModal()};$('cx').onclick=()=>$('cdlg').close();$('cc').onclick=chipClick;
 $('zl').onclick=()=>{if(nav)nav.follow=true;const go=()=>{if(map&&me)map.flyTo({center:[me.lng,me.lat],zoom:Math.max(map.getZoom(),14)})};if(me)go();else locate(go)};
 
 /* ===== GUIDAGE EN TEMPS RÉEL ===== */
