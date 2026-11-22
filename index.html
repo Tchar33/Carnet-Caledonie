@@ -263,12 +263,14 @@ const POI_GROUPS=[
 {id:'food',emoji:'🍴',label:'Restaurants & cafés',color:'#e67e22',kinds:['restaurant','cafe','bar','pub','fast_food','bakery','ice_cream','food_court']},
 {id:'shops',emoji:'🛍️',label:'Commerces',color:'#8e44ad',kinds:['supermarket','convenience','marketplace','mall','department_store','clothes','shoes','jewelry','books','hardware','kiosk','shop','variety_store','greengrocer','butcher','fishmonger','florist','electronics','gift','sports','toys']},
 {id:'sleep',emoji:'🛏️',label:'Hébergement',color:'#2980b9',kinds:['hotel','hostel','guest_house','motel','camp_site','caravan_site','apartment','chalet','resort','alpine_hut']},
-{id:'services',emoji:'🏥',label:'Services',color:'#607d8b',kinds:['hospital','clinic','pharmacy','doctors','dentist','police','fire_station','post_office','bank','atm','townhall','school','university','library','fuel','charging_station','parking','toilets','drinking_water','bus_station','bus_stop','ferry_terminal','airport','taxi','car_rental','bicycle_rental','car_repair','laundry']},
+{id:'services',emoji:'🏥',label:'Services',color:'#607d8b',kinds:['hospital','clinic','pharmacy','doctors','dentist','police','fire_station','post_office','bank','atm','townhall','school','university','library','fuel','charging_station','parking','toilets','drinking_water','car_repair','laundry']},
+{id:'transport',emoji:'🚌',label:'Transports',color:'#16a085',kinds:['bus_station','bus_stop','ferry_terminal','airport','taxi','car_rental','bicycle_rental']},
 {id:'culture',emoji:'🏛️',label:'Culture & loisirs',color:'#d4a017',kinds:['museum','attraction','artwork','theatre','cinema','zoo','aquarium','place_of_worship','monument','memorial','castle','ruins','archaeological_site','historic','theme_park','stadium','swimming_pool','golf_course','marina','sports_centre']}];
 const POI_UI=POI_GROUPS.concat([{id:'autres',emoji:'📍',label:'Autres',color:'#7f8c8d',kinds:[]}]),POI_ALL=POI_GROUPS.map(g=>g.id);
 const POI_KNOWN=POI_GROUPS.flatMap(g=>g.kinds);
 const POI_COLOR=['match',['get','kind']].concat(POI_GROUPS.flatMap(g=>[g.kinds,g.color]),['#7f8c8d']);
 let POIEN=new Set(POI_ALL);try{const x=JSON.parse(localStorage.getItem('carnet-nc-poi')||'null');if(Array.isArray(x))POIEN=new Set(x)}catch(e){}
+try{if(!localStorage.getItem('carnet-nc-poi-v2')){POIEN.add('transport');localStorage.setItem('carnet-nc-poi-v2','1');localStorage.setItem('carnet-nc-poi',JSON.stringify([...POIEN]))}}catch(e){}
 const savePoi=()=>{try{localStorage.setItem('carnet-nc-poi',JSON.stringify([...POIEN]))}catch(e){}};
 function syncZk(){const z=$('zk');if(z)z.style.opacity=POIEN.size?1:.45}
 function poiHTML(){return'<div class="cr">'+POI_UI.map(g=>'<button class="chip'+(POIEN.has(g.id)?' on':'')+'" data-g="'+g.id+'"><i class="dot" style="background:'+g.color+'"></i> '+(g.emoji||'')+' '+g.label+(HAVE_K&&KCOUNT[g.id]!=null?' · '+KCOUNT[g.id]:'')+'</button>').join('')+'</div><div class="row" style="margin:4px 0 8px"><button class="alt" data-g="__all">Tout</button><button class="alt" data-g="__none">Aucun</button></div>'}
