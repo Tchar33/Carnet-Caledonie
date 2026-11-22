@@ -79,7 +79,7 @@ label{display:block;font-size:13px;color:var(--mut);margin:8px 0 3px}
 <button id="loc">📍 Ma position</button>
 <button class="alt" id="imp">Importer KML</button>
 <button class="alt" id="exp">Exporter KML</button>
-<button class="alt" id="expf">Exporter pour la famille</button>
+<button class="alt" id="expf">Publier pour la famille</button>
 <input type="file" id="file" hidden>
 </div>
 <div class="tabs"><button id="tL">📋 Liste</button><button class="alt" id="tM">🗺️ Carte</button></div>
@@ -105,6 +105,16 @@ label{display:block;font-size:13px;color:var(--mut);margin:8px 0 3px}
 <div class="row"><button id="f_ok">Enregistrer</button><button class="alt" id="f_x">Annuler</button><button class="alt" id="f_del" style="margin-left:auto">Supprimer</button></div>
 </dialog>
 
+<dialog id="pdlg"><div style="font-weight:700;font-size:18px">Publier pour la famille</div>
+<div class="meta" id="p_n"></div>
+<label>Code d’accès famille (12 caractères minimum, ex. : trois ou quatre mots)</label><input id="p_code" autocapitalize="off" autocorrect="off" spellcheck="false">
+<div class="two"><div><label>Compte GitHub</label><input id="p_owner" autocapitalize="off"></div><div><label>Dépôt</label><input id="p_repo" autocapitalize="off"></div></div>
+<label>Jeton d’accès GitHub</label><input id="p_token" type="password" autocomplete="off">
+<div class="meta" id="p_st" style="margin-top:8px"></div>
+<div class="row"><button id="p_go">Publier maintenant</button><button class="alt" id="p_dl">Télécharger (secours)</button><button class="alt" id="p_x">Fermer</button></div></dialog>
+<dialog id="kdlg"><div style="font-weight:700;font-size:18px">Accès famille</div><div class="meta">Entrez le code d’accès que vous avez reçu.</div>
+<input id="kin" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Code d’accès" style="margin-top:8px"><div class="meta" id="kerr" style="margin:6px 0"></div>
+<div class="row"><button id="kok">Valider</button></div></dialog>
 <dialog id="cdlg"><div style="font-weight:700;font-size:18px;margin-bottom:8px">Afficher sur la carte</div><div id="cc"></div><div class="row"><button id="cx">Fermer</button></div></dialog>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
@@ -114,7 +124,7 @@ const SEED=[
 {id:2,name:'Baie de Kuto – Île des Pins (exemple)',cat:'Plage',lat:-22.6560,lng:167.4350,note:'Exemple : sable blanc, baignade calme.',links:'',ssid:'',pwd:''},
 {id:3,name:'Parc de la Rivière Bleue (exemple)',cat:'Rando',lat:-22.1500,lng:166.6800,note:'Exemple : sentiers, forêt, kaoris géants.',links:'',ssid:'',pwd:''}];
 let P=[],me=null,cat='Tous',editId=null;
-P=[];fetch('lieux.json',{cache:'no-cache'}).then(r=>r.json()).then(a=>{P=a.map((p,i)=>Object.assign({id:i+1,cat:'',note:'',links:'',ssid:'',pwd:''},p));render();if(view==='map'&&map)fit()}).catch(()=>{$('sub').textContent='Liste des lieux indisponible'});
+P=[];
 const $=id=>document.getElementById(id);
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(P))}catch(e){}};
 let CATS=[];
@@ -178,9 +188,38 @@ if(editId){Object.assign(P.find(x=>x.id===editId),o)}else P.push({id:Date.now(),
 save();$('dlg').close();render()};
 $('f_del').onclick=()=>{if(confirm('Supprimer ce lieu ?')){P=P.filter(x=>x.id!==editId);save();$('dlg').close();render()}};
 $('imp').onclick=()=>$('file').click();
-$('expf').onclick=()=>{const L=P.filter(p=>p.share).map(p=>({name:p.name,cat:p.cat,lat:p.lat,lng:p.lng,note:p.note,links:p.links}));
-if(!L.length)return alert('Cochez d’abord « Partager ce lieu avec la famille » sur au moins un lieu.');
-const a=document.createElement('a');a.href='data:application/json;charset=utf-8,'+encodeURIComponent(JSON.stringify(L,null,1));a.download='lieux.json';document.body.appendChild(a);a.click();a.remove()};
+/* ===== CHIFFREMENT (code famille) ===== */
+function b64(buf){const u=new Uint8Array(buf);let t='';for(let i=0;i<u.length;i+=8192)t+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(t)}
+function unb64(t){return Uint8Array.from(atob(t),c=>c.charCodeAt(0))}
+async function deriveKey(pass,salt,iter){const km=await crypto.subtle.importKey('raw',new TextEncoder().encode(pass),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:iter,hash:'SHA-256'},km,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
+async function encJSON(obj,pass){const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12)),iter=250000,key=await deriveKey(pass,salt,iter);
+const ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,new TextEncoder().encode(JSON.stringify(obj)));return JSON.stringify({v:1,iter,salt:b64(salt),iv:b64(iv),data:b64(ct)})}
+async function decJSON(txt,pass){const o=JSON.parse(txt),key=await deriveKey(pass,unb64(o.salt),o.iter);let pt;
+try{pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:unb64(o.iv)},key,unb64(o.data))}catch(e){throw new Error('code')}
+return JSON.parse(new TextDecoder().decode(pt))}
+/* ===== PUBLICATION VERS GITHUB ===== */
+const PUBKEY='carnet-pub';
+function pubGet(){let o={};try{o=JSON.parse(localStorage.getItem(PUBKEY)||'{}')}catch(e){}
+if(!o.owner&&location.hostname.endsWith('.github.io'))o.owner=location.hostname.split('.')[0];
+if(!o.repo&&location.hostname.endsWith('.github.io'))o.repo=location.pathname.split('/')[1]||'';return o}
+function pubForm(){const o={code:$('p_code').value.trim(),owner:$('p_owner').value.trim(),repo:$('p_repo').value.trim(),token:$('p_token').value.trim()};try{localStorage.setItem(PUBKEY,JSON.stringify(o))}catch(e){}return o}
+const sharedList=()=>P.filter(p=>p.share).map(p=>({name:p.name,cat:p.cat,lat:p.lat,lng:p.lng,note:p.note,links:p.links}));
+async function ghPut(o,path,text){const url='https://api.github.com/repos/'+o.owner+'/'+o.repo+'/contents/'+path,h={Authorization:'Bearer '+o.token,Accept:'application/vnd.github+json'};let sha;
+try{const r=await fetch(url,{headers:h,cache:'no-store'});if(r.ok)sha=(await r.json()).sha}catch(e){}
+const r=await fetch(url,{method:'PUT',headers:h,body:JSON.stringify({message:'Mise à jour des lieux partagés',content:b64(new TextEncoder().encode(text)),sha})});
+if(!r.ok){let m=r.status;try{m=(await r.json()).message||m}catch(e){}throw new Error(m)}}
+$('expf').onclick=()=>{const o=pubGet();$('p_code').value=o.code||'';$('p_owner').value=o.owner||'';$('p_repo').value=o.repo||'';$('p_token').value=o.token||'';
+$('p_n').textContent=sharedList().length+' lieu(x) marqué(s) « partagé » seront publiés.';$('p_st').textContent='';$('pdlg').showModal()};
+$('p_x').onclick=()=>$('pdlg').close();
+async function pubRun(download){const o=pubForm(),L=sharedList(),st=$('p_st');
+if(!L.length)return st.textContent='Cochez « Partager ce lieu avec la famille » sur au moins un lieu.';
+if(o.code.length<12)return st.textContent='Le code doit faire au moins 12 caractères.';
+try{st.textContent='Chiffrement…';const txt=await encJSON(L,o.code);
+if(download){const a=document.createElement('a');a.href='data:application/json;charset=utf-8,'+encodeURIComponent(txt);a.download='lieux.enc.json';document.body.appendChild(a);a.click();a.remove();st.textContent='Fichier téléchargé : envoyez-le sur GitHub.';return}
+if(!o.owner||!o.repo||!o.token)return st.textContent='Renseignez le compte, le dépôt et le jeton GitHub.';
+st.textContent='Envoi vers GitHub…';await ghPut(o,'lieux.enc.json',txt);st.textContent='Publié ✓ Visible chez vos proches dans 1 à 2 minutes.'}
+catch(e){st.textContent='Échec : '+(e.message||e)}}
+$('p_go').onclick=()=>pubRun(false);$('p_dl').onclick=()=>pubRun(true);
 $('file').onchange=async e=>{const f=e.target.files[0];if(!f)return;let txt;try{if(/\.kmz$/i.test(f.name)||/zip/.test(f.type)){const z=await JSZip.loadAsync(f);const k=Object.keys(z.files).find(n=>/\.kml$/i.test(n));txt=await z.files[k].async('string')}else txt=await f.text()}catch(err){return alert('Fichier illisible')}const x=new DOMParser().parseFromString(txt,'text/xml');let n=0,dup=0;
 x.querySelectorAll('Placemark').forEach(m=>{const c=m.querySelector('Point coordinates');if(!c)return;const [lng,lat]=c.textContent.trim().split(',').map(parseFloat);
 const g=t=>{const el=m.querySelector(t);return el?el.textContent.trim():''};
@@ -320,7 +359,18 @@ if(view==='list'&&t-lastList>30000){lastList=t;render()}},
 e=>{if(e.code===1){const ms=$('ms');ms.textContent='Localisation refusée : autorisez-la dans les réglages du site ou du navigateur.';ms.style.display='block'}else gpsChip(null)},
 {enableHighAccuracy:true,maximumAge:0,timeout:30000})}
 
-render();setView('map');
+const CODEKEY='famille-code';
+async function loadFam(code){let r;try{r=await fetch('lieux.enc.json',{cache:'no-cache'})}catch(e){throw new Error('reseau')}
+if(!r.ok)throw new Error('absent');const a=await decJSON(await r.text(),code);
+P=a.map((p,i)=>Object.assign({id:i+1,cat:'',note:'',links:'',ssid:'',pwd:''},p));render();if(view==='map'&&map)fit()}
+async function tryCode(code){const er=$('kerr');try{await loadFam(code);try{localStorage.setItem(CODEKEY,code)}catch(e){}$('kdlg').close();return true}
+catch(e){if(e.message==='absent'){er.textContent='Aucun lieu n’est publié pour le moment.'}
+else if(e.message==='reseau'){er.textContent='Connexion nécessaire pour la première ouverture.'}
+else{er.textContent='Code incorrect.';try{localStorage.removeItem(CODEKEY)}catch(e2){}}return false}}
+async function startFam(){let c=null;try{c=localStorage.getItem(CODEKEY)}catch(e){}if(c&&await tryCode(c))return;$('kdlg').showModal()}
+$('kdlg').addEventListener('cancel',e=>e.preventDefault());
+$('kok').onclick=async()=>{$('kerr').textContent='Vérification…';await tryCode($('kin').value.trim())};
+render();setView('map');startFam();
 try{if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js')}catch(e){}
 </script>
 </body>
