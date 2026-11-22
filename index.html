@@ -61,6 +61,9 @@ label{display:block;font-size:13px;color:var(--mut);margin:8px 0 3px}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/pmtiles@3.2.0/dist/pmtiles.js" crossorigin="anonymous"></script>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-512.png">
 </head>
 <body>
 <header><h1>🌴 Carnet Calédonie</h1><div class="sub" id="sub"></div></header>
@@ -182,29 +185,30 @@ map.touchZoomRotate.disableRotation();
 map.on('zoom',()=>mapEl.classList.toggle('z9',map.getZoom()>=9));
 map.on('click',()=>{sel=null;$('pc').style.display='none';draw()});
 await Promise.race([new Promise(r=>map.once('load',r)),new Promise(r=>setTimeout(r,8000))]);
-ms.textContent=note;ms.style.display=note?'block':'none';fit();draw()}
+ms.textContent=note;ms.style.display=note?'block':'none';fit();draw();maybeCenter()}
 catch(e){ms.textContent='Carte indisponible : '+(e.message||e)}
 initing=false}
 function showCard(b){const pc=$('pc');pc.style.display='block';pc.innerHTML=`<b>${esc(b.name)}</b><div class="meta">${esc(b.cat)}${me?' · '+fmt(dist(me,b)):''}</div>${b.note?`<div class="note" style="max-height:64px;overflow:auto">${linkify(b.note)}</div>`:''}<div class="row"><a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=${b.lat},${b.lng}&travelmode=driving" target="_blank" rel="noopener">🧭 Itinéraire</a><button class="alt" onclick="openForm(${b.id})">✏️</button><button class="alt" onclick="$('pc').style.display='none'">✕</button></div><div class="row">${links(b.links)}</div>`}
 function draw(){if(!map)return;marks.forEach(m=>m.remove());
 marks=shown.map(p=>{const el=document.createElement('div');el.className='pin'+(p.id===sel?' sel':'');el.innerHTML='<i></i><b></b>';el.lastChild.textContent=p.name;el.onclick=e=>{e.stopPropagation();sel=p.id;showCard(p);draw()};return new maplibregl.Marker({element:el}).setLngLat([p.lng,p.lat]).addTo(map)});
-if(meMark){meMark.remove();meMark=null}
-if(me){const d=document.createElement('div');d.className='me';meMark=new maplibregl.Marker({element:d}).setLngLat([me.lng,me.lat]).addTo(map)}}
+updateMe()}
+function updateMe(){if(!map||!me)return;if(meMark)meMark.setLngLat([me.lng,me.lat]);else{const d=document.createElement('div');d.className='me';meMark=new maplibregl.Marker({element:d}).setLngLat([me.lng,me.lat]).addTo(map)}}
 function fit(){if(!map)return;if(!shown.length){map.jumpTo({center:[165.6,-21.3],zoom:6});return}
 const b=new maplibregl.LngLatBounds();shown.forEach(p=>b.extend([p.lng,p.lat]));map.fitBounds(b,{padding:80,maxZoom:13,duration:0})}
 function setView(v){view=v;document.body.classList.toggle('mapv',v==='map');$('list').style.display=v==='list'?'':'none';$('mw').style.display=v==='map'?'block':'none';$('tL').className=v==='list'?'':'alt';$('tM').className=v==='map'?'':'alt';
-if(v==='map'){if(!map&&!initing)initMap();else if(map){map.resize();fit();draw()}}}
+if(v==='map'){if(!map&&!initing)initMap();else if(map){map.resize();fit();draw()}}else render()}
 $('tL').onclick=()=>setView('list');$('tb').onclick=()=>setView('list');$('tM').onclick=()=>setView('map');
 $('zi').onclick=()=>map&&map.zoomIn();$('zo').onclick=()=>map&&map.zoomOut();$('zf').onclick=fit;
-$('zl').onclick=()=>locate(()=>{if(map)map.flyTo({center:[me.lng,me.lat],zoom:Math.max(map.getZoom(),13)})});
-/* ===== ICÔNE CAGOU ===== */
-try{const ICON='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="96" fill="#0a7c6e"/><path d="M175 340 L85 425 L215 398Z" fill="#b7c0c4"/><path d="M170 330C150 240 210 190 280 200C340 205 370 260 350 330C335 390 250 420 200 400Z" fill="#cfd6d9"/><path d="M200 290C240 250 320 270 330 330C290 360 220 350 200 290Z" fill="#9aa6ab"/><path d="M290 135L185 55L225 120L135 95L215 150L125 155L230 178Z" fill="#f2f5f6"/><circle cx="312" cy="172" r="52" fill="#e3e8ea"/><path d="M355 160L455 207L352 197Z" fill="#e8742a"/><circle cx="325" cy="160" r="8" fill="#1b2422"/><path d="M255 405L250 470M295 398L305 470" stroke="#e8742a" stroke-width="13" stroke-linecap="round"/></svg>';
-const add=(rel,href,extra)=>{const l=document.createElement('link');l.rel=rel;l.href=href;if(extra)l.sizes=extra;document.head.appendChild(l)};
-const svg='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(ICON);add('icon',svg);
-const im=new Image();im.onload=()=>{try{const c=document.createElement('canvas');c.width=c.height=512;c.getContext('2d').drawImage(im,0,0,512,512);const u=c.toDataURL('image/png');add('apple-touch-icon',u,'512x512');
-const m={name:'Carnet Calédonie',short_name:'Calédonie',start_url:location.href,display:'standalone',background_color:'#0a7c6e',theme_color:'#0a7c6e',icons:[{src:u,sizes:'512x512',type:'image/png',purpose:'any'}]};
-add('manifest','data:application/manifest+json,'+encodeURIComponent(JSON.stringify(m)))}catch(e){}};im.src=svg}catch(e){}
-render();setView('map');
+$('zl').onclick=()=>{const go=()=>{if(map&&me)map.flyTo({center:[me.lng,me.lat],zoom:Math.max(map.getZoom(),14)})};if(me)go();else locate(go)};
+let centered=false,lastList=0;
+const inNC=p=>p.lat<-19&&p.lat>-23.2&&p.lng>163&&p.lng<168.6;
+function maybeCenter(){if(centered||!map||!me||!inNC(me))return;centered=true;map.jumpTo({center:[me.lng,me.lat],zoom:12})}
+function startGps(){if(!navigator.geolocation)return;
+navigator.geolocation.watchPosition(p=>{me={lat:p.coords.latitude,lng:p.coords.longitude};updateMe();maybeCenter();const t=Date.now();if(view==='list'&&t-lastList>30000){lastList=t;render()}},
+e=>{if(e.code===1){const ms=$('ms');ms.textContent='Localisation refusée : autorisez-la dans les réglages du site ou du navigateur.';ms.style.display='block'}},
+{enableHighAccuracy:true,maximumAge:5000,timeout:30000})}
+
+render();setView('map');startGps();
 try{if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js')}catch(e){}
 </script>
 </body>
