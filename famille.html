@@ -255,22 +255,19 @@ COLORS[t]=PAL[Object.keys(COLORS).filter(k=>!k.includes(' > ')).length%PAL.lengt
 function colorsHTML(){return allCats().map(c=>'<div class="cr2"><span class="dot" style="background:'+catColor(c)+'"></span><span>'+esc(c)+'</span><div class="sw">'+PAL.map(h=>'<button class="swb'+(COLORS[c]===h?' on':'')+'" data-cat="'+esc(c)+'" data-col="'+h+'" style="background:'+h+'"></button>').join('')+'<button class="swb rs" data-cat="'+esc(c)+'" data-col="">↺</button></div></div>').join('')}
 function colorClick(e){const t=e.target;if(t.dataset.cat===undefined)return;const c=t.dataset.cat,h=t.dataset.col;if(h)COLORS[c]=h;else delete COLORS[c];saveColors();render()}
 const POI_GROUPS=[
-{id:'nature',label:'Nature & parcs',color:'#2e8b57',kinds:['park','national_park','nature_reserve','protected_area','beach','viewpoint','peak','waterfall','cave_entrance','volcano','forest','garden','playground']},
-{id:'food',label:'Restaurants & cafés',color:'#e67e22',kinds:['restaurant','cafe','bar','pub','fast_food','bakery','ice_cream','food_court']},
-{id:'shops',label:'Commerces',color:'#8e44ad',kinds:['supermarket','convenience','marketplace','mall','department_store','clothes','shoes','jewelry','books','hardware','kiosk','shop','variety_store','greengrocer','butcher','fishmonger','florist','electronics','gift','sports','toys']},
-{id:'sleep',label:'Hébergement',color:'#2980b9',kinds:['hotel','hostel','guest_house','motel','camp_site','caravan_site','apartment','chalet','resort','alpine_hut']},
-{id:'services',label:'Services',color:'#607d8b',kinds:['hospital','clinic','pharmacy','doctors','dentist','police','fire_station','post_office','bank','atm','townhall','school','university','library','fuel','charging_station','parking','toilets','drinking_water','bus_station','bus_stop','ferry_terminal','airport','taxi','car_rental','bicycle_rental','car_repair','laundry']},
-{id:'culture',label:'Culture & loisirs',color:'#d4a017',kinds:['museum','attraction','artwork','theatre','cinema','zoo','aquarium','place_of_worship','monument','memorial','castle','ruins','archaeological_site','historic','theme_park','stadium','swimming_pool','golf_course','marina','sports_centre']}];
-const POI_UI=POI_GROUPS.concat([{id:'autres',label:'Autres',color:'#7f8c8d',kinds:[]}]),POI_ALL=POI_GROUPS.map(g=>g.id);
+{id:'nature',emoji:'🌳',label:'Nature & parcs',color:'#2e8b57',kinds:['park','national_park','nature_reserve','protected_area','beach','viewpoint','peak','waterfall','cave_entrance','volcano','forest','garden','playground']},
+{id:'food',emoji:'🍴',label:'Restaurants & cafés',color:'#e67e22',kinds:['restaurant','cafe','bar','pub','fast_food','bakery','ice_cream','food_court']},
+{id:'shops',emoji:'🛍️',label:'Commerces',color:'#8e44ad',kinds:['supermarket','convenience','marketplace','mall','department_store','clothes','shoes','jewelry','books','hardware','kiosk','shop','variety_store','greengrocer','butcher','fishmonger','florist','electronics','gift','sports','toys']},
+{id:'sleep',emoji:'🛏️',label:'Hébergement',color:'#2980b9',kinds:['hotel','hostel','guest_house','motel','camp_site','caravan_site','apartment','chalet','resort','alpine_hut']},
+{id:'services',emoji:'🏥',label:'Services',color:'#607d8b',kinds:['hospital','clinic','pharmacy','doctors','dentist','police','fire_station','post_office','bank','atm','townhall','school','university','library','fuel','charging_station','parking','toilets','drinking_water','bus_station','bus_stop','ferry_terminal','airport','taxi','car_rental','bicycle_rental','car_repair','laundry']},
+{id:'culture',emoji:'🏛️',label:'Culture & loisirs',color:'#d4a017',kinds:['museum','attraction','artwork','theatre','cinema','zoo','aquarium','place_of_worship','monument','memorial','castle','ruins','archaeological_site','historic','theme_park','stadium','swimming_pool','golf_course','marina','sports_centre']}];
+const POI_UI=POI_GROUPS.concat([{id:'autres',emoji:'📍',label:'Autres',color:'#7f8c8d',kinds:[]}]),POI_ALL=POI_GROUPS.map(g=>g.id);
 const POI_KNOWN=POI_GROUPS.flatMap(g=>g.kinds);
 const POI_COLOR=['match',['get','kind']].concat(POI_GROUPS.flatMap(g=>[g.kinds,g.color]),['#7f8c8d']);
 let POIEN=new Set(POI_ALL);try{const x=JSON.parse(localStorage.getItem('carnet-nc-poi')||'null');if(Array.isArray(x))POIEN=new Set(x)}catch(e){}
 const savePoi=()=>{try{localStorage.setItem('carnet-nc-poi',JSON.stringify([...POIEN]))}catch(e){}};
 function syncZk(){const z=$('zk');if(z)z.style.opacity=POIEN.size?1:.45}
-function applyPoi(){syncZk();try{if(!map||!map.getLayer('poi'))return;
-const kinds=POI_GROUPS.filter(g=>POIEN.has(g.id)).flatMap(g=>g.kinds),inK=['in',['get','kind'],['literal',kinds]],unk=['!',['in',['get','kind'],['literal',POI_KNOWN]]];
-const f=POIEN.has('autres')?['any',inK,unk]:inK;map.setFilter('poi',f);map.setFilter('poi-l',['all',f,['has','name']])}catch(e){}}
-function poiHTML(){return'<div class="cr">'+POI_UI.map(g=>'<button class="chip'+(POIEN.has(g.id)?' on':'')+'" data-g="'+g.id+'"><i class="dot" style="background:'+g.color+'"></i> '+g.label+'</button>').join('')+'</div><div class="row" style="margin:4px 0 8px"><button class="alt" data-g="__all">Tout</button><button class="alt" data-g="__none">Aucun</button></div>'}
+function poiHTML(){return'<div class="cr">'+POI_UI.map(g=>'<button class="chip'+(POIEN.has(g.id)?' on':'')+'" data-g="'+g.id+'"><i class="dot" style="background:'+g.color+'"></i> '+(g.emoji||'')+' '+g.label+(HAVE_K&&KCOUNT[g.id]!=null?' · '+KCOUNT[g.id]:'')+'</button>').join('')+'</div><div class="row" style="margin:4px 0 8px"><button class="alt" data-g="__all">Tout</button><button class="alt" data-g="__none">Aucun</button></div>'}
 function poiClick(e){const t=e.target.closest('button');if(!t||!t.dataset.g)return;const g=t.dataset.g;
 if(g==='__all')POIEN=new Set([...POI_ALL,'autres']);else if(g==='__none')POIEN=new Set();else if(POIEN.has(g))POIEN.delete(g);else POIEN.add(g);
 savePoi();applyPoi();$('pg').innerHTML=poiHTML()}
@@ -278,11 +275,37 @@ function poiToggleAll(){POIEN=POIEN.size?new Set():new Set(POI_ALL);savePoi();ap
 function refreshDlg(){$('cc').innerHTML=chipsHTML();$('pg').innerHTML=poiHTML();$('cl').innerHTML=colorsHTML()}
 const KL={park:'Parc',national_park:'Parc national',nature_reserve:'Réserve naturelle',protected_area:'Zone protégée',beach:'Plage',viewpoint:'Point de vue',peak:'Sommet',waterfall:'Cascade',cave_entrance:'Grotte',volcano:'Volcan',forest:'Forêt',garden:'Jardin',playground:'Aire de jeux',restaurant:'Restaurant',cafe:'Café',bar:'Bar',pub:'Pub',fast_food:'Restauration rapide',bakery:'Boulangerie',ice_cream:'Glacier',supermarket:'Supermarché',convenience:'Supérette',marketplace:'Marché',mall:'Centre commercial',department_store:'Grand magasin',clothes:'Vêtements',hardware:'Bricolage',hotel:'Hôtel',hostel:'Auberge',guest_house:'Chambre d’hôtes',motel:'Motel',camp_site:'Camping',caravan_site:'Aire de camping-cars',hospital:'Hôpital',clinic:'Clinique',pharmacy:'Pharmacie',doctors:'Médecin',dentist:'Dentiste',police:'Police',fire_station:'Pompiers',post_office:'Poste',bank:'Banque',atm:'Distributeur',townhall:'Mairie',school:'École',university:'Université',library:'Bibliothèque',fuel:'Station-service',charging_station:'Borne de recharge',parking:'Parking',toilets:'Toilettes',drinking_water:'Eau potable',bus_station:'Gare routière',bus_stop:'Arrêt de bus',ferry_terminal:'Embarcadère',airport:'Aéroport',taxi:'Taxi',car_rental:'Location de voitures',museum:'Musée',attraction:'Attraction',artwork:'Œuvre d’art',theatre:'Théâtre',cinema:'Cinéma',zoo:'Zoo',aquarium:'Aquarium',place_of_worship:'Lieu de culte',monument:'Monument',memorial:'Mémorial',castle:'Château',ruins:'Ruines',archaeological_site:'Site archéologique',theme_park:'Parc d’attractions',stadium:'Stade',swimming_pool:'Piscine',marina:'Port de plaisance',sports_centre:'Centre sportif'};
 const kindLabel=k=>KL[k]||String(k||'Lieu').replace(/_/g,' ');
-let KNOWN=null;
-function showKnown(f){const p=f.properties||{},k=p.kind||'',c=f.geometry.coordinates;KNOWN={name:p.name||'',lat:c[1],lng:c[0],kind:k};
+let KT=[],KLAYERS=[],HAVE_K=false,KCOUNT={};
+const GCOL={};POI_UI.forEach(g=>GCOL[g.id]=g.color);
+function kIcon(em,col){const c=document.createElement('canvas');c.width=c.height=48;const x=c.getContext('2d');
+x.beginPath();x.arc(24,24,21,0,6.2832);x.fillStyle=col;x.fill();x.lineWidth=3;x.strokeStyle='#ffffff';x.stroke();
+x.font='24px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText(em,24,26);return x.getImageData(0,0,48,48)}
+async function loadConnus(){try{if(!map||HAVE_K)return;const r=await fetch('connus.json');if(!r.ok)return;const j=await r.json();KT=j.k;
+const feats=j.d.map(q=>{const k=KT[q[2]];KCOUNT[k[2]]=(KCOUNT[k[2]]||0)+1;return{type:'Feature',geometry:{type:'Point',coordinates:[q[0],q[1]]},properties:{k:q[2],n:q[3],a:q[4],p:q[5],w:q[6],h:q[7],g:k[2],z:k[3],i:'k'+q[2]}}});
+KT.forEach((k,i)=>{if(!map.hasImage('k'+i))map.addImage('k'+i,kIcon(k[1],GCOL[k[2]]||'#7f8c8d'),{pixelRatio:2})});
+map.addSource('k',{type:'geojson',data:{type:'FeatureCollection',features:feats}});
+KLAYERS=[];[9,11,13,15].forEach(z=>{const id='kp'+z;map.addLayer({id,type:'symbol',source:'k',minzoom:z,filter:['==',['get','z'],z],
+layout:{'icon-image':['get','i'],'icon-size':['interpolate',['linear'],['zoom'],9,0.55,14,0.8,17,1],'icon-allow-overlap':false,'text-field':['get','n'],'text-font':['Noto Sans Regular'],'text-size':['step',['zoom'],0,14,11],'text-offset':[0,1.4],'text-anchor':'top','text-optional':true},
+paint:{'text-color':'#333333','text-halo-color':'#ffffff','text-halo-width':1.3}});KLAYERS.push(id)});
+['poi','poi-l'].forEach(id=>{if(map.getLayer(id))map.removeLayer(id)});HAVE_K=true}catch(e){}}
+function applyPoi(){syncZk();try{if(!map)return;
+if(HAVE_K){const f=['in',['get','g'],['literal',[...POIEN]]];KLAYERS.forEach(id=>map.setFilter(id,['all',['==',['get','z'],+id.slice(2)],f]));return}
+if(!map.getLayer('poi'))return;
+const kinds=POI_GROUPS.filter(g=>POIEN.has(g.id)).flatMap(g=>g.kinds),inK=['in',['get','kind'],['literal',kinds]],unk=['!',['in',['get','kind'],['literal',POI_KNOWN]]];
+const f=POIEN.has('autres')?['any',inK,unk]:inK;map.setFilter('poi',f);map.setFilter('poi-l',['all',f,['has','name']])}catch(e){}}
+function showKnown(f){const p=f.properties||{},c=f.geometry.coordinates;let name,label,em='',extra='',web='';
+if(p.k!==undefined&&KT[p.k]){const K=KT[p.k];name=p.n||K[0];label=K[0];em=K[1]+' ';web=p.w||'';
+const bits=[];if(p.a)bits.push('📍 '+esc(p.a));if(p.p)bits.push('📞 <a href="tel:'+esc(p.p.split(/[;,]/)[0].replace(/\s/g,''))+'">'+esc(p.p)+'</a>');if(p.h)bits.push('🕒 '+esc(p.h));
+extra=bits.length?'<div class="note" style="margin:6px 0">'+bits.join('<br>')+'</div>':'';
+KNOWN={name:p.n||'',lat:c[1],lng:c[0],kind:label,note:[p.a,p.p?'Tél. '+p.p:'',p.h?'Horaires : '+p.h:''].filter(Boolean).join('\n'),links:web}}
+else{name=p.name||'';label=kindLabel(p.kind);KNOWN={name:name,lat:c[1],lng:c[0],kind:label,note:'',links:''}}
 if(tmpMark){tmpMark.remove();tmpMark=null}const pc=$('pc');pc.style.display='block';
-pc.innerHTML='<b>'+esc(p.name||kindLabel(k))+'</b><div class="meta">'+esc(kindLabel(k))+'</div><div class="row">'+(FAMILY?'':'<button onclick="addKnown()">＋ Ajouter à mes lieux</button>')+'<a class="btn alt" href="https://www.google.com/maps/dir/?api=1&destination='+c[1]+','+c[0]+'" target="_blank" rel="noopener">↗️ Itinéraire</a><button class="alt" onclick="$(\'pc\').style.display=\'none\'">✕</button></div>'}
-function addKnown(){const k=KNOWN;if(!k)return;$('pc').style.display='none';openForm(null);$('f_name').value=k.name||kindLabel(k.kind);$('f_lat').value=k.lat.toFixed(6);$('f_lng').value=k.lng.toFixed(6);$('f_cat').value=cat==='Tous'?'':cat}
+pc.innerHTML='<b>'+em+esc(name||label)+'</b><div class="meta">'+esc(label)+'</div>'+extra+(web?'<div class="row">'+links(web)+'</div>':'')+'<div class="row">'+(FAMILY?'':'<button onclick="addKnown()">＋ Ajouter à mes lieux</button>')+'<a class="btn alt" href="https://www.google.com/maps/dir/?api=1&destination='+c[1]+','+c[0]+'" target="_blank" rel="noopener">↗️ Itinéraire</a><button class="alt" onclick="$(\'pc\').style.display=\'none\'">✕</button></div>'}
+function addKnown(){const k=KNOWN;if(!k)return;$('pc').style.display='none';openForm(null);$('f_name').value=k.name||k.kind;$('f_lat').value=k.lat.toFixed(6);$('f_lng').value=k.lng.toFixed(6);$('f_cat').value=cat==='Tous'?'':cat;$('f_note').value=k.note||'';$('f_links').value=k.links||''}
+let KNOWN=null;
+function addPoiLayers(){try{if(!map||map.getLayer('poi')||!map.getSource('p'))return;const before=map.getLayer('pl')?'pl':undefined;
+map.addLayer({id:'poi',type:'circle',source:'p','source-layer':'pois',minzoom:11,paint:{'circle-radius':['interpolate',['linear'],['zoom'],11,2.5,16,6],'circle-color':POI_COLOR,'circle-stroke-color':'#ffffff','circle-stroke-width':1}},before);
+map.addLayer({id:'poi-l',type:'symbol',source:'p','source-layer':'pois',minzoom:14,layout:{'text-field':['get','name'],'text-font':['Noto Sans Regular'],'text-size':11,'text-offset':[0,0.9],'text-anchor':'top','text-optional':true},paint:{'text-color':'#333333','text-halo-color':'#ffffff','text-halo-width':1.3}},before)}catch(e){}}
 function rasterStyle(){return{version:8,sources:{o:{type:'raster',tiles:['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],tileSize:256,maxzoom:19,attribution:'© OpenStreetMap contributors'}},layers:[{id:'o',type:'raster',source:'o'}]}}
 function vecStyle(u){const rd=(id,kind,col,w,mz)=>({id,type:'line',source:'p','source-layer':'roads',minzoom:mz,filter:['==',['get','kind'],kind],layout:{'line-cap':'round','line-join':'round'},paint:{'line-color':col,'line-width':['interpolate',['exponential',1.6],['zoom'],mz,w*0.4,18,w*6]}});
 return{version:8,glyphs:'https://protomaps.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf',sources:{p:{type:'vector',url:u,attribution:'© OpenStreetMap · Protomaps'}},layers:[
@@ -295,8 +318,6 @@ return{version:8,glyphs:'https://protomaps.github.io/basemaps-assets/fonts/{font
 rd('r_path','path','#9b8a6d',0.6,13),rd('r_min','minor_road','#ffffff',1.2,12),rd('r_oth','other','#ffffff',1,13),
 rd('r_med','medium_road','#fcefb4',1.6,9),rd('r_maj','major_road','#f8d57a',2,7),rd('r_hwy','highway','#f4a55a',2.4,5),
 {id:'bn',type:'line',source:'p','source-layer':'boundaries',paint:{'line-color':'#9a7f9a','line-dasharray':[3,2],'line-width':1}},
-{id:'poi',type:'circle',source:'p','source-layer':'pois',minzoom:11,paint:{'circle-radius':['interpolate',['linear'],['zoom'],11,2.5,16,6],'circle-color':POI_COLOR,'circle-stroke-color':'#ffffff','circle-stroke-width':1}},
-{id:'poi-l',type:'symbol',source:'p','source-layer':'pois',minzoom:14,layout:{'text-field':['get','name'],'text-font':['Noto Sans Regular'],'text-size':11,'text-offset':[0,0.9],'text-anchor':'top','text-optional':true},paint:{'text-color':'#333','text-halo-color':'#fff','text-halo-width':1.3}},
 {id:'pl',type:'symbol',source:'p','source-layer':'places',minzoom:6,filter:['==',['get','kind'],'locality'],layout:{'text-field':['get','name'],'text-font':['Noto Sans Regular'],'text-size':['interpolate',['linear'],['zoom'],6,11,12,15]},paint:{'text-color':'#333','text-halo-color':'#fff','text-halo-width':1.5}}]}}
 async function initMap(){initing=true;const ms=$('ms');ms.style.display='block';ms.textContent='Chargement de la carte…';
 try{if(typeof maplibregl==='undefined')throw new Error('moteur de carte non chargé (connexion requise la 1re fois)');
@@ -306,10 +327,10 @@ catch(e){style=rasterStyle();note='Fichier carte hors ligne introuvable : fond e
 map=new maplibregl.Map({container:'map',style,center:[165.6,-21.3],zoom:6,minZoom:3,maxZoom:18,attributionControl:false,dragRotate:false});
 map.touchZoomRotate.disableRotation();map.on('dragstart',()=>{if(nav)nav.follow=false});
 map.on('zoom',()=>mapEl.classList.toggle('z9',map.getZoom()>=9));
-map.on('click',e=>{sel=null;let fs=[];try{fs=map.getLayer('poi')?map.queryRenderedFeatures([[e.point.x-12,e.point.y-12],[e.point.x+12,e.point.y+12]],{layers:['poi']}):[]}catch(x){}
+map.on('click',e=>{sel=null;let fs=[];try{const ly=HAVE_K?KLAYERS:(map.getLayer('poi')?['poi']:[]);fs=ly.length?map.queryRenderedFeatures([[e.point.x-14,e.point.y-14],[e.point.x+14,e.point.y+14]],{layers:ly}):[]}catch(x){}
 if(fs.length)showKnown(fs[0]);else if(!FAMILY)dropPin(e.lngLat);else $('pc').style.display='none';draw()});
 await Promise.race([new Promise(r=>map.once('load',r)),new Promise(r=>setTimeout(r,8000))]);
-ms.textContent=note;ms.style.display=note?'block':'none';applyPoi();fit();draw();maybeCenter()}
+ms.textContent=note;ms.style.display=note?'block':'none';addPoiLayers();await loadConnus();applyPoi();fit();draw();maybeCenter()}
 catch(e){ms.textContent='Carte indisponible : '+(e.message||e)}
 initing=false}
 let tmpMark=null;
