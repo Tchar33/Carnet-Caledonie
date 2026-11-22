@@ -57,6 +57,9 @@ label{display:block;font-size:13px;color:var(--mut);margin:8px 0 3px}
 #map.z9 .pin b{display:block}
 .me{width:18px;height:18px;border-radius:50%;background:#2f7bff;border:3px solid #fff;box-shadow:0 0 0 8px #2f7bff33}
 .ctl,#pc,.att,.mlist,.nt{z-index:4}
+#gps{position:absolute;left:112px;top:calc(18px + env(safe-area-inset-top,0px));z-index:4;font:600 12px system-ui,sans-serif;background:var(--card);padding:5px 9px;border-radius:99px;box-shadow:0 1px 4px #0003;color:var(--mut)}
+#nb{position:absolute;left:10px;right:62px;top:calc(58px + env(safe-area-inset-top,0px));z-index:5;padding:10px}
+#nb button{padding:8px 10px}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" crossorigin="anonymous"></script>
@@ -79,6 +82,8 @@ label{display:block;font-size:13px;color:var(--mut);margin:8px 0 3px}
 <main id="list"></main>
 <div id="mw"><div id="map"><div id="ms" class="nt">Chargement de la carte…</div></div>
 <button id="tb" class="mlist">📋 Liste</button>
+<div id="gps">GPS…</div>
+<div id="nb" class="card" style="display:none"></div>
 <div class="ctl"><button id="zi">+</button><button id="zo">−</button><button id="zl">📍</button><button id="zf">⤢</button></div>
 <div id="pc" class="card"></div><div class="att">© OpenStreetMap contributors · Protomaps</div></div>
 <button class="fab" id="add">＋ Ajouter</button>
@@ -122,7 +127,7 @@ shown=L;$('sub').textContent=P.length+' lieu(x)'+(me?' · triés par distance':'
 $('list').innerHTML=L.map(p=>`<div class="card"><h3>${esc(p.name)}</h3><div class="meta">${esc(p.cat)}${me?' · '+fmt(p.d):''}</div>
 ${p.note?`<div class="note">${linkify(p.note)}</div>`:''}
 <div class="row">${links(p.links)}</div>
-<div class="row"><a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}&travelmode=driving" target="_blank" rel="noopener">🧭 Itinéraire</a>
+<div class="row"><button onclick="startNav(${p.id},'car')">▶️ Guider</button><a class="btn alt" href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}&travelmode=driving" target="_blank" rel="noopener">↗️ Maps</a>
 <a class="btn alt" href="geo:${p.lat},${p.lng}?q=${p.lat},${p.lng}(${encodeURIComponent(p.name)})">🗺️ Ouvrir dans une appli carte</a>
 <a class="btn alt" href="intent:#Intent;action=android.settings.WIFI_SETTINGS;end">📶 Wi-Fi</a>
 ${p.ssid?`<button class="alt" data-pw="${p.id}">Copier mot de passe « ${esc(p.ssid)} »</button>`:''}
@@ -181,32 +186,102 @@ let style,note='';
 try{const buf=await getBuf();const src=new pmtiles.PMTiles(new BufSource(buf,'nc'));const pr=new pmtiles.Protocol();pr.add(src);maplibregl.addProtocol('pmtiles',pr.tile);style=vecStyle('pmtiles://nc')}
 catch(e){style=rasterStyle();note='Fichier carte hors ligne introuvable : fond en ligne utilisé.'}
 map=new maplibregl.Map({container:'map',style,center:[165.6,-21.3],zoom:6,minZoom:3,maxZoom:18,attributionControl:false,dragRotate:false});
-map.touchZoomRotate.disableRotation();
+map.touchZoomRotate.disableRotation();map.on('dragstart',()=>{if(nav)nav.follow=false});
 map.on('zoom',()=>mapEl.classList.toggle('z9',map.getZoom()>=9));
 map.on('click',()=>{sel=null;$('pc').style.display='none';draw()});
 await Promise.race([new Promise(r=>map.once('load',r)),new Promise(r=>setTimeout(r,8000))]);
 ms.textContent=note;ms.style.display=note?'block':'none';fit();draw();maybeCenter()}
 catch(e){ms.textContent='Carte indisponible : '+(e.message||e)}
 initing=false}
-function showCard(b){const pc=$('pc');pc.style.display='block';pc.innerHTML=`<b>${esc(b.name)}</b><div class="meta">${esc(b.cat)}${me?' · '+fmt(dist(me,b)):''}</div>${b.note?`<div class="note" style="max-height:64px;overflow:auto">${linkify(b.note)}</div>`:''}<div class="row"><a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=${b.lat},${b.lng}&travelmode=driving" target="_blank" rel="noopener">🧭 Itinéraire</a><button class="alt" onclick="openForm(${b.id})">✏️</button><button class="alt" onclick="$('pc').style.display='none'">✕</button></div><div class="row">${links(b.links)}</div>`}
+function showCard(b){const pc=$('pc');pc.style.display='block';pc.innerHTML=`<b>${esc(b.name)}</b><div class="meta">${esc(b.cat)}${me?' · '+fmt(dist(me,b)):''}</div>${b.note?`<div class="note" style="max-height:64px;overflow:auto">${linkify(b.note)}</div>`:''}<div class="row"><button onclick="startNav(${b.id},'car')">🚗 Guider</button><button onclick="startNav(${b.id},'bike')">🚲</button><button onclick="startNav(${b.id},'foot')">🚶</button><a class="btn alt" href="https://www.google.com/maps/dir/?api=1&destination=${b.lat},${b.lng}" target="_blank" rel="noopener">↗️ Maps</a><button class="alt" onclick="openForm(${b.id})">✏️</button><button class="alt" onclick="$('pc').style.display='none'">✕</button></div><div class="row">${links(b.links)}</div>`}
 function draw(){if(!map)return;marks.forEach(m=>m.remove());
 marks=shown.map(p=>{const el=document.createElement('div');el.className='pin'+(p.id===sel?' sel':'');el.innerHTML='<i></i><b></b>';el.lastChild.textContent=p.name;el.onclick=e=>{e.stopPropagation();sel=p.id;showCard(p);draw()};return new maplibregl.Marker({element:el}).setLngLat([p.lng,p.lat]).addTo(map)});
 updateMe()}
-function updateMe(){if(!map||!me)return;if(meMark)meMark.setLngLat([me.lng,me.lat]);else{const d=document.createElement('div');d.className='me';meMark=new maplibregl.Marker({element:d}).setLngLat([me.lng,me.lat]).addTo(map)}}
+function circ(lng,lat,r){const pts=[];for(let i=0;i<=40;i++){const t=i/40*2*Math.PI;pts.push([lng+r*Math.cos(t)/(111320*Math.cos(lat*Math.PI/180)),lat+r*Math.sin(t)/110540])}return{type:'Feature',geometry:{type:'Polygon',coordinates:[pts]}}}
+const EMPTY={type:'FeatureCollection',features:[]};
+function ensureLayers(){try{if(!map.getSource('acc')){map.addSource('acc',{type:'geojson',data:EMPTY});map.addLayer({id:'acc',type:'fill',source:'acc',paint:{'fill-color':'#2f7bff','fill-opacity':0.15}});
+map.addSource('route',{type:'geojson',data:EMPTY});map.addLayer({id:'route-c',type:'line',source:'route',layout:{'line-cap':'round','line-join':'round'},paint:{'line-color':'#ffffff','line-width':9}});
+map.addLayer({id:'route',type:'line',source:'route',layout:{'line-cap':'round','line-join':'round'},paint:{'line-color':'#2f7bff','line-width':5}})}return true}catch(e){return false}}
+function updateMe(){if(!map||!me)return;if(meMark)meMark.setLngLat([me.lng,me.lat]);else{const d=document.createElement('div');d.className='me';meMark=new maplibregl.Marker({element:d}).setLngLat([me.lng,me.lat]).addTo(map)}
+if(ensureLayers())map.getSource('acc').setData(me.acc>0?circ(me.lng,me.lat,Math.min(me.acc,500)):EMPTY)}
 function fit(){if(!map)return;if(!shown.length){map.jumpTo({center:[165.6,-21.3],zoom:6});return}
 const b=new maplibregl.LngLatBounds();shown.forEach(p=>b.extend([p.lng,p.lat]));map.fitBounds(b,{padding:80,maxZoom:13,duration:0})}
 function setView(v){view=v;document.body.classList.toggle('mapv',v==='map');$('list').style.display=v==='list'?'':'none';$('mw').style.display=v==='map'?'block':'none';$('tL').className=v==='list'?'':'alt';$('tM').className=v==='map'?'':'alt';
 if(v==='map'){if(!map&&!initing)initMap();else if(map){map.resize();fit();draw()}}else render()}
 $('tL').onclick=()=>setView('list');$('tb').onclick=()=>setView('list');$('tM').onclick=()=>setView('map');
 $('zi').onclick=()=>map&&map.zoomIn();$('zo').onclick=()=>map&&map.zoomOut();$('zf').onclick=fit;
-$('zl').onclick=()=>{const go=()=>{if(map&&me)map.flyTo({center:[me.lng,me.lat],zoom:Math.max(map.getZoom(),14)})};if(me)go();else locate(go)};
+$('zl').onclick=()=>{if(nav)nav.follow=true;const go=()=>{if(map&&me)map.flyTo({center:[me.lng,me.lat],zoom:Math.max(map.getZoom(),14)})};if(me)go();else locate(go)};
+
+/* ===== GUIDAGE EN TEMPS RÉEL ===== */
+let nav=null,wl=null;
+const dm=(a,b)=>dist(a,b)*1000;
+const fmtm=m=>m<1000?(m>=50?Math.round(m/10)*10:Math.round(m))+' m':(m/1000).toFixed(m<10000?1:0)+' km';
+const fmtt=s=>s<3600?Math.max(1,Math.round(s/60))+' min':Math.floor(s/3600)+' h '+String(Math.round(s%3600/60)).padStart(2,'0');
+const card8=d=>['Nord','Nord-Est','Est','Sud-Est','Sud','Sud-Ouest','Ouest','Nord-Ouest'][Math.round(d/45)%8];
+function brg(a,b){const r=x=>x*Math.PI/180,y=Math.sin(r(b.lng-a.lng))*Math.cos(r(b.lat)),x=Math.cos(r(a.lat))*Math.sin(r(b.lat))-Math.sin(r(a.lat))*Math.cos(r(b.lat))*Math.cos(r(b.lng-a.lng));return(Math.atan2(y,x)*180/Math.PI+360)%360}
+function say(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='fr-FR';speechSynthesis.speak(u)}catch(e){}}
+function stepText(s){const m=s.maneuver,d={left:'à gauche',right:'à droite','slight left':'légèrement à gauche','slight right':'légèrement à droite','sharp left':'franchement à gauche','sharp right':'franchement à droite',straight:'tout droit',uturn:'demi-tour'}[m.modifier]||'',n=s.name?' sur '+s.name:'',t=m.type;
+if(t==='depart')return'Départ'+n;if(t==='arrive')return'Vous êtes arrivé';
+if(t==='roundabout'||t==='rotary'||t==='roundabout turn')return'Au rond-point, sortie'+(m.exit?' n°'+m.exit:'')+n;
+if(m.modifier==='uturn')return'Faites demi-tour'+n;
+if(t==='fork')return'À l’embranchement, prenez '+(d||'tout droit')+n;
+if(t==='end of road')return'Au bout de la route, tournez '+d+n;
+if(t==='turn')return'Tournez '+d+n;
+return'Continuez '+(d||'tout droit')+n}
+async function fetchRoute(f,t,mode){const prof={car:'routed-car',bike:'routed-bike',foot:'routed-foot'}[mode];
+const q=f.lng+','+f.lat+';'+t.lng+','+t.lat+'?overview=full&geometries=geojson&steps=true';
+const urls=['https://routing.openstreetmap.de/'+prof+'/route/v1/driving/'+q];if(mode==='car')urls.push('https://router.project-osrm.org/route/v1/driving/'+q);
+for(const u of urls){try{const r=await fetch(u);const j=await r.json();if(j.code==='Ok'&&j.routes&&j.routes[0])return j.routes[0]}catch(e){}}return null}
+const nb=h=>{const b=$('nb');b.style.display='block';b.innerHTML=h};
+async function startNav(id,mode){const p=P.find(x=>x.id===id);if(!p)return;
+try{speechSynthesis.speak(new SpeechSynthesisUtterance(''))}catch(e){}
+if(!me){locate(()=>startNav(id,mode));return}
+if(nav)stopNav();setView('map');$('pc').style.display='none';
+nav={to:p,mode,route:null,steps:[],cum:[],tot:0,dur:0,si:0,follow:true,last:0,spoken:{},fallback:false,voice:true,drawn:false,cam:false};
+nb('Calcul de l’itinéraire…');try{wl=await navigator.wakeLock.request('screen')}catch(e){}
+await computeRoute()}
+async function computeRoute(){const n=nav;if(!n||!me)return;n.last=Date.now();const from={lat:me.lat,lng:me.lng};
+const r=await fetchRoute(from,n.to,n.mode);if(nav!==n)return;
+if(r){n.fallback=false;n.route=r.geometry.coordinates.map(c=>({lng:c[0],lat:c[1]}));
+n.cum=[0];for(let i=1;i<n.route.length;i++)n.cum.push(n.cum[i-1]+dm(n.route[i-1],n.route[i]));n.tot=n.cum[n.cum.length-1];n.dur=r.duration;
+n.steps=r.legs[0].steps.map(s=>{const l={lng:s.maneuver.location[0],lat:s.maneuver.location[1]};let bi=0,bd=1e12;n.route.forEach((q,i)=>{const d=(q.lat-l.lat)**2+(q.lng-l.lng)**2;if(d<bd){bd=d;bi=i}});return{txt:stepText(s),vi:bi}});
+n.si=0;n.spoken={}}
+else{n.fallback=true;n.route=[from,{lat:n.to.lat,lng:n.to.lng}];n.cum=[0,dm(from,n.to)];n.tot=n.cum[1];n.dur=0;n.steps=[]}
+n.drawn=false;navTick()}
+function drawRoute(n){if(!map||!ensureLayers())return;
+map.getSource('route').setData({type:'Feature',geometry:{type:'LineString',coordinates:n.route.map(q=>[q.lng,q.lat])}});n.drawn=true;
+if(!n.cam){n.cam=true;if(n.fallback){const b=new maplibregl.LngLatBounds();n.route.forEach(q=>b.extend([q.lng,q.lat]));map.fitBounds(b,{padding:100,maxZoom:16,duration:0});n.follow=false}else map.jumpTo({center:[me.lng,me.lat],zoom:16})}}
+function navTick(){const n=nav;if(!n||!me||!n.route)return;
+if(!n.drawn)drawRoute(n);
+const cl=Math.cos(me.lat*Math.PI/180);let bi=0,bd=1e12;n.route.forEach((q,i)=>{const dx=(q.lng-me.lng)*cl,dy=q.lat-me.lat,d=dx*dx+dy*dy;if(d<bd){bd=d;bi=i}});
+const off=dm(me,n.route[bi]),direct=dm(me,n.to),remain=n.fallback?direct:Math.max(0,n.tot-n.cum[bi]);
+if(direct<30){finishNav('Vous êtes arrivé');return}
+const now=Date.now();
+if(!n.fallback&&off>Math.max(60,(me.acc||0)*1.5)&&now-n.last>15000){nb('Recalcul de l’itinéraire…');computeRoute();return}
+if(n.fallback&&now-n.last>60000)computeRoute();
+let line1,line2;
+if(n.fallback){line1='Direction '+card8(brg(me,n.to))+' · '+fmtm(direct);line2='Pas d’itinéraire (hors connexion ?) : trajet à vol d’oiseau'}
+else{while(n.si<n.steps.length-1&&n.steps[n.si].vi<=bi)n.si++;const st=n.steps[n.si],dn=Math.max(0,n.cum[st.vi]-n.cum[bi]);
+line1='Dans '+fmtm(dn)+' · '+st.txt;line2='Reste '+fmtm(remain)+(n.dur?' · ~'+fmtt(n.dur*remain/Math.max(n.tot,1)):'');
+if(n.voice&&dn<130&&!n.spoken[n.si]){n.spoken[n.si]=1;say(st.txt)}}
+nb('<div style="display:flex;gap:6px;align-items:center"><div style="flex:1;min-width:0"><b>'+esc(line1)+'</b><div class="meta">'+esc(line2)+' · '+esc(n.to.name)+'</div></div><button class="alt" onclick="nav.voice=!nav.voice;this.textContent=nav.voice?\'🔊\':\'🔇\'">'+(n.voice?'🔊':'🔇')+'</button><button onclick="stopNav()">■</button></div>');
+if(n.follow&&map)map.easeTo({center:[me.lng,me.lat],duration:600})}
+function stopNav(keep){nav=null;try{if(map&&map.getSource('route'))map.getSource('route').setData(EMPTY)}catch(e){}
+try{wl&&wl.release();wl=null}catch(e){}try{speechSynthesis.cancel()}catch(e){}if(!keep)$('nb').style.display='none'}
+function finishNav(m){say(m);stopNav(true);nb('<b>✅ '+m+'</b>');setTimeout(()=>{if(!nav)$('nb').style.display='none'},8000)}
 let centered=false,lastList=0;
 const inNC=p=>p.lat<-19&&p.lat>-23.2&&p.lng>163&&p.lng<168.6;
-function maybeCenter(){if(centered||!map||!me||!inNC(me))return;centered=true;map.jumpTo({center:[me.lng,me.lat],zoom:12})}
+function maybeCenter(){if(centered||!map||!me||!inNC(me)||me.acc>150)return;centered=true;map.jumpTo({center:[me.lng,me.lat],zoom:12})}
+let lastAcc=1e9,lastT=0;
+function gpsChip(a){const el=$('gps');if(a==null){el.textContent='GPS…';return}el.textContent='GPS ±'+Math.round(a)+' m';el.style.color=a<25?'#1a8f4a':a<80?'#c77a00':'#c0392b'}
 function startGps(){if(!navigator.geolocation)return;
-navigator.geolocation.watchPosition(p=>{me={lat:p.coords.latitude,lng:p.coords.longitude};updateMe();maybeCenter();const t=Date.now();if(view==='list'&&t-lastList>30000){lastList=t;render()}},
-e=>{if(e.code===1){const ms=$('ms');ms.textContent='Localisation refusée : autorisez-la dans les réglages du site ou du navigateur.';ms.style.display='block'}},
-{enableHighAccuracy:true,maximumAge:5000,timeout:30000})}
+navigator.geolocation.watchPosition(p=>{const c=p.coords,t=Date.now();
+if(me&&c.accuracy>Math.max(40,lastAcc*1.5)&&t-lastT<15000)return;
+lastAcc=c.accuracy;lastT=t;me={lat:c.latitude,lng:c.longitude,acc:c.accuracy};
+gpsChip(c.accuracy);updateMe();maybeCenter();if(nav)navTick();
+if(view==='list'&&t-lastList>30000){lastList=t;render()}},
+e=>{if(e.code===1){const ms=$('ms');ms.textContent='Localisation refusée : autorisez-la dans les réglages du site ou du navigateur.';ms.style.display='block'}else gpsChip(null)},
+{enableHighAccuracy:true,maximumAge:0,timeout:30000})}
 
 render();setView('map');startGps();
 try{if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js')}catch(e){}
