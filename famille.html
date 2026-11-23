@@ -75,6 +75,29 @@ dialog{max-height:88dvh;overflow:auto}
 .ctl{grid-template-columns:42px 42px}#nb{right:112px}
 .maplibregl-ctrl-bottom-left{bottom:calc(72px + env(safe-area-inset-bottom,0px))}#nb{max-height:46vh;overflow:auto}
 .inf-b{font-size:15px;line-height:1.5;padding:4px 2px 10px}.inf-b ul{padding-left:20px;margin:6px 0}.inf-b li{margin:5px 0}.inf-b a{word-break:break-word}#inf details,#voy details{border-bottom:1px solid var(--bd);padding:8px 0}#inf summary{font-weight:700;cursor:pointer;font-size:16px}
+.hid{display:none!important}
+#home{position:fixed;inset:0;z-index:30;display:none;overflow:auto;background:url(fond.jpg) center/cover no-repeat,url(fond-accueil.svg) center/cover no-repeat,#0b6b78;color:#fff}
+.hm-in{min-height:100%;display:flex;flex-direction:column;justify-content:space-between;gap:18px;padding:calc(30px + env(safe-area-inset-top,0px)) 18px calc(22px + env(safe-area-inset-bottom,0px))}
+.hm-k{font-size:31px;font-weight:800;text-shadow:0 2px 12px #000a}.hm-s{font-size:15px;text-shadow:0 1px 8px #000a;margin-top:2px}
+.hm-grid{display:grid;gap:10px}
+.hm-b{display:flex;align-items:center;gap:14px;text-align:left;width:100%;padding:14px 16px;border-radius:18px;border:1px solid #ffffff77;background:rgba(6,36,50,.42);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#fff;font:inherit;font-weight:400}
+.hm-b .e{font-size:30px}.hm-b b{display:block;font-size:18px}.hm-b small{display:block;opacity:.92;font-size:13px;margin-top:1px}
+.hm-f{display:flex;gap:10px;justify-content:center;margin-top:4px}.hm-f button{background:rgba(6,36,50,.42);border:1px solid #ffffff77;color:#fff;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+#chap{position:fixed;inset:0;z-index:25;display:none;overflow:auto;background:var(--bg);padding:calc(10px + env(safe-area-inset-top,0px)) 14px calc(24px + env(safe-area-inset-bottom,0px))}
+.chh{display:flex;align-items:center;gap:10px;position:sticky;top:0;background:var(--bg);padding:6px 0 10px;z-index:2}.chh b{font-size:19px}
+#chap details{border-bottom:1px solid var(--bd);padding:8px 0}#chap summary{font-weight:700;font-size:16px;cursor:pointer}
+#hm{left:10px;width:42px;padding:0}#tb{left:58px}#gps{left:168px}body.carte #tb,body.carte .vo{display:none!important}body.carte #gps{left:58px}
+.fh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:18px}
+.seg{display:flex;gap:6px;margin-bottom:10px}.seg button{flex:1}
+.sw-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 2px;border-bottom:1px solid var(--bd);font-size:15px}
+.tg{width:46px;height:26px;min-width:46px;border-radius:99px;border:0;background:var(--bd);position:relative;padding:0}
+.tg::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .15s}.tg.on{background:var(--ac)}.tg.on::after{left:23px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.tile{display:flex;align-items:center;gap:8px;padding:10px;border-radius:12px;border:2px solid var(--bd);background:var(--card);color:var(--tx);text-align:left;font-weight:600;font-size:14px;opacity:.5}
+.tile.on{opacity:1;border-color:var(--c)}.tile .te{font-size:22px}.tile small{margin-left:auto;color:var(--mut);font-weight:500}
+#cc .cr{flex-wrap:wrap;overflow:visible}
+#zc{position:relative}#zc[data-n]:not([data-n=""])::after{content:attr(data-n);position:absolute;top:-6px;right:-6px;background:#f2a23a;color:#000;border-radius:99px;min-width:18px;height:18px;padding:0 4px;font-size:12px;line-height:18px;text-align:center;font-weight:700}
+.tl{display:block;width:100%;text-align:left;margin:6px 0;padding:13px 14px;font-size:16px}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" crossorigin="anonymous"></script>
@@ -97,17 +120,17 @@ dialog{max-height:88dvh;overflow:auto}
 <button class="alt" id="expf">Publier pour la famille</button>
 <input type="file" id="file" hidden>
 </div>
-<div class="tabs"><button id="tL">📋 Liste</button><button class="alt" id="tM">🗺️ Carte</button></div>
-<div class="tabs" id="stabs"><button id="s_l">📍 Lieux</button><button class="alt" id="s_v">🧭 Voyage NC Louis</button><button class="alt" id="s_i">📚 Infos NC</button></div>
+<div class="tabs"><button id="tL">📋 Liste</button><button class="alt" id="tM">🗺️ Carte</button><button class="alt" id="tH">🏠</button></div>
+<div class="tabs" id="stabs"><button id="s_l">📍 Lieux</button><button class="alt" id="s_v">🧭 Étapes du voyage</button></div>
 <div class="chips" id="chips"></div>
 <main id="list"></main>
-<div id="voy" style="display:none;padding:0 14px 90px"></div><div id="inf" style="display:none;padding:0 14px 90px"></div>
+<div id="voy" style="display:none;padding:0 14px 90px"></div>
 <input type="file" id="photo_in" accept="image/*,video/*" multiple hidden>
 <div id="mw"><div id="map"><div id="ms" class="nt">Chargement de la carte…</div></div>
-<button id="tb" class="mlist">📋 Liste</button>
+<button id="hm" class="mlist">🏠</button><button id="tb" class="mlist">📋 Liste</button>
 <div id="gps">GPS…</div>
 <div id="nb" class="card" style="display:none"></div>
-<div class="ctl"><button id="zi">+</button><button id="zo">−</button><button id="zl">📍</button><button id="zf">⤢</button><button id="zc">🏷️</button><button id="zk">👁️</button><button id="zh">❓</button><button id="zm">💱</button><button id="zr">🛣️</button><button id="zj">📅</button></div>
+<div class="ctl"><button id="zi">+</button><button id="zo">−</button><button id="zl">📍</button><button id="zf">⤢</button><button id="zc">🏷️</button><button id="zt">⋯</button><button id="zk" class="hid">👁️</button><button id="zh" class="hid">❓</button><button id="zm" class="hid">💱</button><button id="zr" class="hid">🛣️</button><button id="zj" class="hid">📅</button></div>
 <div id="pc" class="card"></div><div class="att">© OpenStreetMap contributors · Protomaps</div></div>
 <button class="fab" id="add">＋ Ajouter</button>
 
@@ -142,6 +165,19 @@ dialog{max-height:88dvh;overflow:auto}
 <dialog id="jdlg"><div style="font-weight:700;font-size:18px;margin-bottom:6px">📅 Journal des visites</div>
 <div class="row" style="margin-bottom:6px"><button class="alt" id="j_ord">↓ Plus récents d’abord</button><button class="alt" id="j_alb">📷 Avec album</button></div>
 <div id="jbody"></div><div class="row"><button id="j_x">Fermer</button></div></dialog>
+<div id="home"><div class="hm-in"><div><div class="hm-k">🌴 Carnet Calédonie</div><div class="hm-s">Nouvelle-Calédonie · le voyage de Louis</div></div>
+<div><div class="hm-grid">
+<button class="hm-b" data-go="voyage"><span class="e">🧭</span><span><b>Voyage Louis NC</b><small>Mes étapes, mes photos et les lieux connus sur la carte</small></span></button>
+<button class="hm-b" data-go="carte"><span class="e">🗺️</span><span><b>Carte NC</b><small>La carte de la Nouvelle-Calédonie et ses lieux</small></span></button>
+<button class="hm-b" data-go="culture"><span class="e">🪶</span><span><b>Culture et histoire kanak</b><small>Coutume, histoire, traditions</small></span></button>
+<button class="hm-b" data-go="conseils"><span class="e">🧳</span><span><b>Conseils de voyage</b><small>Préparer, se déplacer, rester en sécurité</small></span></button>
+<button class="hm-b" data-go="activites"><span class="e">🏝️</span><span><b>Activités en NC</b><small>Lagon, randonnées, visites</small></span></button></div>
+<div class="hm-f"><button data-go="monnaie">💱 Monnaie</button><button data-go="aide">❓ Aide</button></div></div></div></div>
+<div id="chap"><div class="chh"><button class="alt" id="chap_h">← Accueil</button><b id="chap_t"></b></div><div id="chap_b"></div></div>
+<dialog id="tdlg"><div class="fh"><b>Outils</b></div>
+<button class="tl vo" data-t="route">🛣️ Itinéraire entre deux lieux</button><button class="tl vo" data-t="journal">📅 Journal des visites</button>
+<button class="tl" data-t="fx">💱 Convertisseur de monnaie</button><button class="tl" data-t="aide">❓ Aide</button><button class="tl" data-t="home">🏠 Retour à l’accueil</button>
+<div class="row"><button class="alt" id="td_x">Fermer</button></div></dialog>
 <dialog id="fdlg"><div style="font-weight:700;font-size:18px;margin-bottom:6px">💱 Convertisseur de monnaie</div>
 <label>Montant</label><input id="fx_amt" inputmode="decimal" autocomplete="off">
 <div class="two" style="margin-top:6px"><div><label>De</label><select id="fx_from"></select></div><div><label>Vers</label><select id="fx_to"></select></div></div>
@@ -151,11 +187,12 @@ dialog{max-height:88dvh;overflow:auto}
 <div class="meta" id="fx_info"></div>
 <div class="row"><button class="alt" id="fx_upd">Mettre à jour les taux</button><button id="fx_x">Fermer</button></div></dialog>
 <dialog id="hdlg"><div style="font-weight:700;font-size:18px;margin-bottom:6px">❓ Aide</div><div id="hbody"></div><div class="row"><button id="hx">Fermer</button></div></dialog>
-<dialog id="cdlg"><div style="font-weight:700;font-size:18px;margin-bottom:6px">Afficher sur la carte</div>
-<div class="meta">Mes lieux</div><div id="cc"></div>
-<div class="meta" style="margin-top:6px">Lieux connus (parcs, commerces, services…)</div><div id="pg"></div>
-<details id="clh"><summary class="meta">Couleurs de mes catégories</summary><div id="cl"></div></details>
-<div class="row"><button id="cx">Fermer</button></div></dialog>
+<dialog id="cdlg"><div class="fh"><b>Filtres</b><button class="alt" id="f_reset">↺ Réinitialiser</button></div>
+<div class="seg"><button id="sg_m">📍 Mes lieux</button><button class="alt" id="sg_k">🏪 Lieux connus</button></div>
+<div id="sec_m"><div class="meta">Catégories</div><div id="cc"></div><div id="tg"></div>
+<details id="clh"><summary class="meta" style="margin-top:8px">🎨 Couleurs des catégories</summary><div id="cl"></div></details></div>
+<div id="sec_k" style="display:none"><div id="pg"></div></div>
+<div class="row"><button id="cx">Terminé</button></div></dialog>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
 const KEY='carnet-nc-v1';
@@ -187,12 +224,12 @@ if(/maps\.|goo\.gl/.test(h))return SV('#34a853','<path d="M12 5a4.5 4.5 0 0 0-4.
 return SV('#0a7c6e','<circle cx="12" cy="12" r="6.5" fill="none" stroke="#fff" stroke-width="1.6"/><path d="M5.5 12h13M12 5.5c-3 3.2-3 9.8 0 13M12 5.5c3 3.2 3 9.8 0 13" fill="none" stroke="#fff" stroke-width="1.3"/>')}
 function render(){
 const AC=allCats();
-$('chips').innerHTML=chipsHTML();if($('cdlg').open)refreshDlg();if(lt==='voyage')voyRender();$('zc').style.outline=(cat==='Tous'&&!onlyAlbum)?'':'3px solid #f2a23a';
+$('chips').innerHTML=chipsHTML();if($('cdlg').open)refreshDlg();if(lt==='voyage')voyRender();$('zc').dataset.n=filterCount()||'';
 $('cats').innerHTML=AC.map(c=>`<option value="${esc(c)}">`).join('');
 const q=$('q').value.toLowerCase();
-let L=P.filter(p=>inCat(p)&&(!onlyAlbum||hasAlbum(p))&&(!q||(p.name+' '+p.note+' '+p.cat).toLowerCase().includes(q)));
+let L=P.filter(p=>inCat(p)&&(!onlyAlbum||hasAlbum(p))&&(!onlyShared||p.share)&&(!q||(p.name+' '+p.note+' '+p.cat).toLowerCase().includes(q)));
 if(me)L.forEach(p=>p.d=dist(me,p));L.sort((a,b)=>me?a.d-b.d:a.name.localeCompare(b.name));
-shown=L;$('sub').textContent=P.length+' lieu(x)'+(me?' · triés par distance':'');if(view==='map')draw();
+shown=MODE==='carte'?[]:L;$('sub').textContent=P.length+' lieu(x)'+(me?' · triés par distance':'');if(view==='map')draw();
 $('list').innerHTML=L.map(p=>`<div class="card"><h3>${esc(p.name)}${hasAlbum(p)?' 📷':''}</h3><div class="meta">${p.cat?'<span class="dot" style="background:'+catColor(p.cat)+'"></span> ':''}${esc(p.cat)}${me?' · '+fmt(p.d):''}</div>
 ${p.note?`<div class="note">${linkify(p.note)}</div>`:''}
 <div class="row">${links(p.links)}</div>
@@ -204,15 +241,16 @@ ${p.note?`<div class="note">${linkify(p.note)}</div>`:''}
 const ALBUM_RE=/photos\.google|photos\.app\.goo|icloud\.com|drive\.google|onedrive|1drv|dropbox|youtube|youtu\.be|vimeo|flickr|photos\.amazon|amazon\.[a-z.]+\/photos/i;
 const hasAlbum=p=>ALBUM_RE.test(p.links||'');
 let onlyAlbum=false;try{onlyAlbum=localStorage.getItem('carnet-nc-album')==='1'}catch(e){}
-function albumChip(){const n=P.filter(hasAlbum).length;return'<div class="cr"><button class="chip'+(onlyAlbum?' on':'')+'" data-album="1">📷 Avec album photos/vidéos · '+n+'</button></div>'}
+function albumChip(){const n=P.filter(hasAlbum).length;return'<div class="cr"><button class="chip'+(onlyAlbum?' on':'')+'" data-album="1">📷 Avec album · '+n+'</button>'+(FAMILY?'':'<button class="chip'+(onlyShared?' on':'')+'" data-shared="1">👨‍👩‍👧 Partagés · '+P.filter(p=>p.share).length+'</button>')+'</div>'}
 const SEP=' > ';
 function allCats(){const s=new Set(CATS);P.forEach(p=>p.cat&&s.add(p.cat));[...s].forEach(c=>{const x=c.split(SEP);for(let i=1;i<x.length;i++)s.add(x.slice(0,i).join(SEP))});return[...s].sort((a,b)=>a.localeCompare(b,'fr'))}
 const inCat=p=>cat==='Tous'||p.cat===cat||(p.cat||'').startsWith(cat+SEP);
 const cnt=c=>P.filter(p=>p.cat===c||(p.cat||'').startsWith(c+SEP)).length;
-function chipsHTML(){const A=allCats(),tops=A.filter(c=>!c.includes(SEP)),cur=cat==='Tous'?null:cat.split(SEP)[0],subs=cur?A.filter(c=>c.startsWith(cur+SEP)&&c.split(SEP).length===2):[];
+function catChipsHTML(){const A=allCats(),tops=A.filter(c=>!c.includes(SEP)),cur=cat==='Tous'?null:cat.split(SEP)[0],subs=cur?A.filter(c=>c.startsWith(cur+SEP)&&c.split(SEP).length===2):[];
 const b=(c,l)=>`<button class="chip${c===cat?' on':''}${c!=='Tous'&&!cnt(c)?' z':''}" data-c="${esc(c)}"${c==='Tous'?'':' style="border-left:8px solid '+catColor(c)+'"'}>${esc(l)}${c==='Tous'?'':' · '+cnt(c)}</button>`;
-return albumChip()+'<div class="cr">'+b('Tous','Tous')+tops.map(c=>b(c,c)).join('')+'</div>'+(subs.length?'<div class="cr">'+subs.map(c=>b(c,c.split(SEP)[1])).join('')+'</div>':'')}
-function chipClick(e){if(e.target.dataset.album){onlyAlbum=!onlyAlbum;try{localStorage.setItem('carnet-nc-album',onlyAlbum?'1':'0')}catch(x){}render();return}const c=e.target.dataset.c;if(!c)return;cat=(c===cat)?(c.includes(SEP)?c.split(SEP)[0]:'Tous'):c;render()}
+return '<div class="cr">'+b('Tous','Tous')+tops.map(c=>b(c,c)).join('')+'</div>'+(subs.length?'<div class="cr">'+subs.map(c=>b(c,c.split(SEP)[1])).join('')+'</div>':'')}
+function chipsHTML(){return albumChip()+catChipsHTML()}
+function chipClick(e){if(e.target.dataset.shared){onlyShared=!onlyShared;render();if($('cdlg').open)refreshDlg();return}if(e.target.dataset.album){onlyAlbum=!onlyAlbum;try{localStorage.setItem('carnet-nc-album',onlyAlbum?'1':'0')}catch(x){}render();return}const c=e.target.dataset.c;if(!c)return;cat=(c===cat)?(c.includes(SEP)?c.split(SEP)[0]:'Tous'):c;render()}
 $('chips').onclick=chipClick;
 $('q').oninput=render;
 $('list').onclick=e=>{const t=e.target;if(t.dataset.e)openForm(+t.dataset.e);
@@ -303,12 +341,7 @@ let POIEN=new Set(POI_ALL);try{const x=JSON.parse(localStorage.getItem('carnet-n
 try{if(!localStorage.getItem('carnet-nc-poi-v2')){POIEN.add('transport');localStorage.setItem('carnet-nc-poi-v2','1');localStorage.setItem('carnet-nc-poi',JSON.stringify([...POIEN]))}}catch(e){}
 const savePoi=()=>{try{localStorage.setItem('carnet-nc-poi',JSON.stringify([...POIEN]))}catch(e){}};
 function syncZk(){const z=$('zk');if(z)z.style.opacity=POIEN.size?1:.45}
-function poiHTML(){return'<div class="cr">'+POI_UI.map(g=>'<button class="chip'+(POIEN.has(g.id)?' on':'')+'" data-g="'+g.id+'"><i class="dot" style="background:'+g.color+'"></i> '+(g.emoji||'')+' '+g.label+(HAVE_K&&KCOUNT[g.id]!=null?' · '+KCOUNT[g.id]:'')+'</button>').join('')+'</div><div class="row" style="margin:4px 0 8px"><button class="alt" data-g="__all">Tout</button><button class="alt" data-g="__none">Aucun</button></div>'}
-function poiClick(e){const t=e.target.closest('button');if(!t||!t.dataset.g)return;const g=t.dataset.g;
-if(g==='__all')POIEN=new Set([...POI_ALL,'autres']);else if(g==='__none')POIEN=new Set();else if(POIEN.has(g))POIEN.delete(g);else POIEN.add(g);
-savePoi();applyPoi();$('pg').innerHTML=poiHTML()}
 function poiToggleAll(){POIEN=POIEN.size?new Set():new Set(POI_ALL);savePoi();applyPoi();if($('cdlg').open)$('pg').innerHTML=poiHTML()}
-function refreshDlg(){$('cc').innerHTML=chipsHTML();$('pg').innerHTML=poiHTML();$('cl').innerHTML=colorsHTML()}
 const KL={park:'Parc',national_park:'Parc national',nature_reserve:'Réserve naturelle',protected_area:'Zone protégée',beach:'Plage',viewpoint:'Point de vue',peak:'Sommet',waterfall:'Cascade',cave_entrance:'Grotte',volcano:'Volcan',forest:'Forêt',garden:'Jardin',playground:'Aire de jeux',restaurant:'Restaurant',cafe:'Café',bar:'Bar',pub:'Pub',fast_food:'Restauration rapide',bakery:'Boulangerie',ice_cream:'Glacier',supermarket:'Supermarché',convenience:'Supérette',marketplace:'Marché',mall:'Centre commercial',department_store:'Grand magasin',clothes:'Vêtements',hardware:'Bricolage',hotel:'Hôtel',hostel:'Auberge',guest_house:'Chambre d’hôtes',motel:'Motel',camp_site:'Camping',caravan_site:'Aire de camping-cars',hospital:'Hôpital',clinic:'Clinique',pharmacy:'Pharmacie',doctors:'Médecin',dentist:'Dentiste',police:'Police',fire_station:'Pompiers',post_office:'Poste',bank:'Banque',atm:'Distributeur',townhall:'Mairie',school:'École',university:'Université',library:'Bibliothèque',fuel:'Station-service',charging_station:'Borne de recharge',parking:'Parking',toilets:'Toilettes',drinking_water:'Eau potable',bus_station:'Gare routière',bus_stop:'Arrêt de bus',ferry_terminal:'Embarcadère',airport:'Aéroport',taxi:'Taxi',car_rental:'Location de voitures',museum:'Musée',attraction:'Attraction',artwork:'Œuvre d’art',theatre:'Théâtre',cinema:'Cinéma',zoo:'Zoo',aquarium:'Aquarium',place_of_worship:'Lieu de culte',monument:'Monument',memorial:'Mémorial',castle:'Château',ruins:'Ruines',archaeological_site:'Site archéologique',theme_park:'Parc d’attractions',stadium:'Stade',swimming_pool:'Piscine',marina:'Port de plaisance',sports_centre:'Centre sportif'};
 const kindLabel=k=>KL[k]||String(k||'Lieu').replace(/_/g,' ');
 let KT=[],KLAYERS=[],HAVE_K=false,KCOUNT={};
@@ -338,18 +371,18 @@ else{name=p.name||'';label=kindLabel(p.kind);KNOWN={name:name,lat:c[1],lng:c[0],
 if(tmpMark){tmpMark.remove();tmpMark=null}const pc=$('pc');pc.style.display='block';
 pc.innerHTML='<b>'+em+esc(name||label)+'</b><div class="meta">'+esc(label)+'</div>'+extra+(web?'<div class="row">'+linksL(web)+'</div>':'')+'<div class="row">'+(FAMILY?'':'<button onclick="addKnown()">＋ Ajouter à mes lieux</button>')+'<a class="btn alt" href="https://www.google.com/maps/dir/?api=1&destination='+c[1]+','+c[0]+'" target="_blank" rel="noopener">↗️ Itinéraire</a><button class="alt" onclick="$(\'pc\').style.display=\'none\'">✕</button></div>'}
 function addKnown(){const k=KNOWN;if(!k)return;$('pc').style.display='none';openForm(null);$('f_name').value=k.name||k.kind;$('f_lat').value=k.lat.toFixed(6);$('f_lng').value=k.lng.toFixed(6);$('f_cat').value=cat==='Tous'?'':cat;$('f_note').value=k.note||'';$('f_links').value=k.links||''}
-const HELP_OWNER=`<details open><summary>🗺️ Découvrir la carte</summary><ul>
+const HELP_OWNER=`<details open><summary>🏠 L’accueil et les chapitres</summary><ul>
+<li>L’écran d’accueil donne accès à cinq chapitres : <b>🧭 Voyage Louis NC</b> (la carte avec vos lieux et les lieux connus), <b>🗺️ Carte NC</b> (la carte seule, sans vos lieux), <b>🪶 Culture et histoire kanak</b>, <b>🧳 Conseils de voyage</b> et <b>🏝️ Activités en NC</b>.</li>
+<li>Le bouton <b>🏠</b> (en haut à gauche de la carte) ou le menu <b>⋯ → Retour à l’accueil</b> ramène à l’accueil.</li>
+<li>Les trois derniers chapitres sont des fiches avec une barre de recherche.</li></ul></details>
+<details><summary>🗺️ Découvrir la carte</summary><ul>
 <li>Déplacez la carte avec un doigt et zoomez en pinçant, ou avec les boutons <b>+</b> et <b>−</b>.</li>
 <li><b>📍</b> vous centre sur votre position, <b>⤢</b> affiche tous vos lieux. La pastille « GPS ± … m » indique la précision (vert = bonne).</li>
 <li><b>📋 Liste</b> (en haut à gauche) affiche vos lieux en liste, avec une barre de recherche, l’import et l’export.</li></ul></details>
 <details><summary>🏷️ Filtrer ce qui s’affiche</summary><ul>
-<li>Touchez <b>🏷️</b> : vous y trouvez vos catégories, les groupes de lieux connus et les couleurs.</li>
-<li><b>Mes lieux</b> : touchez une catégorie pour ne voir qu’elle, ses sous-catégories apparaissent sur une 2<sup>e</sup> ligne. Retouchez le bouton actif pour revenir en arrière.</li>
-<li><b>📷 Avec album photos/vidéos</b> : ne garde que les lieux qui ont un album.</li>
-<li><b>Lieux connus</b> : activez ou coupez chaque groupe (Nature, Restaurants, Commerces, Hébergement, Services, Transports, Culture, Autres). Le nombre de lieux est indiqué.</li>
-<li><b>👁️</b> affiche ou masque d’un coup tous les lieux connus.</li>
-<li>Un bouton 🏷️ entouré d’orange signale qu’un filtre est actif. Pour tout revoir : « Tous » et décochez 📷.</li>
-<li><b>Couleurs</b> : dans 🏷️ → « Couleurs de mes catégories », choisissez une couleur par catégorie (↺ = automatique).</li></ul></details>
+<li>Touchez <b>🏷️</b> : la fenêtre <b>Filtres</b> a deux parties, <b>📍 Mes lieux</b> et <b>🏪 Lieux connus</b>. Un petit chiffre orange sur le bouton indique le nombre de filtres actifs, et <b>↺ Réinitialiser</b> remet tout à zéro.</li>
+<li><b>Mes lieux</b> : touchez une catégorie pour ne voir qu’elle (ses sous-catégories apparaissent juste dessous), puis utilisez les interrupteurs <b>📷 Avec album</b> et <b>👨‍👩‍👧 Partagés avec la famille</b>. La couleur de chaque catégorie se choisit dans « 🎨 Couleurs des catégories ».</li>
+<li><b>Lieux connus</b> : un interrupteur affiche ou masque tous les lieux connus, et chaque tuile (Nature, Restaurants, Commerces…) se coupe ou se rallume d’un toucher.</li></ul></details>
 <details><summary>📍 Les lieux connus (parcs, commerces, services…)</summary><ul>
 <li>Touchez une pastille : la fiche montre le nom, le type, l’adresse, le téléphone (un appui appelle), les horaires et les liens du site ou des réseaux sociaux quand ils existent.</li>
 <li><b>＋ Ajouter à mes lieux</b> copie le lieu dans votre carnet avec ses informations.</li>
@@ -380,13 +413,10 @@ const HELP_OWNER=`<details open><summary>🗺️ Découvrir la carte</summary><u
 <li>Vos lieux sont enregistrés dans le téléphone. Dans la liste, <b>Exporter KML</b> en fait une copie de sécurité, <b>Importer KML</b> la restaure.</li>
 <li>Effacer les données du navigateur supprime vos lieux : exportez avant.</li></ul></details>
 <details><summary>🧭 Voyage NC Louis</summary><ul>
-<li>Dans la liste, l’onglet <b>🧭 Voyage NC Louis</b> affiche vos étapes une par une, dans l’ordre chronologique, par jour (Jour 1, Jour 2…), avec la date et le nombre de photos.</li>
+<li>Dans <b>📋 Liste</b>, l’onglet <b>🧭 Étapes du voyage</b> affiche vos étapes une par une, dans l’ordre chronologique, par jour (Jour 1, Jour 2…), avec la date et le nombre de photos.</li>
 <li><b>📷 Dater</b> sur une étape : choisissez les photos ou vidéos de ce lieu. L’appli lit leur date de prise de vue (ou, à défaut, la date du fichier) et met l’étape à jour, avec la période si elles s’étalent sur plusieurs jours.</li>
 <li><b>Importer des photos pour dater ou créer des étapes</b> : choisissez toutes vos photos du voyage. Celles qui ont une position GPS sont rattachées à l’étape la plus proche (moins de 400 m), ou créent une nouvelle étape. Les autres sont rattachées à l’étape du même jour quand elle est unique.</li>
 <li>Vos photos ne sont pas envoyées ni enregistrées : seule leur date est lue. Sur certains téléphones, la position GPS n’est pas transmise, la date du fichier sert alors de repère.</li></ul></details>
-<details><summary>📚 Infos NC</summary><ul>
-<li>L’onglet <b>📚 Infos NC</b> rassemble des fiches pratiques : géographie, climat, histoire, culture, préparer son voyage, se déplacer, idées de visites, sécurité et liens officiels. Une barre de recherche permet de retrouver un sujet.</li>
-<li>Ce sont des synthèses : vérifiez toujours les informations pratiques (formalités, santé, actualité) auprès des sites officiels indiqués.</li></ul></details>
 <details><summary>📏 Échelle et noms de rues</summary><ul>
 <li>Une <b>échelle</b> en bas à gauche de la carte indique la distance réelle et s’adapte au zoom.</li>
 <li>Les <b>noms de rues</b> apparaissent en zoomant fortement. Ils demandent du réseau la première fois, puis sont en général conservés pour la suite.</li></ul></details>
@@ -409,6 +439,9 @@ const HELP_OWNER=`<details open><summary>🗺️ Découvrir la carte</summary><u
 const HELP_FAM=`<details open><summary>🔑 Accès</summary><ul>
 <li>Entrez le code reçu à la première ouverture. Il est ensuite mémorisé sur votre téléphone.</li>
 <li>Gardez le lien et le code pour vous : l’accès est privé.</li></ul></details>
+<details><summary>🏠 L’accueil et les chapitres</summary><ul>
+<li>L’accueil donne accès à : <b>🧭 Voyage Louis NC</b> (la carte avec les lieux du voyage), <b>🗺️ Carte NC</b> (la carte seule), <b>🪶 Culture et histoire kanak</b>, <b>🧳 Conseils de voyage</b> et <b>🏝️ Activités en NC</b>.</li>
+<li>Le bouton <b>🏠</b> en haut à gauche de la carte, ou <b>⋯ → Retour à l’accueil</b>, ramène à l’accueil.</li></ul></details>
 <details><summary>🗺️ La carte</summary><ul>
 <li>Déplacez la carte avec un doigt, zoomez en pinçant ou avec <b>+</b> et <b>−</b>. <b>⤢</b> affiche tous les lieux.</li>
 <li>Les pastilles colorées sont les lieux partagés avec vous. Touchez-en une pour lire la note et ouvrir les liens.</li>
@@ -418,20 +451,17 @@ const HELP_FAM=`<details open><summary>🔑 Accès</summary><ul>
 <li>Touchez le lieu, puis l’icône d’album dans la fiche pour l’ouvrir.</li>
 <li>Il faut une connexion internet. Les nouvelles photos apparaissent dans l’album sans rien faire.</li></ul></details>
 <details><summary>🏷️ Filtrer</summary><ul>
-<li>Touchez <b>🏷️</b> : choisissez une catégorie (Rando, Plage, Cuisine…), ses sous-catégories apparaissent juste dessous. Retouchez le bouton actif pour revenir en arrière.</li>
-<li><b>📷 Avec album photos/vidéos</b> ne garde que les lieux qui ont des photos ou vidéos.</li>
-<li><b>👁️</b> affiche ou masque tous les lieux connus (commerces, parcs, services…). Dans 🏷️, vous pouvez aussi choisir les groupes à garder.</li>
-<li>Un bouton 🏷️ entouré d’orange signale un filtre actif.</li></ul></details>
+<li>Touchez <b>🏷️</b> pour ouvrir les <b>Filtres</b>. Un petit chiffre orange sur le bouton indique le nombre de filtres actifs, et <b>↺ Réinitialiser</b> remet tout à zéro.</li>
+<li><b>📍 Mes lieux</b> : choisissez une catégorie (Rando, Plage, Cuisine…), ses sous-catégories apparaissent dessous, puis l’interrupteur <b>📷 Avec album</b> ne garde que les lieux avec photos ou vidéos.</li>
+<li><b>🏪 Lieux connus</b> : un interrupteur affiche ou masque les commerces, parcs et services, et chaque tuile se coupe ou se rallume d’un toucher.</li></ul></details>
 <details><summary>📍 Les lieux connus</summary><ul>
 <li>Touchez une pastille de la carte : nom, type, adresse, téléphone, horaires et liens du site ou des réseaux sociaux quand ils existent.</li>
 <li><b>↗️ Itinéraire</b> ouvre Google Maps pour s’y rendre.</li></ul></details>
 <details><summary>🔒 Vie privée</summary><ul>
 <li>L’application ne demande pas votre position et ne modifie rien : elle sert seulement à consulter.</li></ul></details>
 <details><summary>🧭 Voyage NC Louis</summary><ul>
-<li>Dans la liste, l’onglet <b>🧭 Voyage NC Louis</b> montre les étapes du voyage une par une, dans l’ordre chronologique, par jour, avec la date et le nombre de photos.</li>
+<li>Dans <b>📋 Liste</b>, l’onglet <b>🧭 Étapes du voyage</b> montre les étapes du voyage une par une, dans l’ordre chronologique, par jour, avec la date et le nombre de photos.</li>
 <li><b>📍 Voir</b> ouvre l’étape sur la carte, et l’icône d’album ouvre les photos et vidéos.</li></ul></details>
-<details><summary>📚 Infos NC</summary><ul>
-<li>L’onglet <b>📚 Infos NC</b> rassemble des fiches pratiques sur la Nouvelle-Calédonie : géographie, climat, histoire, culture, visites, conseils de voyage et liens officiels. Une barre de recherche permet de retrouver un sujet.</li></ul></details>
 <details><summary>📏 Échelle et noms de rues</summary><ul>
 <li>Une <b>échelle</b> en bas à gauche de la carte indique la distance réelle.</li>
 <li>Les <b>noms de rues</b> apparaissent en zoomant fortement, avec une connexion.</li></ul></details>
@@ -520,11 +550,9 @@ $('jbody').onclick=e=>{const t=e.target.closest('button');if(!t||!t.dataset.j)re
 /* ===== VOYAGE NC LOUIS + INFOS NC + DATES DES PHOTOS ===== */
 const TRIP='Voyage NC Louis';
 let lt='lieux',INF=null;
-function syncList(){const L=view==='list',a=L&&lt==='lieux';$('bar').style.display=a?'':'none';$('chips').style.display=a?'':'none';$('list').style.display=a?'':'none';
-$('voy').style.display=L&&lt==='voyage'?'block':'none';$('inf').style.display=L&&lt==='infos'?'block':'none';
-['lieux','voyage','infos'].forEach((k,i)=>{$(['s_l','s_v','s_i'][i]).className=k===lt?'':'alt'});
-if(L&&lt==='voyage')voyRender();if(L&&lt==='infos')infosShow()}
-$('s_l').onclick=()=>{lt='lieux';syncList()};$('s_v').onclick=()=>{lt='voyage';syncList()};$('s_i').onclick=()=>{lt='infos';syncList()};
+function syncList(){const L=view==='list',a=L&&lt==='lieux';$('bar').style.display=a?'':'none';$('chips').style.display=a?'':'none';$('list').style.display=a?'':'none';$('voy').style.display=L&&lt==='voyage'?'block':'none';
+['lieux','voyage'].forEach((k,i)=>{$(['s_l','s_v'][i]).className=k===lt?'':'alt'});if(L&&lt==='voyage')voyRender()}
+$('s_l').onclick=()=>{lt='lieux';syncList()};$('s_v').onclick=()=>{lt='voyage';syncList()};
 /* --- lecture de la date (et de la position) d'une photo --- */
 function exifInfo(buf){try{const v=new DataView(buf);if(v.getUint16(0)!==0xFFD8)return null;let o=2;
 while(o<v.byteLength-4){const m=v.getUint16(o);if(m===0xFFDA)break;const len=v.getUint16(o+2);if(m===0xFFE1&&v.getUint32(o+4)===0x45786966)return exifTiff(v,o+10);o+=2+len}}catch(e){}return null}
@@ -575,15 +603,35 @@ if(t.id==='v_imp'){$('photo_in').dataset.target='';$('photo_in').click();return}
 if(t.dataset.d){$('photo_in').dataset.target=t.dataset.d;$('photo_in').click();return}
 if(t.dataset.e2){openForm(+t.dataset.e2);return}
 if(t.dataset.j){const p=P.find(x=>x.id==t.dataset.j);if(!p)return;setView('map');if(map)map.jumpTo({center:[p.lng,p.lat],zoom:Math.max(map.getZoom(),13)});showCard(p)}};
-/* --- onglet Infos NC --- */
-async function infosShow(){if(INF){infosRender();return}$('inf').innerHTML='<div class="meta">Chargement…</div>';
-try{const r=await fetch('infos.json');if(!r.ok)throw 0;INF=await r.json();infosRender()}catch(e){$('inf').innerHTML='<div class="meta">Les pages d’informations sont indisponibles pour le moment (connexion nécessaire la première fois).</div>'}}
-function infosRender(q){const Q=(typeof q==='string'?q:($('inf_q')?$('inf_q').value:'')).toLowerCase().trim();
-const S=INF.sections.filter(s=>!Q||(s.title+' '+s.html.replace(/<[^>]+>/g,' ')).toLowerCase().includes(Q));
-let h='<h2 style="margin:6px 0 2px">📚 La Nouvelle-Calédonie</h2><div class="meta">Synthèses rédigées pour ce carnet, mises à jour en '+esc(INF.updated)+'. Vérifiez les informations pratiques avant de partir.</div>'+
-'<input id="inf_q" placeholder="Rechercher dans les infos…" value="'+esc(Q)+'" style="margin:8px 0">';
-h+=S.map((s,i)=>'<details'+(Q&&S.length<4?' open':'')+'><summary>'+s.emoji+' '+esc(s.title)+'</summary><div class="inf-b">'+s.html+'</div></details>').join('')||'<div class="meta">Aucun résultat.</div>';
-const f=document.activeElement&&document.activeElement.id==='inf_q';$('inf').innerHTML=h;const i=$('inf_q');i.oninput=()=>{const p=i.selectionStart;infosRender(i.value);const n=$('inf_q');n.focus();try{n.setSelectionRange(p,p)}catch(x){}}}
+/* ===== ACCUEIL, CHAPITRES, FILTRES ===== */
+let MODE='voyage',CH='',onlyShared=false,SEG='m';
+const CHAPT={culture:['🪶','Culture et histoire kanak'],conseils:['🧳','Conseils de voyage'],activites:['🏝️','Activités en NC']};
+function openHome(){$('chap').style.display='none';$('pc').style.display='none';$('home').style.display='block'}
+function setMode(m){MODE=m;document.body.classList.toggle('carte',m==='carte');$('home').style.display='none';$('chap').style.display='none';$('pc').style.display='none';render();setView('map');if(m==='carte'&&map)map.jumpTo({center:[165.6,-21.3],zoom:6})}
+async function chapOpen(k){CH=k;$('home').style.display='none';$('chap').style.display='block';$('chap').scrollTop=0;$('chap_t').textContent=CHAPT[k][0]+' '+CHAPT[k][1];$('chap_b').innerHTML='<div class="meta">Chargement…</div>';
+if(!INF){try{const r=await fetch('infos.json');if(!r.ok)throw 0;INF=await r.json()}catch(e){$('chap_b').innerHTML='<div class="meta">Contenu indisponible pour le moment (connexion nécessaire la première fois).</div>';return}}
+chapRender('')}
+function chapRender(q){const Q=(q||'').toLowerCase().trim(),S=INF.sections.filter(s=>s.chapter===CH&&(!Q||(s.title+' '+s.html.replace(/<[^>]+>/g,' ')).toLowerCase().includes(Q)));
+$('chap_b').innerHTML='<input id="chap_q" placeholder="Rechercher dans ce chapitre…" value="'+esc(Q)+'" style="margin:0 0 10px">'+(S.map(s=>'<details'+(Q&&S.length<3?' open':'')+'><summary>'+s.emoji+' '+esc(s.title)+'</summary><div class="inf-b">'+s.html+'</div></details>').join('')||'<div class="meta">Aucun résultat.</div>')+'<div class="meta" style="margin-top:14px">Synthèses rédigées pour ce carnet ('+esc(INF.updated)+'). Vérifiez les informations pratiques auprès des sites officiels.</div>';
+const i=$('chap_q');i.oninput=()=>{const p=i.selectionStart;chapRender(i.value);const n=$('chap_q');n.focus();try{n.setSelectionRange(p,p)}catch(x){}}}
+$('home').onclick=e=>{const b=e.target.closest('[data-go]');if(!b)return;const g=b.dataset.go;
+if(g==='voyage'||g==='carte')setMode(g);else if(CHAPT[g])chapOpen(g);else if(g==='monnaie')fxOpen();else if(g==='aide')$('zh').onclick()};
+$('chap_h').onclick=openHome;$('hm').onclick=openHome;$('tH').onclick=openHome;
+$('zt').onclick=()=>$('tdlg').showModal();$('td_x').onclick=()=>$('tdlg').close();
+$('tdlg').onclick=e=>{const b=e.target.closest('button[data-t]');if(!b)return;$('tdlg').close();const t=b.dataset.t;if(t==='route')openRoute(null);else if(t==='journal')journalOpen();else if(t==='fx')fxOpen();else if(t==='aide')$('zh').onclick();else if(t==='home')openHome()};
+function filterCount(){let n=0;if(MODE!=='carte'){if(cat!=='Tous')n++;if(onlyAlbum)n++;if(onlyShared)n++}if(POI_ALL.some(g=>!POIEN.has(g))||POIEN.has('autres'))n++;return n}
+function togglesHTML(){let h='<div class="sw-row"><span>📷 Avec album photos/vidéos <small class="meta">· '+P.filter(hasAlbum).length+'</small></span><button class="tg'+(onlyAlbum?' on':'')+'" data-album="1" aria-label="Avec album"></button></div>';
+if(!FAMILY)h+='<div class="sw-row"><span>👨‍👩‍👧 Partagés avec la famille <small class="meta">· '+P.filter(p=>p.share).length+'</small></span><button class="tg'+(onlyShared?' on':'')+'" data-shared="1" aria-label="Partagés"></button></div>';return h}
+function poiHTML(){let h='<div class="sw-row"><span>🏪 Afficher les lieux connus</span><button class="tg'+(POIEN.size?' on':'')+'" data-g="__toggle" aria-label="Lieux connus"></button></div><div class="tiles">';
+h+=POI_UI.map(g=>'<button class="tile'+(POIEN.has(g.id)?' on':'')+'" data-g="'+g.id+'" style="--c:'+g.color+'"><span class="te">'+(g.emoji||'')+'</span><span>'+g.label+'</span>'+(HAVE_K&&KCOUNT[g.id]!=null?'<small>'+KCOUNT[g.id]+'</small>':'')+'</button>').join('')+'</div>';return h}
+function poiClick(e){const t=e.target.closest('button');if(!t||!t.dataset.g)return;const g=t.dataset.g;
+if(g==='__toggle')POIEN=POIEN.size?new Set():new Set(POI_ALL);else if(POIEN.has(g))POIEN.delete(g);else POIEN.add(g);
+savePoi();applyPoi();$('pg').innerHTML=poiHTML();$('zc').dataset.n=filterCount()||''}
+function refreshDlg(){$('cc').innerHTML=catChipsHTML();$('tg').innerHTML=togglesHTML();$('pg').innerHTML=poiHTML();$('cl').innerHTML=colorsHTML()}
+function segSet(s){SEG=s;$('sec_m').style.display=s==='m'?'':'none';$('sec_k').style.display=s==='k'?'':'none';$('sg_m').className=s==='m'?'':'alt';$('sg_k').className=s==='k'?'':'alt';$('sg_m').style.display=MODE==='carte'?'none':''}
+function openFilters(){if(MODE==='carte')SEG='k';segSet(SEG);refreshDlg();if(!$('cdlg').open)$('cdlg').showModal()}
+$('sg_m').onclick=()=>segSet('m');$('sg_k').onclick=()=>segSet('k');
+$('f_reset').onclick=()=>{cat='Tous';onlyAlbum=false;onlyShared=false;try{localStorage.setItem('carnet-nc-album','0')}catch(e){}POIEN=new Set(POI_ALL);savePoi();applyPoi();render();refreshDlg()};
 let KNOWN=null;
 function addPoiLayers(){try{if(!map||map.getLayer('poi')||!map.getSource('p'))return;const before=map.getLayer('pl')?'pl':undefined;
 map.addLayer({id:'poi',type:'circle',source:'p','source-layer':'pois',minzoom:11,paint:{'circle-radius':['interpolate',['linear'],['zoom'],11,2.5,16,6],'circle-color':POI_COLOR,'circle-stroke-color':'#ffffff','circle-stroke-width':1}},before);
@@ -639,7 +687,7 @@ const b=new maplibregl.LngLatBounds();shown.forEach(p=>b.extend([p.lng,p.lat]));
 function setView(v){view=v;document.body.classList.toggle('mapv',v==='map');syncList();$('mw').style.display=v==='map'?'block':'none';$('tL').className=v==='list'?'':'alt';$('tM').className=v==='map'?'':'alt';
 if(v==='map'){if(!map&&!initing)initMap();else if(map){map.resize();fit();draw()}}else render()}
 $('tL').onclick=()=>setView('list');$('tb').onclick=()=>setView('list');$('tM').onclick=()=>setView('map');
-$('zi').onclick=()=>map&&map.zoomIn();$('zo').onclick=()=>map&&map.zoomOut();$('zf').onclick=fit;$('zc').onclick=()=>{refreshDlg();$('cdlg').showModal()};$('cx').onclick=()=>$('cdlg').close();$('cc').onclick=chipClick;$('pg').onclick=poiClick;$('cl').onclick=colorClick;$('zk').onclick=poiToggleAll;
+$('zi').onclick=()=>map&&map.zoomIn();$('zo').onclick=()=>map&&map.zoomOut();$('zf').onclick=fit;$('zc').onclick=openFilters;$('cx').onclick=()=>$('cdlg').close();$('cc').onclick=chipClick;$('tg').onclick=chipClick;$('pg').onclick=poiClick;$('cl').onclick=colorClick;$('zk').onclick=poiToggleAll;
 $('zl').onclick=()=>{if(nav)nav.follow=true;const go=()=>{if(map&&me)map.flyTo({center:[me.lng,me.lat],zoom:Math.max(map.getZoom(),14)})};if(me)go();else locate(go)};
 
 /* ===== GUIDAGE EN TEMPS RÉEL ===== */
@@ -724,7 +772,7 @@ else{er.textContent='Code incorrect.';try{localStorage.removeItem(CODEKEY)}catch
 async function startFam(){let c=null;try{c=localStorage.getItem(CODEKEY)}catch(e){}if(c&&await tryCode(c))return;$('kdlg').showModal()}
 $('kdlg').addEventListener('cancel',e=>e.preventDefault());
 $('kok').onclick=async()=>{$('kerr').textContent='Vérification…';await tryCode($('kin').value.trim())};
-render();setView('map');startFam();
+render();setView('map');openHome();startFam();
 try{if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js')}catch(e){}
 </script>
 </body>
