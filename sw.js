@@ -1,6 +1,6 @@
-const SHELL='shell-v8',TILES='tiles-v1',MAPS='maps-v1',MAXT=8000;
+const SHELL='shell-v9',TILES='tiles-v1',MAPS='maps-v1',MAXT=8000;
 const HOSTS=['cdnjs.cloudflare.com','cdn.jsdelivr.net','protomaps.github.io'];
-self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(SHELL).then(c=>Promise.all(['./','index.html','famille.html','famille.webmanifest','lieux.enc.json','connus.json','infos.json','fond-accueil.svg','manifest.webmanifest','icon-192.png','icon-512.png'].map(u=>c.add(u).catch(()=>{})))))});
+self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(SHELL).then(c=>Promise.all(['./','index.html','famille.html','famille.webmanifest','lieux.enc.json','connus.json','infos.json','activites.json','fond-accueil.svg','manifest.webmanifest','icon-192.png','icon-512.png'].map(u=>c.add(u).catch(()=>{})))))});
 self.addEventListener('activate',e=>{e.waitUntil(Promise.all([self.clients.claim(),caches.keys().then(ks=>Promise.all(ks.filter(k=>![SHELL,TILES,MAPS].includes(k)).map(k=>caches.delete(k))))]))});
 self.addEventListener('fetch',e=>{
 const r=e.request;if(r.method!=='GET')return;const u=new URL(r.url);

@@ -1,0 +1,149 @@
+{
+ "v": 1,
+ "updated": "novembre 2026",
+ "categories": [
+  {
+   "id": "plongee",
+   "emoji": "🤿",
+   "title": "Plongée",
+   "providers": [
+    {
+     "id": "scubaddict",
+     "name": "Scub'Addict",
+     "place": "La Roche Percée, Bourail",
+     "lat": -21.63368,
+     "lng": 165.46929,
+     "summary": "Club de plongée de Bourail, avec des sorties à bord du bateau KUMA : explorations, baptêmes et formations FFESSM.",
+     "hours": "Tous les jours de 7 h 30 à 15 h ; plongées de nuit possibles",
+     "phone": "+687 78 08 88",
+     "whatsapp": "https://wa.me/687780888",
+     "email": "contact@scubaddict.nc",
+     "web": "http://scubaddict.nc/",
+     "facebook": "https://www.facebook.com/profile.php?id=61554321735391",
+     "instagram": "https://www.instagram.com/scubaddict_bourail/",
+     "source": "http://scubaddict.nc/activite-tarifs.html",
+     "checked": "2026-11-24",
+     "offers": [
+      {
+       "g": "Explorations",
+       "items": [
+        {
+         "n": "Exploration guidée, 2 plongées",
+         "p": "17 000 XPF",
+         "d": "guide, matériel et briefing inclus"
+        },
+        {
+         "n": "Exploration autonome non guidée, 2 plongées",
+         "p": "14 000 XPF",
+         "d": "plongeurs qualifiés ; équipement personnel non compris"
+        },
+        {
+         "n": "Plongée de nuit non guidée",
+         "p": "9 000 XPF",
+         "d": "par plongée"
+        },
+        {
+         "n": "Plongée de nuit guidée",
+         "p": "10 000 XPF",
+         "d": "par plongée"
+        },
+        {
+         "n": "Option Nitrox 32 %",
+         "p": "+ 2 000 XPF",
+         "d": "pour 2 plongées"
+        },
+        {
+         "n": "Réduction de groupe",
+         "p": "− 2 000 XPF",
+         "d": "par personne, dès 8 plongeurs"
+        }
+       ]
+      },
+      {
+       "g": "Baptême",
+       "items": [
+        {
+         "n": "Baptême de plongée",
+         "p": "10 000 XPF",
+         "d": "20 minutes sous l’eau, 1 moniteur pour 1 participant, matériel prêté"
+        }
+       ]
+      },
+      {
+       "g": "Formations FFESSM",
+       "items": [
+        {
+         "n": "Niveau 1",
+         "p": "55 000 XPF",
+         "d": "5 plongées"
+        },
+        {
+         "n": "PE40",
+         "p": "45 000 XPF",
+         "d": "4 plongées"
+        },
+        {
+         "n": "PA20",
+         "p": "65 000 XPF",
+         "d": "6 plongées"
+        },
+        {
+         "n": "Niveau 2",
+         "p": "90 000 XPF",
+         "d": "10 plongées"
+        },
+        {
+         "n": "Niveau 3",
+         "p": "100 000 XPF",
+         "d": "10 plongées"
+        },
+        {
+         "n": "Nitrox simple",
+         "p": "25 000 XPF",
+         "d": "2 plongées"
+        }
+       ]
+      },
+      {
+       "g": "Location et gonflage",
+       "items": [
+        {
+         "n": "Combinaison, stab ou PMT",
+         "p": "500 XPF",
+         "d": "par élément"
+        },
+        {
+         "n": "Ordinateur ou parachute",
+         "p": "1 000 XPF",
+         "d": "par sortie"
+        },
+        {
+         "n": "Lampe",
+         "p": "500 XPF",
+         "d": "par sortie"
+        },
+        {
+         "n": "Gonflage d’un bloc à l’air",
+         "p": "800 à 900 XPF",
+         "d": "selon la taille du bloc"
+        },
+        {
+         "n": "Supplément Nitrox 32 %",
+         "p": "200 XPF",
+         "d": "par bloc"
+        }
+       ]
+      }
+     ],
+     "notes": [
+      "Sortie habituelle : 2 plongées, rendez-vous vers 7 h 30 devant le club, retour vers 13 h. Les horaires dépendent notamment de la marée.",
+      "Pour une exploration, il faut déjà avoir un niveau de plongée : le baptême n’en est pas un.",
+      "Documents demandés : carte de niveau, règlement intérieur signé, autorisation parentale pour les mineurs, certificat médical de moins d’un an ou questionnaire médical.",
+      "Formations : théorie, matériel et carte inclus. Licence FFESSM de 6 500 XPF si vous n’êtes pas licencié ; assurance non incluse.",
+      "Le gonflage demande une réépreuve du bloc à jour."
+     ]
+    }
+   ]
+  }
+ ]
+}

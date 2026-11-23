@@ -98,6 +98,7 @@ dialog{max-height:88dvh;overflow:auto}
 #cc .cr{flex-wrap:wrap;overflow:visible}
 #zc{position:relative}#zc[data-n]:not([data-n=""])::after{content:attr(data-n);position:absolute;top:-6px;right:-6px;background:#f2a23a;color:#000;border-radius:99px;min-width:18px;height:18px;padding:0 4px;font-size:12px;line-height:18px;text-align:center;font-weight:700}
 .tl{display:block;width:100%;text-align:left;margin:6px 0;padding:13px 14px;font-size:16px}
+.of{display:flex;justify-content:space-between;gap:10px;padding:4px 0;border-bottom:1px dashed var(--bd);font-size:14px}.of b{white-space:nowrap}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" crossorigin="anonymous"></script>
@@ -332,13 +333,15 @@ const POI_GROUPS=[
 {id:'shops',emoji:'🛍️',label:'Commerces',color:'#8e44ad',kinds:['supermarket','convenience','marketplace','mall','department_store','clothes','shoes','jewelry','books','hardware','kiosk','shop','variety_store','greengrocer','butcher','fishmonger','florist','electronics','gift','sports','toys']},
 {id:'sleep',emoji:'🛏️',label:'Hébergement',color:'#2980b9',kinds:['hotel','hostel','guest_house','motel','camp_site','caravan_site','apartment','chalet','resort','alpine_hut']},
 {id:'services',emoji:'🏥',label:'Services',color:'#607d8b',kinds:['hospital','clinic','pharmacy','doctors','dentist','police','fire_station','post_office','bank','atm','townhall','school','university','library','fuel','charging_station','parking','toilets','drinking_water','car_repair','laundry']},
+{id:'activites',emoji:'🤿',label:'Activités',color:'#d6336c',kinds:[]},
 {id:'transport',emoji:'🚌',label:'Transports',color:'#16a085',kinds:['bus_station','bus_stop','ferry_terminal','airport','taxi','car_rental','bicycle_rental']},
 {id:'culture',emoji:'🏛️',label:'Culture & loisirs',color:'#d4a017',kinds:['museum','attraction','artwork','theatre','cinema','zoo','aquarium','place_of_worship','monument','memorial','castle','ruins','archaeological_site','historic','theme_park','stadium','swimming_pool','golf_course','marina','sports_centre']}];
 const POI_UI=POI_GROUPS.concat([{id:'autres',emoji:'📍',label:'Autres',color:'#7f8c8d',kinds:[]}]),POI_ALL=POI_GROUPS.map(g=>g.id);
 const POI_KNOWN=POI_GROUPS.flatMap(g=>g.kinds);
-const POI_COLOR=['match',['get','kind']].concat(POI_GROUPS.flatMap(g=>[g.kinds,g.color]),['#7f8c8d']);
+const POI_COLOR=['match',['get','kind']].concat(POI_GROUPS.filter(g=>g.kinds.length).flatMap(g=>[g.kinds,g.color]),['#7f8c8d']);
 let POIEN=new Set(POI_ALL);try{const x=JSON.parse(localStorage.getItem('carnet-nc-poi')||'null');if(Array.isArray(x))POIEN=new Set(x)}catch(e){}
 try{if(!localStorage.getItem('carnet-nc-poi-v2')){POIEN.add('transport');localStorage.setItem('carnet-nc-poi-v2','1');localStorage.setItem('carnet-nc-poi',JSON.stringify([...POIEN]))}}catch(e){}
+try{if(!localStorage.getItem('carnet-nc-poi-v3')){POIEN.add('activites');localStorage.setItem('carnet-nc-poi-v3','1');localStorage.setItem('carnet-nc-poi',JSON.stringify([...POIEN]))}}catch(e){}
 const savePoi=()=>{try{localStorage.setItem('carnet-nc-poi',JSON.stringify([...POIEN]))}catch(e){}};
 function syncZk(){const z=$('zk');if(z)z.style.opacity=POIEN.size?1:.45}
 function poiToggleAll(){POIEN=POIEN.size?new Set():new Set(POI_ALL);savePoi();applyPoi();if($('cdlg').open)$('pg').innerHTML=poiHTML()}
@@ -351,6 +354,8 @@ x.beginPath();x.arc(24,24,21,0,6.2832);x.fillStyle=col;x.fill();x.lineWidth=3;x.
 x.font='24px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText(em,24,26);return x.getImageData(0,0,48,48)}
 async function loadConnus(){try{if(!map||HAVE_K)return;const r=await fetch('connus.json');if(!r.ok)return;const j=await r.json();KT=j.k;
 const feats=j.d.map(q=>{const k=KT[q[2]];KCOUNT[k[2]]=(KCOUNT[k[2]]||0)+1;return{type:'Feature',geometry:{type:'Point',coordinates:[q[0],q[1]]},properties:{k:q[2],n:q[3],a:q[4],p:q[5],w:q[6],h:q[7],g:k[2],z:k[3],i:'k'+q[2]}}});
+try{const ra=await fetch('activites.json');if(ra.ok){const A=await ra.json();ACT=A;A.categories.forEach(c=>{if(!c.providers.length)return;const ki=KT.length;KT.push([c.title,c.emoji,'activites',11]);
+c.providers.forEach(p=>{if(p.lat==null)return;const f={type:'Feature',geometry:{type:'Point',coordinates:[p.lng,p.lat]},properties:{k:ki,n:p.name,a:p.place||'',p:p.phone||'',w:provLinks(p),h:p.hours||'',g:'activites',z:11,i:'k'+ki,pid:p.id}};feats.push(f);ACTF[p.id]=f;KCOUNT.activites=(KCOUNT.activites||0)+1})})}}catch(e){}
 KT.forEach((k,i)=>{if(!map.hasImage('k'+i))map.addImage('k'+i,kIcon(k[1],GCOL[k[2]]||'#7f8c8d'),{pixelRatio:2})});
 map.addSource('k',{type:'geojson',data:{type:'FeatureCollection',features:feats}});
 KLAYERS=[];[9,11,13,15].forEach(z=>{const id='kp'+z;map.addLayer({id,type:'symbol',source:'k',minzoom:z,filter:['==',['get','z'],z],
@@ -369,7 +374,7 @@ extra=bits.length?'<div class="note" style="margin:6px 0">'+bits.join('<br>')+'<
 KNOWN={name:p.n||'',lat:c[1],lng:c[0],kind:label,note:[p.a,p.p?'Tél. '+p.p:'',p.h?'Horaires : '+p.h:''].filter(Boolean).join('\n'),links:web}}
 else{name=p.name||'';label=kindLabel(p.kind);KNOWN={name:name,lat:c[1],lng:c[0],kind:label,note:'',links:''}}
 if(tmpMark){tmpMark.remove();tmpMark=null}const pc=$('pc');pc.style.display='block';
-pc.innerHTML='<b>'+em+esc(name||label)+'</b><div class="meta">'+esc(label)+'</div>'+extra+(web?'<div class="row">'+linksL(web)+'</div>':'')+'<div class="row">'+(FAMILY?'':'<button onclick="addKnown()">＋ Ajouter à mes lieux</button>')+'<a class="btn alt" href="https://www.google.com/maps/dir/?api=1&destination='+c[1]+','+c[0]+'" target="_blank" rel="noopener">↗️ Itinéraire</a><button class="alt" onclick="$(\'pc\').style.display=\'none\'">✕</button></div>'}
+pc.innerHTML='<b>'+em+esc(name||label)+'</b><div class="meta">'+esc(label)+'</div>'+extra+(web?'<div class="row">'+linksL(web)+'</div>':'')+'<div class="row">'+(p.pid?'<button onclick="openProvider(\''+esc(p.pid)+'\')">🧾 Prestations et tarifs</button>':'')+(FAMILY?'':'<button onclick="addKnown()">＋ Ajouter à mes lieux</button>')+'<a class="btn alt" href="https://www.google.com/maps/dir/?api=1&destination='+c[1]+','+c[0]+'" target="_blank" rel="noopener">↗️ Itinéraire</a><button class="alt" onclick="$(\'pc\').style.display=\'none\'">✕</button></div>'}
 function addKnown(){const k=KNOWN;if(!k)return;$('pc').style.display='none';openForm(null);$('f_name').value=k.name||k.kind;$('f_lat').value=k.lat.toFixed(6);$('f_lng').value=k.lng.toFixed(6);$('f_cat').value=cat==='Tous'?'':cat;$('f_note').value=k.note||'';$('f_links').value=k.links||''}
 const HELP_OWNER=`<details open><summary>🏠 L’accueil et les chapitres</summary><ul>
 <li>L’écran d’accueil donne accès à cinq chapitres : <b>🧭 Voyage Louis NC</b> (la carte avec vos lieux et les lieux connus), <b>🗺️ Carte NC</b> (la carte seule, sans vos lieux), <b>🪶 Culture et histoire kanak</b>, <b>🧳 Conseils de voyage</b> et <b>🏝️ Activités en NC</b>.</li>
@@ -417,6 +422,10 @@ const HELP_OWNER=`<details open><summary>🏠 L’accueil et les chapitres</summ
 <li><b>📷 Dater</b> sur une étape : choisissez les photos ou vidéos de ce lieu. L’appli lit leur date de prise de vue (ou, à défaut, la date du fichier) et met l’étape à jour, avec la période si elles s’étalent sur plusieurs jours.</li>
 <li><b>Importer des photos pour dater ou créer des étapes</b> : choisissez toutes vos photos du voyage. Celles qui ont une position GPS sont rattachées à l’étape la plus proche (moins de 400 m), ou créent une nouvelle étape. Les autres sont rattachées à l’étape du même jour quand elle est unique.</li>
 <li>Vos photos ne sont pas envoyées ni enregistrées : seule leur date est lue. Sur certains téléphones, la position GPS n’est pas transmise, la date du fichier sert alors de repère.</li></ul></details>
+<details><summary>🧾 Annuaire des activités</summary><ul>
+<li>Dans <b>🏝️ Activités en NC</b>, l’annuaire regroupe des prestataires par catégorie (plongée, puis d’autres au fil du temps). Chaque fiche indique les prestations, les tarifs, les horaires et les contacts : <b>📞 Appeler</b>, <b>💬 WhatsApp</b>, <b>✉️ E-mail</b>, site et réseaux sociaux.</li>
+<li><b>📍 Carte</b> montre le prestataire sur la carte. Les prestataires y apparaissent aussi avec une pastille 🤿 (tuile <b>Activités</b> des filtres), et <b>🧾 Prestations et tarifs</b> dans leur fiche ouvre le détail.</li>
+<li>Les informations sont relevées sur les sites des prestataires, avec la date du relevé : tarifs et horaires sont à confirmer auprès d’eux.</li></ul></details>
 <details><summary>📏 Échelle et noms de rues</summary><ul>
 <li>Une <b>échelle</b> en bas à gauche de la carte indique la distance réelle et s’adapte au zoom.</li>
 <li>Les <b>noms de rues</b> apparaissent en zoomant fortement. Ils demandent du réseau la première fois, puis sont en général conservés pour la suite.</li></ul></details>
@@ -462,6 +471,9 @@ const HELP_FAM=`<details open><summary>🔑 Accès</summary><ul>
 <details><summary>🧭 Voyage NC Louis</summary><ul>
 <li>Dans <b>📋 Liste</b>, l’onglet <b>🧭 Étapes du voyage</b> montre les étapes du voyage une par une, dans l’ordre chronologique, par jour, avec la date et le nombre de photos.</li>
 <li><b>📍 Voir</b> ouvre l’étape sur la carte, et l’icône d’album ouvre les photos et vidéos.</li></ul></details>
+<details><summary>🧾 Annuaire des activités</summary><ul>
+<li>Dans <b>🏝️ Activités en NC</b>, l’annuaire regroupe des prestataires (plongée pour l’instant) avec leurs prestations, tarifs, horaires et contacts : appeler, WhatsApp, e-mail, site, réseaux sociaux.</li>
+<li><b>📍 Carte</b> les situe sur la carte, où ils ont une pastille 🤿. Tarifs et horaires sont à confirmer auprès du prestataire.</li></ul></details>
 <details><summary>📏 Échelle et noms de rues</summary><ul>
 <li>Une <b>échelle</b> en bas à gauche de la carte indique la distance réelle.</li>
 <li>Les <b>noms de rues</b> apparaissent en zoomant fortement, avec une connexion.</li></ul></details>
@@ -610,10 +622,29 @@ function openHome(){$('chap').style.display='none';$('pc').style.display='none';
 function setMode(m){MODE=m;document.body.classList.toggle('carte',m==='carte');$('home').style.display='none';$('chap').style.display='none';$('pc').style.display='none';render();setView('map');if(m==='carte'&&map)map.jumpTo({center:[165.6,-21.3],zoom:6})}
 async function chapOpen(k){CH=k;$('home').style.display='none';$('chap').style.display='block';$('chap').scrollTop=0;$('chap_t').textContent=CHAPT[k][0]+' '+CHAPT[k][1];$('chap_b').innerHTML='<div class="meta">Chargement…</div>';
 if(!INF){try{const r=await fetch('infos.json');if(!r.ok)throw 0;INF=await r.json()}catch(e){$('chap_b').innerHTML='<div class="meta">Contenu indisponible pour le moment (connexion nécessaire la première fois).</div>';return}}
+if(CH==='activites'&&!ACT){try{const ra=await fetch('activites.json');if(ra.ok)ACT=await ra.json()}catch(e){}}
 chapRender('')}
+let PEND=null,ACT=null,ACTF={};
+const provLinks=p=>[p.web,p.facebook,p.instagram].filter(Boolean).join('\n');
+function provHTML(p){const tel=(p.phone||'').replace(/[^\d+]/g,'');
+const btn=(tel?'<a class="btn" href="tel:'+esc(tel)+'">📞 Appeler</a>':'')+(p.whatsapp?'<a class="btn alt" href="'+esc(p.whatsapp)+'" target="_blank" rel="noopener">💬 WhatsApp</a>':'')+(p.email?'<a class="btn alt" href="mailto:'+esc(p.email)+'">✉️ E-mail</a>':'')+(p.lat!=null?'<button class="alt" data-pv="'+esc(p.id)+'">📍 Carte</button>':'');
+const offers=(p.offers||[]).map(g=>'<div style="font-weight:700;margin-top:8px">'+esc(g.g)+'</div>'+g.items.map(i=>'<div class="of"><span>'+esc(i.n)+(i.d?'<small class="meta"> · '+esc(i.d)+'</small>':'')+'</span><b>'+esc(i.p||'')+'</b></div>').join('')).join('');
+const notes=(p.notes||[]).length?'<ul style="padding-left:18px;margin:6px 0">'+p.notes.map(n=>'<li>'+esc(n)+'</li>').join('')+'</ul>':'';
+return'<div class="card" id="prov_'+esc(p.id)+'" style="margin:8px 0"><b>'+esc(p.name)+'</b><div class="meta">📍 '+esc(p.place||'')+'</div><div style="margin:6px 0">'+esc(p.summary||'')+'</div>'+(p.hours?'<div class="meta">🕒 '+esc(p.hours)+'</div>':'')+
+'<div class="row">'+btn+'</div><div class="row">'+linksL(provLinks(p))+'</div>'+(offers?'<details><summary class="meta" style="margin-top:6px">Prestations et tarifs</summary>'+offers+notes+'</details>':'')+
+'<div class="meta" style="margin-top:6px">Relevé le '+esc(frD(p.checked,{day:'numeric',month:'long',year:'numeric'}))+' sur '+(p.source?'<a href="'+esc(p.source)+'" target="_blank" rel="noopener">le site du prestataire</a>':'le site du prestataire')+'. Tarifs et horaires à confirmer auprès du prestataire.</div></div>'}
+function annuaireHTML(Q){if(!ACT)return'';let h='';ACT.categories.forEach(c=>{const L=c.providers.filter(p=>!Q||JSON.stringify(p).toLowerCase().includes(Q));if(!L.length)return;
+h+='<details'+((Q||(PEND&&L.some(p=>p.id===PEND)))?' open':'')+'><summary>'+c.emoji+' '+esc(c.title)+' · '+L.length+'</summary>'+L.map(provHTML).join('')+'</details>'});
+return h?'<div style="font-weight:700;margin:8px 0 2px">🧾 Annuaire des prestataires</div><div class="meta" style="margin-bottom:6px">Informations relevées sur les sites des prestataires. Tarifs et horaires à confirmer auprès d’eux.</div>'+h+'<div style="font-weight:700;margin:16px 0 2px">💡 Idées et conseils</div>':''}
 function chapRender(q){const Q=(q||'').toLowerCase().trim(),S=INF.sections.filter(s=>s.chapter===CH&&(!Q||(s.title+' '+s.html.replace(/<[^>]+>/g,' ')).toLowerCase().includes(Q)));
-$('chap_b').innerHTML='<input id="chap_q" placeholder="Rechercher dans ce chapitre…" value="'+esc(Q)+'" style="margin:0 0 10px">'+(S.map(s=>'<details'+(Q&&S.length<3?' open':'')+'><summary>'+s.emoji+' '+esc(s.title)+'</summary><div class="inf-b">'+s.html+'</div></details>').join('')||'<div class="meta">Aucun résultat.</div>')+'<div class="meta" style="margin-top:14px">Synthèses rédigées pour ce carnet ('+esc(INF.updated)+'). Vérifiez les informations pratiques auprès des sites officiels.</div>';
-const i=$('chap_q');i.oninput=()=>{const p=i.selectionStart;chapRender(i.value);const n=$('chap_q');n.focus();try{n.setSelectionRange(p,p)}catch(x){}}}
+const ann=CH==='activites'?annuaireHTML(Q):'';
+$('chap_b').innerHTML='<input id="chap_q" placeholder="Rechercher dans ce chapitre…" value="'+esc(Q)+'" style="margin:0 0 10px">'+ann+(S.map(s=>'<details'+(Q&&S.length<3?' open':'')+'><summary>'+s.emoji+' '+esc(s.title)+'</summary><div class="inf-b">'+s.html+'</div></details>').join('')||(ann?'':'<div class="meta">Aucun résultat.</div>'))+'<div class="meta" style="margin-top:14px">Synthèses rédigées pour ce carnet ('+esc(INF.updated)+'). Vérifiez les informations pratiques auprès des sites officiels.</div>';
+const i=$('chap_q');i.oninput=()=>{const p=i.selectionStart;chapRender(i.value);const n=$('chap_q');n.focus();try{n.setSelectionRange(p,p)}catch(x){}};
+if(PEND){const el=$('prov_'+PEND);PEND=null;if(el&&el.scrollIntoView)el.scrollIntoView({block:'start'})}}
+function openProvider(pid){PEND=pid;chapOpen('activites')}
+function showProviderOnMap(pid){let lat,lng;const f=ACTF[pid];if(f){lng=f.geometry.coordinates[0];lat=f.geometry.coordinates[1]}else if(ACT)ACT.categories.forEach(c=>c.providers.forEach(p=>{if(p.id===pid){lat=p.lat;lng=p.lng}}));
+if(lat==null)return;setMode(MODE);if(map){map.jumpTo({center:[lng,lat],zoom:14});if(f)showKnown(f)}}
+$('chap_b').onclick=e=>{const b=e.target.closest('button[data-pv]');if(b)showProviderOnMap(b.dataset.pv)};
 $('home').onclick=e=>{const b=e.target.closest('[data-go]');if(!b)return;const g=b.dataset.go;
 if(g==='voyage'||g==='carte')setMode(g);else if(CHAPT[g])chapOpen(g);else if(g==='monnaie')fxOpen();else if(g==='aide')$('zh').onclick()};
 $('chap_h').onclick=openHome;$('hm').onclick=openHome;$('tH').onclick=openHome;
