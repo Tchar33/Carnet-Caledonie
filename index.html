@@ -71,6 +71,7 @@ label{display:block;font-size:13px;color:var(--mut);margin:8px 0 3px}
 dialog{max-height:88dvh;overflow:auto}
 .pin .cam{position:absolute;right:-10px;top:-12px;font-size:12px;width:19px;height:19px;line-height:19px;text-align:center;background:#fff;border-radius:50%;box-shadow:0 1px 3px #0006}
 #hbody details{border-bottom:1px solid var(--bd);padding:8px 0}#hbody summary{font-weight:700;cursor:pointer;font-size:16px}#hbody ul{padding-left:20px;margin:6px 0}#hbody li{font-size:15px;margin:6px 0}
+.ctl{grid-template-columns:42px 42px}#nb{right:112px}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" crossorigin="anonymous"></script>
@@ -85,6 +86,7 @@ dialog{max-height:88dvh;overflow:auto}
 <input id="q" placeholder="Rechercher un lieu, une note…" style="flex:1 1 100%">
 <button id="loc">📍 Ma position</button>
 <button class="alt" id="hl">❓ Aide</button>
+<button class="alt" id="fl">💱 Monnaie</button>
 <button class="alt" id="imp">Importer KML</button>
 <button class="alt" id="exp">Exporter KML</button>
 <button class="alt" id="expf">Publier pour la famille</button>
@@ -97,7 +99,7 @@ dialog{max-height:88dvh;overflow:auto}
 <button id="tb" class="mlist">📋 Liste</button>
 <div id="gps">GPS…</div>
 <div id="nb" class="card" style="display:none"></div>
-<div class="ctl"><button id="zi">+</button><button id="zo">−</button><button id="zl">📍</button><button id="zf">⤢</button><button id="zc">🏷️</button><button id="zk">👁️</button><button id="zh">❓</button></div>
+<div class="ctl"><button id="zi">+</button><button id="zo">−</button><button id="zl">📍</button><button id="zf">⤢</button><button id="zc">🏷️</button><button id="zk">👁️</button><button id="zh">❓</button><button id="zm">💱</button></div>
 <div id="pc" class="card"></div><div class="att">© OpenStreetMap contributors · Protomaps</div></div>
 <button class="fab" id="add">＋ Ajouter</button>
 
@@ -123,6 +125,14 @@ dialog{max-height:88dvh;overflow:auto}
 <dialog id="kdlg"><div style="font-weight:700;font-size:18px">Accès famille</div><div class="meta">Entrez le code d’accès que vous avez reçu.</div>
 <input id="kin" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Code d’accès" style="margin-top:8px"><div class="meta" id="kerr" style="margin:6px 0"></div>
 <div class="row"><button id="kok">Valider</button></div></dialog>
+<dialog id="fdlg"><div style="font-weight:700;font-size:18px;margin-bottom:6px">💱 Convertisseur de monnaie</div>
+<label>Montant</label><input id="fx_amt" inputmode="decimal" autocomplete="off">
+<div class="two" style="margin-top:6px"><div><label>De</label><select id="fx_from"></select></div><div><label>Vers</label><select id="fx_to"></select></div></div>
+<div class="row"><button class="alt" id="fx_swap">⇅ Inverser</button></div>
+<div class="row" id="fx_quick"></div>
+<div id="fx_res" style="font-size:26px;font-weight:700;margin:12px 0 4px;word-break:break-word"></div>
+<div class="meta" id="fx_info"></div>
+<div class="row"><button class="alt" id="fx_upd">Mettre à jour les taux</button><button id="fx_x">Fermer</button></div></dialog>
 <dialog id="hdlg"><div style="font-weight:700;font-size:18px;margin-bottom:6px">❓ Aide</div><div id="hbody"></div><div class="row"><button id="hx">Fermer</button></div></dialog>
 <dialog id="cdlg"><div style="font-weight:700;font-size:18px;margin-bottom:6px">Afficher sur la carte</div>
 <div class="meta">Mes lieux</div><div id="cc"></div>
@@ -352,6 +362,11 @@ const HELP_OWNER=`<details open><summary>🗺️ Découvrir la carte</summary><u
 <details><summary>💾 Sauvegarde</summary><ul>
 <li>Vos lieux sont enregistrés dans le téléphone. Dans la liste, <b>Exporter KML</b> en fait une copie de sécurité, <b>Importer KML</b> la restaure.</li>
 <li>Effacer les données du navigateur supprime vos lieux : exportez avant.</li></ul></details>
+<details><summary>💱 Convertisseur de monnaie</summary><ul>
+<li>Touchez <b>💱</b> : par défaut, Franc Pacifique (F CFP) vers Euro. Ce taux est fixe (1 € = 119,33 F CFP) et fonctionne <b>sans connexion</b>.</li>
+<li>Changez les devises avec les deux listes, <b>⇅ Inverser</b> échange les deux, et les boutons de montants rapides évitent de taper.</li>
+<li>Les autres devises (dollar, dollar australien, dollar néo-zélandais, yen…) utilisent les taux de la Banque centrale européenne. Ils se mettent à jour en ligne (au plus une fois par jour), sont mémorisés pour la suite, et leur date est indiquée.</li>
+<li>Certaines devises du Pacifique, comme le vatu ou le dollar fidjien, ne sont pas fournies par la BCE : elles ne sont donc pas disponibles.</li></ul></details>
 <details><summary>🛠️ Un souci ?</summary><ul>
 <li>Une nouveauté n’apparaît pas : fermez complètement l’appli et rouvrez-la, ou supprimez et recréez le raccourci.</li>
 <li>Position imprécise : autorisez la localisation <b>précise</b> dans les réglages du navigateur et sortez en extérieur.</li>
@@ -377,6 +392,11 @@ const HELP_FAM=`<details open><summary>🔑 Accès</summary><ul>
 <li><b>↗️ Itinéraire</b> ouvre Google Maps pour s’y rendre.</li></ul></details>
 <details><summary>🔒 Vie privée</summary><ul>
 <li>L’application ne demande pas votre position et ne modifie rien : elle sert seulement à consulter.</li></ul></details>
+<details><summary>💱 Convertisseur de monnaie</summary><ul>
+<li>Touchez <b>💱</b> : par défaut, Franc Pacifique (F CFP) vers Euro. Ce taux est fixe (1 € = 119,33 F CFP) et fonctionne <b>sans connexion</b>.</li>
+<li>Changez les devises avec les deux listes, <b>⇅ Inverser</b> échange les deux, et les boutons de montants rapides évitent de taper.</li>
+<li>Les autres devises (dollar, dollar australien, dollar néo-zélandais, yen…) utilisent les taux de la Banque centrale européenne. Ils se mettent à jour en ligne (au plus une fois par jour), sont mémorisés pour la suite, et leur date est indiquée.</li>
+<li>Certaines devises du Pacifique, comme le vatu ou le dollar fidjien, ne sont pas fournies par la BCE : elles ne sont donc pas disponibles.</li></ul></details>
 <details><summary>🛠️ Un souci ?</summary><ul>
 <li>Rien ne s’affiche : vérifiez la connexion, puis fermez complètement l’appli et rouvrez-la.</li>
 <li>« Code incorrect » : vérifiez les majuscules et les accents, ou redemandez le code.</li></ul></details>`;
@@ -384,6 +404,39 @@ $('zh').onclick=$('hl').onclick=()=>{$('hbody').innerHTML=FAMILY?HELP_FAM:HELP_O
 function linksL(t){return String(t||'').split(/\n+/).map(s=>s.trim()).filter(Boolean).map(u=>{u=/^https?:\/\//.test(u)?u:'https://'+u;let h=u;try{h=new URL(u).hostname.replace('www.','')}catch(e){}
 const lab=/facebook|fb\.com|fb\.me/.test(h)?'Facebook':/instagram/.test(h)?'Instagram':/youtube|youtu\.be/.test(h)?'YouTube':/tiktok/.test(h)?'TikTok':/wa\.me|whatsapp/.test(h)?'WhatsApp':h;
 return '<a class="btn alt" style="display:inline-flex;align-items:center;gap:6px;padding:6px 10px" href="'+esc(u)+'" target="_blank" rel="noopener">'+icoFor(h)+'<span>'+esc(lab)+'</span></a>'}).join('')}
+/* ===== CONVERTISSEUR DE MONNAIE ===== */
+const XPF_PER_EUR=119.33174;
+let FX={rates:null,date:'',t:0};try{Object.assign(FX,JSON.parse(localStorage.getItem('carnet-nc-rates')||'{}'))}catch(e){}
+let FXS={from:'XPF',to:'EUR',amt:'1000'};try{Object.assign(FXS,JSON.parse(localStorage.getItem('carnet-nc-fx')||'{}'))}catch(e){}
+const FXTOP=['XPF','EUR','USD','AUD','NZD','JPY','GBP','CHF','CAD','CNY'];
+const fxAll=()=>{const r=Object.assign({},FX.rates||{});r.EUR=1;r.XPF=XPF_PER_EUR;return r};
+function fxName(c){try{return new Intl.DisplayNames(['fr'],{type:'currency'}).of(c)}catch(e){return c}}
+function fxFmt(v,c){const d=['XPF','JPY','KRW','IDR','HUF','ISK'].includes(c)?0:2;try{return new Intl.NumberFormat('fr-FR',{style:'currency',currency:c,minimumFractionDigits:d,maximumFractionDigits:d}).format(v)}catch(e){return v.toFixed(d)+' '+c}}
+function fxFill(){const codes=Object.keys(fxAll()),top=FXTOP.filter(c=>codes.includes(c)),rest=codes.filter(c=>!top.includes(c)).sort(),opts=top.concat(rest).map(c=>'<option value="'+c+'">'+c+' — '+fxName(c)+'</option>').join('');
+['fx_from','fx_to'].forEach(id=>{$(id).innerHTML=opts});$('fx_from').value=codes.includes(FXS.from)?FXS.from:'XPF';$('fx_to').value=codes.includes(FXS.to)?FXS.to:'EUR'}
+function fxQuick(){const f=$('fx_from').value,big=['XPF','JPY','KRW','IDR','HUF','ISK'].includes(f),L=big?[500,1000,5000,10000,50000]:[1,5,10,50,100];
+$('fx_quick').innerHTML=L.map(v=>'<button class="alt" data-v="'+v+'">'+v.toLocaleString('fr-FR')+'</button>').join('')}
+function fxCalc(){const r=fxAll(),f=$('fx_from').value,t=$('fx_to').value;let a=parseFloat(String($('fx_amt').value||'0').replace(/\s/g,'').replace(',','.'));if(isNaN(a))a=0;
+FXS={from:f,to:t,amt:$('fx_amt').value};try{localStorage.setItem('carnet-nc-fx',JSON.stringify(FXS))}catch(e){}
+if(!r[f]||!r[t]){$('fx_res').textContent='—';return}
+const rate=r[t]/r[f];$('fx_res').textContent=fxFmt(a*rate,t);
+const fixed=(f==='EUR'||f==='XPF')&&(t==='EUR'||t==='XPF');
+let info='1 '+f+' = '+rate.toLocaleString('fr-FR',{maximumSignificantDigits:6})+' '+t+'. ';
+if(fixed)info+='Taux fixe officiel (1 € = 119,332 F CFP), valable hors connexion.';
+else if(FX.rates)info+='Taux de la Banque centrale européenne du '+FX.date+(navigator.onLine===false?' (hors connexion)':'')+'.';
+else info+='Connectez-vous une fois pour charger les autres devises.';
+$('fx_info').textContent=info}
+async function fxFetch(){const b=$('fx_upd');b.disabled=true;b.textContent='Mise à jour…';
+try{const r=await fetch('https://api.frankfurter.dev/v1/latest');if(!r.ok)throw 0;const j=await r.json();if(!j.rates)throw 0;
+FX={rates:j.rates,date:j.date,t:Date.now()};try{localStorage.setItem('carnet-nc-rates',JSON.stringify(FX))}catch(e){}
+const f=$('fx_from').value,t=$('fx_to').value;FXS.from=f;FXS.to=t;fxFill();fxCalc();b.textContent='Taux à jour ✓'}
+catch(e){b.textContent='Échec : réessayez avec du réseau';fxCalc()}
+setTimeout(()=>{b.disabled=false;b.textContent='Mettre à jour les taux'},2500)}
+function fxOpen(){$('fx_amt').value=FXS.amt||'1000';fxFill();fxQuick();fxCalc();$('fdlg').showModal();if(!FX.rates||Date.now()-FX.t>12*3600e3)fxFetch()}
+$('zm').onclick=$('fl').onclick=fxOpen;$('fx_x').onclick=()=>$('fdlg').close();
+$('fx_amt').oninput=fxCalc;$('fx_from').onchange=()=>{fxQuick();fxCalc()};$('fx_to').onchange=fxCalc;
+$('fx_swap').onclick=()=>{const a=$('fx_from').value;$('fx_from').value=$('fx_to').value;$('fx_to').value=a;fxQuick();fxCalc()};
+$('fx_quick').onclick=e=>{const v=e.target.dataset.v;if(v){$('fx_amt').value=v;fxCalc()}};$('fx_upd').onclick=fxFetch;
 let KNOWN=null;
 function addPoiLayers(){try{if(!map||map.getLayer('poi')||!map.getSource('p'))return;const before=map.getLayer('pl')?'pl':undefined;
 map.addLayer({id:'poi',type:'circle',source:'p','source-layer':'pois',minzoom:11,paint:{'circle-radius':['interpolate',['linear'],['zoom'],11,2.5,16,6],'circle-color':POI_COLOR,'circle-stroke-color':'#ffffff','circle-stroke-width':1}},before);
