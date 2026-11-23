@@ -73,6 +73,7 @@ dialog{max-height:88dvh;overflow:auto}
 .pin .cam{position:absolute;right:-10px;top:-12px;font-size:12px;width:19px;height:19px;line-height:19px;text-align:center;background:#fff;border-radius:50%;box-shadow:0 1px 3px #0006}
 #hbody details{border-bottom:1px solid var(--bd);padding:8px 0}#hbody summary{font-weight:700;cursor:pointer;font-size:16px}#hbody ul{padding-left:20px;margin:6px 0}#hbody li{font-size:15px;margin:6px 0}
 .ctl{grid-template-columns:42px 42px}#nb{right:112px}
+.maplibregl-ctrl-bottom-left{bottom:calc(72px + env(safe-area-inset-bottom,0px))}#nb{max-height:46vh;overflow:auto}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" crossorigin="anonymous"></script>
@@ -88,6 +89,8 @@ dialog{max-height:88dvh;overflow:auto}
 <button id="loc">📍 Ma position</button>
 <button class="alt" id="hl">❓ Aide</button>
 <button class="alt" id="fl">💱 Monnaie</button>
+<button class="alt" id="rl">🛣️ Itinéraire</button>
+<button class="alt" id="jl">📅 Journal</button>
 <button class="alt" id="imp">Importer KML</button>
 <button class="alt" id="exp">Exporter KML</button>
 <button class="alt" id="expf">Publier pour la famille</button>
@@ -100,7 +103,7 @@ dialog{max-height:88dvh;overflow:auto}
 <button id="tb" class="mlist">📋 Liste</button>
 <div id="gps">GPS…</div>
 <div id="nb" class="card" style="display:none"></div>
-<div class="ctl"><button id="zi">+</button><button id="zo">−</button><button id="zl">📍</button><button id="zf">⤢</button><button id="zc">🏷️</button><button id="zk">👁️</button><button id="zh">❓</button><button id="zm">💱</button></div>
+<div class="ctl"><button id="zi">+</button><button id="zo">−</button><button id="zl">📍</button><button id="zf">⤢</button><button id="zc">🏷️</button><button id="zk">👁️</button><button id="zh">❓</button><button id="zm">💱</button><button id="zr">🛣️</button><button id="zj">📅</button></div>
 <div id="pc" class="card"></div><div class="att">© OpenStreetMap contributors · Protomaps</div></div>
 <button class="fab" id="add">＋ Ajouter</button>
 
@@ -112,6 +115,7 @@ dialog{max-height:88dvh;overflow:auto}
 <label>Notes et conseils</label><textarea id="f_note" rows="3"></textarea>
 <label>Liens (un par ligne : site, Facebook, Instagram…)</label><textarea id="f_links" rows="3"></textarea>
 <div class="two"><div><label>Wi-Fi (nom)</label><input id="f_ssid"></div><div><label>Wi-Fi (mot de passe)</label><input id="f_pwd"></div></div>
+<label>Date de visite</label><input id="f_date" type="date">
 <label style="display:flex;gap:8px;align-items:center;color:var(--tx);font-size:15px"><input type="checkbox" id="f_share" style="width:auto"> Partager ce lieu avec la famille</label>
 <div class="row"><button id="f_ok">Enregistrer</button><button class="alt" id="f_x">Annuler</button><button class="alt" id="f_del" style="margin-left:auto">Supprimer</button></div>
 </dialog>
@@ -126,6 +130,14 @@ dialog{max-height:88dvh;overflow:auto}
 <dialog id="kdlg"><div style="font-weight:700;font-size:18px">Accès famille</div><div class="meta">Entrez le code d’accès que vous avez reçu.</div>
 <input id="kin" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Code d’accès" style="margin-top:8px"><div class="meta" id="kerr" style="margin:6px 0"></div>
 <div class="row"><button id="kok">Valider</button></div></dialog>
+<dialog id="rdlg"><div style="font-weight:700;font-size:18px;margin-bottom:6px">🛣️ Itinéraire entre deux lieux</div>
+<label>Départ</label><select id="rt_from"></select><label>Arrivée</label><select id="rt_to"></select>
+<label>Mode</label><select id="rt_mode"><option value="car">🚗 Voiture</option><option value="bike">🚲 Vélo</option><option value="foot">🚶 À pied</option></select>
+<div class="meta" id="rt_st" style="margin:8px 0"></div>
+<div class="row"><button id="rt_go">Calculer</button><button class="alt" id="rt_swap">⇅ Inverser</button><button class="alt" id="rt_x">Fermer</button></div></dialog>
+<dialog id="jdlg"><div style="font-weight:700;font-size:18px;margin-bottom:6px">📅 Journal des visites</div>
+<div class="row" style="margin-bottom:6px"><button class="alt" id="j_ord">↓ Plus récents d’abord</button><button class="alt" id="j_alb">📷 Avec album</button></div>
+<div id="jbody"></div><div class="row"><button id="j_x">Fermer</button></div></dialog>
 <dialog id="fdlg"><div style="font-weight:700;font-size:18px;margin-bottom:6px">💱 Convertisseur de monnaie</div>
 <label>Montant</label><input id="fx_amt" inputmode="decimal" autocomplete="off">
 <div class="two" style="margin-top:6px"><div><label>De</label><select id="fx_from"></select></div><div><label>Vers</label><select id="fx_to"></select></div></div>
@@ -204,13 +216,13 @@ if(t.dataset.pw){const p=P.find(x=>x.id==t.dataset.pw);navigator.clipboard&&navi
 function locate(cb){if(!navigator.geolocation)return alert('Géolocalisation indisponible');navigator.geolocation.getCurrentPosition(pos=>{me={lat:pos.coords.latitude,lng:pos.coords.longitude};cb&&cb();render()},()=>alert('Position refusée ou indisponible'),{enableHighAccuracy:true,timeout:15000})}
 $('loc').onclick=()=>locate();
 function openForm(id){editId=id;const p=P.find(x=>x.id===id)||{name:'',cat:'',lat:'',lng:'',note:'',links:'',ssid:'',pwd:''};
-for(const k of ['name','cat','lat','lng','note','links','ssid','pwd'])$('f_'+k).value=p[k];$('f_share').checked=!!p.share;
+for(const k of ['name','cat','lat','lng','note','links','ssid','pwd'])$('f_'+k).value=p[k];$('f_share').checked=!!p.share;{const n=new Date(),t=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');$('f_date').value=p.date||(id?'':t)}
 $('f_del').style.display=id?'':'none';$('dlg').showModal()}
 $('add').onclick=()=>openForm(null);
 $('f_x').onclick=()=>$('dlg').close();
 $('f_here').onclick=()=>locate(()=>{$('f_lat').value=me.lat.toFixed(6);$('f_lng').value=me.lng.toFixed(6)});
 $('f_ok').onclick=()=>{const o={};for(const k of ['name','cat','lat','lng','note','links','ssid','pwd'])o[k]=$('f_'+k).value.trim();
-o.lat=parseFloat(o.lat.replace(',','.'));o.lng=parseFloat(o.lng.replace(',','.'));o.share=$('f_share').checked;
+o.lat=parseFloat(o.lat.replace(',','.'));o.lng=parseFloat(o.lng.replace(',','.'));o.share=$('f_share').checked;o.date=$('f_date').value;
 if(!o.name||isNaN(o.lat)||isNaN(o.lng))return alert('Nom, latitude et longitude sont requis');
 if(editId){Object.assign(P.find(x=>x.id===editId),o)}else P.push({id:Date.now(),...o});
 save();$('dlg').close();render()};
@@ -231,7 +243,7 @@ function pubGet(){let o={};try{o=JSON.parse(localStorage.getItem(PUBKEY)||'{}')}
 if(!o.owner&&location.hostname.endsWith('.github.io'))o.owner=location.hostname.split('.')[0];
 if(!o.repo&&location.hostname.endsWith('.github.io'))o.repo=location.pathname.split('/')[1]||'';return o}
 function pubForm(){const o={code:$('p_code').value.trim(),owner:$('p_owner').value.trim(),repo:$('p_repo').value.trim(),token:$('p_token').value.trim()};try{localStorage.setItem(PUBKEY,JSON.stringify(o))}catch(e){}return o}
-const sharedList=()=>P.filter(p=>p.share).map(p=>({name:p.name,cat:p.cat,lat:p.lat,lng:p.lng,note:p.note,links:p.links}));
+const sharedList=()=>P.filter(p=>p.share).map(p=>({name:p.name,cat:p.cat,lat:p.lat,lng:p.lng,note:p.note,links:p.links,date:p.date||''}));
 async function ghPut(o,path,text){const url='https://api.github.com/repos/'+o.owner+'/'+o.repo+'/contents/'+path,h={Authorization:'Bearer '+o.token,Accept:'application/vnd.github+json'};let sha;
 try{const r=await fetch(url,{headers:h,cache:'no-store'});if(r.ok)sha=(await r.json()).sha}catch(e){}
 const r=await fetch(url,{method:'PUT',headers:h,body:JSON.stringify({message:'Mise à jour des lieux partagés',content:b64(new TextEncoder().encode(text)),sha})});
@@ -254,9 +266,9 @@ const g=t=>{const el=m.querySelector(t);return el?el.textContent.trim():''};
 const d=g('description').replace(/<[^>]+>/g,' ').trim(),u=(d.match(/https?:\/\/\S+/g)||[]).join('\n');
 const ed=k=>{for(const el of m.querySelectorAll('Data')){if(el.getAttribute('name')===k){const v=el.querySelector('value');return v?v.textContent:''}}return null};
 const nm=g('name')||'Sans nom';if(P.some(p=>p.name===nm&&Math.abs(p.lat-lat)<1e-5&&Math.abs(p.lng-lng)<1e-5)){dup++;return}
-P.push({id:Date.now()+n,name:nm,cat:ed('cat')||'Importé',lat,lng,note:ed('note')!==null?ed('note'):d,links:ed('links')!==null?ed('links'):u,ssid:ed('ssid')||'',pwd:ed('pwd')||'',share:ed('share')==='true'});n++});
+P.push({id:Date.now()+n,name:nm,cat:ed('cat')||'Importé',lat,lng,note:ed('note')!==null?ed('note'):d,links:ed('links')!==null?ed('links'):u,ssid:ed('ssid')||'',pwd:ed('pwd')||'',share:ed('share')==='true',date:ed('date')||''});n++});
 save();render();alert(n+' lieu(x) importé(s)'+(dup?', '+dup+' doublon(s) ignoré(s)':''));e.target.value=''};
-$('exp').onclick=()=>{const k='<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2"><Document>'+P.map(p=>`<Placemark><name>${esc(p.name)}</name><description>${esc((p.note||'')+'\n'+(p.links||''))}</description><ExtendedData>${['cat','note','links','ssid','pwd','share'].map(k=>`<Data name="${k}"><value>${esc(p[k])}</value></Data>`).join('')}</ExtendedData><Point><coordinates>${p.lng},${p.lat},0</coordinates></Point></Placemark>`).join('')+'</Document></kml>';
+$('exp').onclick=()=>{const k='<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2"><Document>'+P.map(p=>`<Placemark><name>${esc(p.name)}</name><description>${esc((p.note||'')+'\n'+(p.links||''))}</description><ExtendedData>${['cat','note','links','ssid','pwd','share','date'].map(k=>`<Data name="${k}"><value>${esc(p[k])}</value></Data>`).join('')}</ExtendedData><Point><coordinates>${p.lng},${p.lat},0</coordinates></Point></Placemark>`).join('')+'</Document></kml>';
 const a=document.createElement('a');a.href='data:application/vnd.google-earth.kml+xml;charset=utf-8,'+encodeURIComponent(k);a.download='carnet-caledonie.kml';document.body.appendChild(a);a.click();a.remove()};
 /* ===== CARTE (MapLibre + fichier hors ligne nc.pmtiles) ===== */
 let shown=[],view='list',sel=null,map=null,initing=false,marks=[],meMark=null;
@@ -363,6 +375,16 @@ const HELP_OWNER=`<details open><summary>🗺️ Découvrir la carte</summary><u
 <details><summary>💾 Sauvegarde</summary><ul>
 <li>Vos lieux sont enregistrés dans le téléphone. Dans la liste, <b>Exporter KML</b> en fait une copie de sécurité, <b>Importer KML</b> la restaure.</li>
 <li>Effacer les données du navigateur supprime vos lieux : exportez avant.</li></ul></details>
+<details><summary>📏 Échelle et noms de rues</summary><ul>
+<li>Une <b>échelle</b> en bas à gauche de la carte indique la distance réelle et s’adapte au zoom.</li>
+<li>Les <b>noms de rues</b> apparaissent en zoomant fortement. Ils demandent du réseau la première fois, puis sont en général conservés pour la suite.</li></ul></details>
+<details><summary>🛣️ Itinéraire entre deux lieux</summary><ul>
+<li>Touchez <b>🛣️</b> (ou ce bouton dans la fiche d’un lieu), choisissez le départ, l’arrivée et le mode (voiture, vélo, à pied), puis <b>Calculer</b>.</li>
+<li>Le trajet se trace sur la carte, avec la distance, la durée et les étapes. Une connexion est nécessaire. <b>✕</b> efface le tracé.</li></ul></details>
+<details><summary>📅 Journal des visites</summary><ul>
+<li>Dans la fiche d’un lieu, renseignez la <b>date de visite</b> (elle est remplie avec le jour même pour un nouveau lieu).</li>
+<li><b>📅 Journal</b> affiche vos lieux dans l’ordre chronologique, par mois, avec les icônes d’albums pour vérifier vos photos et vidéos. Le bouton du haut inverse l’ordre, <b>📷 Avec album</b> ne garde que les lieux avec album, et <b>📍 Voir</b> ouvre le lieu sur la carte.</li>
+<li>Les dates des lieux partagés sont publiées avec les autres informations.</li></ul></details>
 <details><summary>💱 Convertisseur de monnaie</summary><ul>
 <li>Touchez <b>💱</b> : par défaut, Franc Pacifique (F CFP) vers Euro. Ce taux est fixe (1 € = 119,33 F CFP) et fonctionne <b>sans connexion</b>.</li>
 <li>Changez les devises avec les deux listes, <b>⇅ Inverser</b> échange les deux, et les boutons de montants rapides évitent de taper.</li>
@@ -393,6 +415,15 @@ const HELP_FAM=`<details open><summary>🔑 Accès</summary><ul>
 <li><b>↗️ Itinéraire</b> ouvre Google Maps pour s’y rendre.</li></ul></details>
 <details><summary>🔒 Vie privée</summary><ul>
 <li>L’application ne demande pas votre position et ne modifie rien : elle sert seulement à consulter.</li></ul></details>
+<details><summary>📏 Échelle et noms de rues</summary><ul>
+<li>Une <b>échelle</b> en bas à gauche de la carte indique la distance réelle.</li>
+<li>Les <b>noms de rues</b> apparaissent en zoomant fortement, avec une connexion.</li></ul></details>
+<details><summary>🛣️ Itinéraire entre deux lieux</summary><ul>
+<li>Touchez <b>🛣️</b> (ou ce bouton dans la fiche d’un lieu), choisissez le départ, l’arrivée et le mode (voiture, vélo, à pied), puis <b>Calculer</b>. Une connexion est nécessaire.</li>
+<li>Le trajet se trace sur la carte avec la distance, la durée et les étapes. <b>✕</b> efface le tracé.</li></ul></details>
+<details><summary>📅 Journal des visites</summary><ul>
+<li><b>📅 Journal</b> liste les lieux dans l’ordre chronologique, par mois, avec les icônes d’albums pour retrouver les photos et vidéos.</li>
+<li>Le bouton du haut inverse l’ordre, <b>📷 Avec album</b> ne garde que les lieux avec album, et <b>📍 Voir</b> ouvre le lieu sur la carte.</li></ul></details>
 <details><summary>💱 Convertisseur de monnaie</summary><ul>
 <li>Touchez <b>💱</b> : par défaut, Franc Pacifique (F CFP) vers Euro. Ce taux est fixe (1 € = 119,33 F CFP) et fonctionne <b>sans connexion</b>.</li>
 <li>Changez les devises avec les deux listes, <b>⇅ Inverser</b> échange les deux, et les boutons de montants rapides évitent de taper.</li>
@@ -438,6 +469,37 @@ $('zm').onclick=$('fl').onclick=fxOpen;$('fx_x').onclick=()=>$('fdlg').close();
 $('fx_amt').oninput=fxCalc;$('fx_from').onchange=()=>{fxQuick();fxCalc()};$('fx_to').onchange=fxCalc;
 $('fx_swap').onclick=()=>{const a=$('fx_from').value;$('fx_from').value=$('fx_to').value;$('fx_to').value=a;fxQuick();fxCalc()};
 $('fx_quick').onclick=e=>{const v=e.target.dataset.v;if(v){$('fx_amt').value=v;fxCalc()}};$('fx_upd').onclick=fxFetch;
+/* ===== ROUTE ENTRE LIEUX, JOURNAL, NOMS DE RUES ===== */
+function addRoadLabels(){try{if(!map||map.getLayer('road-l')||!map.getSource('p'))return;const before=map.getLayer('kp9')?'kp9':(map.getLayer('poi')?'poi':undefined);
+map.addLayer({id:'road-l',type:'symbol',source:'p','source-layer':'roads',minzoom:14,filter:['has','name'],layout:{'symbol-placement':'line','text-field':['get','name'],'text-font':['Noto Sans Regular'],'text-size':['interpolate',['linear'],['zoom'],14,10,18,13],'symbol-spacing':280,'text-max-angle':35},paint:{'text-color':'#444444','text-halo-color':'#ffffff','text-halo-width':1.5}},before)}catch(e){}}
+function openRoute(id){const L=[...P].sort((a,b)=>a.name.localeCompare(b.name,'fr')),o=L.map(p=>'<option value="'+p.id+'">'+esc(p.name)+'</option>').join('');
+$('rt_from').innerHTML=o;$('rt_to').innerHTML=o;if(id)$('rt_from').value=id;const other=L.find(p=>p.id!=$('rt_from').value);if(other)$('rt_to').value=other.id;
+$('rt_st').textContent=L.length<2?'Il faut au moins deux lieux.':'';$('pc').style.display='none';if(!$('rdlg').open)$('rdlg').showModal()}
+async function routeGo(){const a=P.find(p=>p.id==$('rt_from').value),b=P.find(p=>p.id==$('rt_to').value),st=$('rt_st');
+if(!a||!b||a.id===b.id){st.textContent='Choisissez deux lieux différents.';return}
+st.textContent='Calcul en cours…';const mode=$('rt_mode').value,r=await fetchRoute(a,b,mode);
+if(!r){st.textContent='Impossible de calculer l’itinéraire : une connexion est nécessaire.';return}
+$('rdlg').close();showRouteBetween(a,b,r,mode)}
+const fmtkm=m=>m<1000?Math.round(m)+' m':(m/1000).toFixed(1).replace('.',',')+' km';
+function showRouteBetween(a,b,r,mode){setView('map');
+if(map&&ensureLayers()){const co=r.geometry.coordinates;map.getSource('route').setData({type:'Feature',geometry:{type:'LineString',coordinates:co}});
+const bb=new maplibregl.LngLatBounds();co.forEach(c=>bb.extend(c));map.fitBounds(bb,{padding:{top:150,bottom:120,left:40,right:70},maxZoom:15,duration:0})}
+const steps=((r.legs&&r.legs[0]&&r.legs[0].steps)||[]).map(s=>'<li>'+esc(stepText(s))+' <span class="meta">('+fmtm(s.distance)+')</span></li>').join(''),ic={car:'🚗',bike:'🚲',foot:'🚶'}[mode];
+nb('<div style="display:flex;gap:6px;align-items:flex-start"><div style="flex:1;min-width:0"><b>'+ic+' '+esc(a.name)+' → '+esc(b.name)+'</b><div class="meta">'+fmtkm(r.distance)+' · environ '+fmtt(r.duration)+'</div></div><button class="alt" onclick="clearRoute()">✕</button></div><details><summary class="meta">Étapes</summary><ol style="padding-left:20px;margin:6px 0">'+steps+'</ol></details>')}
+function clearRoute(){try{if(map&&map.getSource('route'))map.getSource('route').setData(EMPTY)}catch(e){}$('nb').style.display='none'}
+$('zr').onclick=$('rl').onclick=()=>openRoute(null);$('rt_x').onclick=()=>$('rdlg').close();$('rt_go').onclick=routeGo;
+$('rt_swap').onclick=()=>{const a=$('rt_from').value;$('rt_from').value=$('rt_to').value;$('rt_to').value=a};
+let jDesc=true,jAlb=false;
+function journalHTML(){const L=P.filter(p=>!jAlb||hasAlbum(p)),dated=L.filter(p=>p.date).sort((a,b)=>jDesc?b.date.localeCompare(a.date):a.date.localeCompare(b.date)),und=L.filter(p=>!p.date);
+const mo=d=>new Date(d+'T12:00:00').toLocaleDateString('fr-FR',{month:'long',year:'numeric'}),dd=d=>new Date(d+'T12:00:00').toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+const item=p=>'<div class="card" style="margin:8px 0"><div class="meta">'+(p.date?esc(dd(p.date)):'Sans date')+'</div><b>'+esc(p.name)+(hasAlbum(p)?' 📷':'')+'</b><div class="meta">'+(p.cat?'<span class="dot" style="background:'+catColor(p.cat)+'"></span> '+esc(p.cat):'')+'</div>'+(p.note?'<div class="note" style="max-height:60px;overflow:auto">'+linkify(p.note)+'</div>':'')+'<div class="row">'+links(p.links)+'<button class="alt" data-j="'+p.id+'">📍 Voir</button></div></div>';
+let h='',cur='';dated.forEach(p=>{const m=mo(p.date);if(m!==cur){cur=m;h+='<div style="font-weight:700;margin-top:10px;text-transform:capitalize">'+esc(m)+'</div>'}h+=item(p)});
+if(und.length)h+='<div style="font-weight:700;margin-top:10px">Sans date</div>'+und.map(item).join('');
+return h||'<div class="meta">Aucun lieu à afficher.</div>'}
+function journalOpen(){$('j_ord').textContent=jDesc?'↓ Plus récents d’abord':'↑ Plus anciens d’abord';$('j_alb').className=jAlb?'':'alt';$('jbody').innerHTML=journalHTML();if(!$('jdlg').open)$('jdlg').showModal()}
+$('jl').onclick=$('zj').onclick=journalOpen;$('j_x').onclick=()=>$('jdlg').close();
+$('j_ord').onclick=()=>{jDesc=!jDesc;journalOpen()};$('j_alb').onclick=()=>{jAlb=!jAlb;journalOpen()};
+$('jbody').onclick=e=>{const t=e.target.closest('button');if(!t||!t.dataset.j)return;const p=P.find(x=>x.id==t.dataset.j);if(!p)return;$('jdlg').close();setView('map');if(map)map.jumpTo({center:[p.lng,p.lat],zoom:Math.max(map.getZoom(),13)});showCard(p)};
 let KNOWN=null;
 function addPoiLayers(){try{if(!map||map.getLayer('poi')||!map.getSource('p'))return;const before=map.getLayer('pl')?'pl':undefined;
 map.addLayer({id:'poi',type:'circle',source:'p','source-layer':'pois',minzoom:11,paint:{'circle-radius':['interpolate',['linear'],['zoom'],11,2.5,16,6],'circle-color':POI_COLOR,'circle-stroke-color':'#ffffff','circle-stroke-width':1}},before);
@@ -462,11 +524,13 @@ try{const buf=await getBuf();const src=new pmtiles.PMTiles(new BufSource(buf,'nc
 catch(e){style=rasterStyle();note='Fichier carte hors ligne introuvable : fond en ligne utilisé.'}
 map=new maplibregl.Map({container:'map',style,center:[165.6,-21.3],zoom:6,minZoom:3,maxZoom:18,attributionControl:false,dragRotate:false});
 map.touchZoomRotate.disableRotation();map.on('dragstart',()=>{if(nav)nav.follow=false});
+try{map.addControl(new maplibregl.ScaleControl({maxWidth:110,unit:'metric'}),'bottom-left')}catch(e){}
+['0-255','256-511','8192-8447'].forEach(r=>{try{fetch('https://protomaps.github.io/basemaps-assets/fonts/Noto%20Sans%20Regular/'+r+'.pbf').catch(()=>{})}catch(e){}});
 map.on('zoom',()=>mapEl.classList.toggle('z9',map.getZoom()>=9));
 map.on('click',e=>{sel=null;let fs=[];try{const ly=HAVE_K?KLAYERS:(map.getLayer('poi')?['poi']:[]);fs=ly.length?map.queryRenderedFeatures([[e.point.x-14,e.point.y-14],[e.point.x+14,e.point.y+14]],{layers:ly}):[]}catch(x){}
 if(fs.length)showKnown(fs[0]);else if(!FAMILY)dropPin(e.lngLat);else $('pc').style.display='none';draw()});
 await Promise.race([new Promise(r=>map.once('load',r)),new Promise(r=>setTimeout(r,8000))]);
-ms.textContent=note;ms.style.display=note?'block':'none';addPoiLayers();await loadConnus();applyPoi();fit();draw();maybeCenter()}
+ms.textContent=note;ms.style.display=note?'block':'none';addPoiLayers();await loadConnus();addRoadLabels();applyPoi();fit();draw();maybeCenter()}
 catch(e){ms.textContent='Carte indisponible : '+(e.message||e)}
 initing=false}
 let tmpMark=null;
@@ -475,7 +539,7 @@ const la=ll.lat.toFixed(6),lo=ll.lng.toFixed(6),pc=$('pc');pc.style.display='blo
 pc.innerHTML=`<b>Nouveau lieu</b><div class="meta">${la}, ${lo}${me?' · '+fmt(dist(me,{lat:ll.lat,lng:ll.lng})):''}</div><div class="row"><button onclick="addHere(${la},${lo})">＋ Ajouter ici</button><button class="alt" onclick="clearTmp()">✕</button></div>`}
 function clearTmp(){if(tmpMark){tmpMark.remove();tmpMark=null}$('pc').style.display='none'}
 function addHere(la,lo){clearTmp();openForm(null);$('f_lat').value=la;$('f_lng').value=lo;$('f_cat').value=cat==='Tous'?'':cat;$('f_name').focus()}
-function showCard(b){if(tmpMark){tmpMark.remove();tmpMark=null}const pc=$('pc');pc.style.display='block';pc.innerHTML=`<b>${esc(b.name)}${hasAlbum(b)?' 📷':''}</b><div class="meta">${esc(b.cat)}${me?' · '+fmt(dist(me,b)):''}</div>${b.note?`<div class="note" style="max-height:64px;overflow:auto">${linkify(b.note)}</div>`:''}<div class="row"><a class="btn alt" href="https://www.google.com/maps/dir/?api=1&destination=${b.lat},${b.lng}" target="_blank" rel="noopener">↗️ Itinéraire</a><button class="alt" onclick="$('pc').style.display='none'">✕</button></div><div class="row">${links(b.links)}</div>`}
+function showCard(b){if(tmpMark){tmpMark.remove();tmpMark=null}const pc=$('pc');pc.style.display='block';pc.innerHTML=`<b>${esc(b.name)}${hasAlbum(b)?' 📷':''}</b><div class="meta">${esc(b.cat)}${me?' · '+fmt(dist(me,b)):''}</div>${b.note?`<div class="note" style="max-height:64px;overflow:auto">${linkify(b.note)}</div>`:''}<div class="row"><a class="btn alt" href="https://www.google.com/maps/dir/?api=1&destination=${b.lat},${b.lng}" target="_blank" rel="noopener">↗️ Itinéraire</a><button class="alt" onclick="openRoute(${b.id})">🛣️</button><button class="alt" onclick="$('pc').style.display='none'">✕</button></div><div class="row">${links(b.links)}</div>`}
 function draw(){if(!map)return;marks.forEach(m=>m.remove());
 marks=shown.map(p=>{const el=document.createElement('div');el.className='pin'+(p.id===sel?' sel':'');el.innerHTML='<i></i><b></b>';el.lastChild.textContent=p.name+(hasAlbum(p)?' 📷':'');el.firstChild.style.background=catColor(p.cat);if(hasAlbum(p)){const cm=document.createElement('span');cm.className='cam';cm.textContent='📷';el.appendChild(cm)}el.onclick=e=>{e.stopPropagation();sel=p.id;showCard(p);draw()};return new maplibregl.Marker({element:el}).setLngLat([p.lng,p.lat]).addTo(map)});
 updateMe()}
@@ -497,7 +561,7 @@ $('zl').onclick=()=>{if(nav)nav.follow=true;const go=()=>{if(map&&me)map.flyTo({
 /* ===== GUIDAGE EN TEMPS RÉEL ===== */
 let nav=null,wl=null;
 const dm=(a,b)=>dist(a,b)*1000;
-const fmtm=m=>m<1000?(m>=50?Math.round(m/10)*10:Math.round(m))+' m':(m/1000).toFixed(m<10000?1:0)+' km';
+const fmtm=m=>m<1000?(m>=50?Math.round(m/10)*10:Math.round(m))+' m':(m/1000).toFixed(m<10000?1:0).replace('.',',')+' km';
 const fmtt=s=>s<3600?Math.max(1,Math.round(s/60))+' min':Math.floor(s/3600)+' h '+String(Math.round(s%3600/60)).padStart(2,'0');
 const card8=d=>['Nord','Nord-Est','Est','Sud-Est','Sud','Sud-Ouest','Ouest','Nord-Ouest'][Math.round(d/45)%8];
 function brg(a,b){const r=x=>x*Math.PI/180,y=Math.sin(r(b.lng-a.lng))*Math.cos(r(b.lat)),x=Math.cos(r(a.lat))*Math.sin(r(b.lat))-Math.sin(r(a.lat))*Math.cos(r(b.lat))*Math.cos(r(b.lng-a.lng));return(Math.atan2(y,x)*180/Math.PI+360)%360}
