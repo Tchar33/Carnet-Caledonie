@@ -74,6 +74,7 @@ dialog{max-height:88dvh;overflow:auto}
 #hbody details{border-bottom:1px solid var(--bd);padding:8px 0}#hbody summary{font-weight:700;cursor:pointer;font-size:16px}#hbody ul{padding-left:20px;margin:6px 0}#hbody li{font-size:15px;margin:6px 0}
 .ctl{grid-template-columns:42px 42px}#nb{right:112px}
 .maplibregl-ctrl-bottom-left{bottom:calc(72px + env(safe-area-inset-bottom,0px))}#nb{max-height:46vh;overflow:auto}
+.inf-b{font-size:15px;line-height:1.5;padding:4px 2px 10px}.inf-b ul{padding-left:20px;margin:6px 0}.inf-b li{margin:5px 0}.inf-b a{word-break:break-word}#inf details,#voy details{border-bottom:1px solid var(--bd);padding:8px 0}#inf summary{font-weight:700;cursor:pointer;font-size:16px}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" crossorigin="anonymous"></script>
@@ -84,7 +85,7 @@ dialog{max-height:88dvh;overflow:auto}
 </head>
 <body>
 <header><h1>🌴 Carnet Calédonie</h1><div class="sub" id="sub"></div></header>
-<div class="bar">
+<div class="bar" id="bar">
 <input id="q" placeholder="Rechercher un lieu, une note…" style="flex:1 1 100%">
 <button id="loc">📍 Ma position</button>
 <button class="alt" id="hl">❓ Aide</button>
@@ -97,8 +98,11 @@ dialog{max-height:88dvh;overflow:auto}
 <input type="file" id="file" hidden>
 </div>
 <div class="tabs"><button id="tL">📋 Liste</button><button class="alt" id="tM">🗺️ Carte</button></div>
+<div class="tabs" id="stabs"><button id="s_l">📍 Lieux</button><button class="alt" id="s_v">🧭 Voyage NC Louis</button><button class="alt" id="s_i">📚 Infos NC</button></div>
 <div class="chips" id="chips"></div>
 <main id="list"></main>
+<div id="voy" style="display:none;padding:0 14px 90px"></div><div id="inf" style="display:none;padding:0 14px 90px"></div>
+<input type="file" id="photo_in" accept="image/*,video/*" multiple hidden>
 <div id="mw"><div id="map"><div id="ms" class="nt">Chargement de la carte…</div></div>
 <button id="tb" class="mlist">📋 Liste</button>
 <div id="gps">GPS…</div>
@@ -183,7 +187,7 @@ if(/maps\.|goo\.gl/.test(h))return SV('#34a853','<path d="M12 5a4.5 4.5 0 0 0-4.
 return SV('#0a7c6e','<circle cx="12" cy="12" r="6.5" fill="none" stroke="#fff" stroke-width="1.6"/><path d="M5.5 12h13M12 5.5c-3 3.2-3 9.8 0 13M12 5.5c3 3.2 3 9.8 0 13" fill="none" stroke="#fff" stroke-width="1.3"/>')}
 function render(){
 const AC=allCats();
-$('chips').innerHTML=chipsHTML();if($('cdlg').open)refreshDlg();$('zc').style.outline=(cat==='Tous'&&!onlyAlbum)?'':'3px solid #f2a23a';
+$('chips').innerHTML=chipsHTML();if($('cdlg').open)refreshDlg();if(lt==='voyage')voyRender();$('zc').style.outline=(cat==='Tous'&&!onlyAlbum)?'':'3px solid #f2a23a';
 $('cats').innerHTML=AC.map(c=>`<option value="${esc(c)}">`).join('');
 const q=$('q').value.toLowerCase();
 let L=P.filter(p=>inCat(p)&&(!onlyAlbum||hasAlbum(p))&&(!q||(p.name+' '+p.note+' '+p.cat).toLowerCase().includes(q)));
@@ -224,7 +228,7 @@ $('f_here').onclick=()=>locate(()=>{$('f_lat').value=me.lat.toFixed(6);$('f_lng'
 $('f_ok').onclick=()=>{const o={};for(const k of ['name','cat','lat','lng','note','links','ssid','pwd'])o[k]=$('f_'+k).value.trim();
 o.lat=parseFloat(o.lat.replace(',','.'));o.lng=parseFloat(o.lng.replace(',','.'));o.share=$('f_share').checked;o.date=$('f_date').value;
 if(!o.name||isNaN(o.lat)||isNaN(o.lng))return alert('Nom, latitude et longitude sont requis');
-if(editId){Object.assign(P.find(x=>x.id===editId),o)}else P.push({id:Date.now(),...o});
+if(editId){const q0=P.find(x=>x.id===editId);if(q0&&q0.date!==o.date)o.dateEnd='';Object.assign(q0,o)}else P.push({id:Date.now(),...o});
 save();$('dlg').close();render()};
 $('f_del').onclick=()=>{if(confirm('Supprimer ce lieu ?')){P=P.filter(x=>x.id!==editId);save();$('dlg').close();render()}};
 $('imp').onclick=()=>$('file').click();
@@ -243,7 +247,7 @@ function pubGet(){let o={};try{o=JSON.parse(localStorage.getItem(PUBKEY)||'{}')}
 if(!o.owner&&location.hostname.endsWith('.github.io'))o.owner=location.hostname.split('.')[0];
 if(!o.repo&&location.hostname.endsWith('.github.io'))o.repo=location.pathname.split('/')[1]||'';return o}
 function pubForm(){const o={code:$('p_code').value.trim(),owner:$('p_owner').value.trim(),repo:$('p_repo').value.trim(),token:$('p_token').value.trim()};try{localStorage.setItem(PUBKEY,JSON.stringify(o))}catch(e){}return o}
-const sharedList=()=>P.filter(p=>p.share).map(p=>({name:p.name,cat:p.cat,lat:p.lat,lng:p.lng,note:p.note,links:p.links,date:p.date||''}));
+const sharedList=()=>P.filter(p=>p.share).map(p=>({name:p.name,cat:p.cat,lat:p.lat,lng:p.lng,note:p.note,links:p.links,date:p.date||'',dateEnd:p.dateEnd||'',nphotos:p.nphotos||0}));
 async function ghPut(o,path,text){const url='https://api.github.com/repos/'+o.owner+'/'+o.repo+'/contents/'+path,h={Authorization:'Bearer '+o.token,Accept:'application/vnd.github+json'};let sha;
 try{const r=await fetch(url,{headers:h,cache:'no-store'});if(r.ok)sha=(await r.json()).sha}catch(e){}
 const r=await fetch(url,{method:'PUT',headers:h,body:JSON.stringify({message:'Mise à jour des lieux partagés',content:b64(new TextEncoder().encode(text)),sha})});
@@ -266,9 +270,9 @@ const g=t=>{const el=m.querySelector(t);return el?el.textContent.trim():''};
 const d=g('description').replace(/<[^>]+>/g,' ').trim(),u=(d.match(/https?:\/\/\S+/g)||[]).join('\n');
 const ed=k=>{for(const el of m.querySelectorAll('Data')){if(el.getAttribute('name')===k){const v=el.querySelector('value');return v?v.textContent:''}}return null};
 const nm=g('name')||'Sans nom';if(P.some(p=>p.name===nm&&Math.abs(p.lat-lat)<1e-5&&Math.abs(p.lng-lng)<1e-5)){dup++;return}
-P.push({id:Date.now()+n,name:nm,cat:ed('cat')||'Importé',lat,lng,note:ed('note')!==null?ed('note'):d,links:ed('links')!==null?ed('links'):u,ssid:ed('ssid')||'',pwd:ed('pwd')||'',share:ed('share')==='true',date:ed('date')||''});n++});
+P.push({id:Date.now()+n,name:nm,cat:ed('cat')||'Importé',lat,lng,note:ed('note')!==null?ed('note'):d,links:ed('links')!==null?ed('links'):u,ssid:ed('ssid')||'',pwd:ed('pwd')||'',share:ed('share')==='true',date:ed('date')||'',dateEnd:ed('dateEnd')||'',nphotos:parseInt(ed('nphotos'))||0});n++});
 save();render();alert(n+' lieu(x) importé(s)'+(dup?', '+dup+' doublon(s) ignoré(s)':''));e.target.value=''};
-$('exp').onclick=()=>{const k='<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2"><Document>'+P.map(p=>`<Placemark><name>${esc(p.name)}</name><description>${esc((p.note||'')+'\n'+(p.links||''))}</description><ExtendedData>${['cat','note','links','ssid','pwd','share','date'].map(k=>`<Data name="${k}"><value>${esc(p[k])}</value></Data>`).join('')}</ExtendedData><Point><coordinates>${p.lng},${p.lat},0</coordinates></Point></Placemark>`).join('')+'</Document></kml>';
+$('exp').onclick=()=>{const k='<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2"><Document>'+P.map(p=>`<Placemark><name>${esc(p.name)}</name><description>${esc((p.note||'')+'\n'+(p.links||''))}</description><ExtendedData>${['cat','note','links','ssid','pwd','share','date','dateEnd','nphotos'].map(k=>`<Data name="${k}"><value>${esc(p[k])}</value></Data>`).join('')}</ExtendedData><Point><coordinates>${p.lng},${p.lat},0</coordinates></Point></Placemark>`).join('')+'</Document></kml>';
 const a=document.createElement('a');a.href='data:application/vnd.google-earth.kml+xml;charset=utf-8,'+encodeURIComponent(k);a.download='carnet-caledonie.kml';document.body.appendChild(a);a.click();a.remove()};
 /* ===== CARTE (MapLibre + fichier hors ligne nc.pmtiles) ===== */
 let shown=[],view='list',sel=null,map=null,initing=false,marks=[],meMark=null;
@@ -375,6 +379,14 @@ const HELP_OWNER=`<details open><summary>🗺️ Découvrir la carte</summary><u
 <details><summary>💾 Sauvegarde</summary><ul>
 <li>Vos lieux sont enregistrés dans le téléphone. Dans la liste, <b>Exporter KML</b> en fait une copie de sécurité, <b>Importer KML</b> la restaure.</li>
 <li>Effacer les données du navigateur supprime vos lieux : exportez avant.</li></ul></details>
+<details><summary>🧭 Voyage NC Louis</summary><ul>
+<li>Dans la liste, l’onglet <b>🧭 Voyage NC Louis</b> affiche vos étapes une par une, dans l’ordre chronologique, par jour (Jour 1, Jour 2…), avec la date et le nombre de photos.</li>
+<li><b>📷 Dater</b> sur une étape : choisissez les photos ou vidéos de ce lieu. L’appli lit leur date de prise de vue (ou, à défaut, la date du fichier) et met l’étape à jour, avec la période si elles s’étalent sur plusieurs jours.</li>
+<li><b>Importer des photos pour dater ou créer des étapes</b> : choisissez toutes vos photos du voyage. Celles qui ont une position GPS sont rattachées à l’étape la plus proche (moins de 400 m), ou créent une nouvelle étape. Les autres sont rattachées à l’étape du même jour quand elle est unique.</li>
+<li>Vos photos ne sont pas envoyées ni enregistrées : seule leur date est lue. Sur certains téléphones, la position GPS n’est pas transmise, la date du fichier sert alors de repère.</li></ul></details>
+<details><summary>📚 Infos NC</summary><ul>
+<li>L’onglet <b>📚 Infos NC</b> rassemble des fiches pratiques : géographie, climat, histoire, culture, préparer son voyage, se déplacer, idées de visites, sécurité et liens officiels. Une barre de recherche permet de retrouver un sujet.</li>
+<li>Ce sont des synthèses : vérifiez toujours les informations pratiques (formalités, santé, actualité) auprès des sites officiels indiqués.</li></ul></details>
 <details><summary>📏 Échelle et noms de rues</summary><ul>
 <li>Une <b>échelle</b> en bas à gauche de la carte indique la distance réelle et s’adapte au zoom.</li>
 <li>Les <b>noms de rues</b> apparaissent en zoomant fortement. Ils demandent du réseau la première fois, puis sont en général conservés pour la suite.</li></ul></details>
@@ -415,6 +427,11 @@ const HELP_FAM=`<details open><summary>🔑 Accès</summary><ul>
 <li><b>↗️ Itinéraire</b> ouvre Google Maps pour s’y rendre.</li></ul></details>
 <details><summary>🔒 Vie privée</summary><ul>
 <li>L’application ne demande pas votre position et ne modifie rien : elle sert seulement à consulter.</li></ul></details>
+<details><summary>🧭 Voyage NC Louis</summary><ul>
+<li>Dans la liste, l’onglet <b>🧭 Voyage NC Louis</b> montre les étapes du voyage une par une, dans l’ordre chronologique, par jour, avec la date et le nombre de photos.</li>
+<li><b>📍 Voir</b> ouvre l’étape sur la carte, et l’icône d’album ouvre les photos et vidéos.</li></ul></details>
+<details><summary>📚 Infos NC</summary><ul>
+<li>L’onglet <b>📚 Infos NC</b> rassemble des fiches pratiques sur la Nouvelle-Calédonie : géographie, climat, histoire, culture, visites, conseils de voyage et liens officiels. Une barre de recherche permet de retrouver un sujet.</li></ul></details>
 <details><summary>📏 Échelle et noms de rues</summary><ul>
 <li>Une <b>échelle</b> en bas à gauche de la carte indique la distance réelle.</li>
 <li>Les <b>noms de rues</b> apparaissent en zoomant fortement, avec une connexion.</li></ul></details>
@@ -500,6 +517,73 @@ function journalOpen(){$('j_ord').textContent=jDesc?'↓ Plus récents d’abord
 $('jl').onclick=$('zj').onclick=journalOpen;$('j_x').onclick=()=>$('jdlg').close();
 $('j_ord').onclick=()=>{jDesc=!jDesc;journalOpen()};$('j_alb').onclick=()=>{jAlb=!jAlb;journalOpen()};
 $('jbody').onclick=e=>{const t=e.target.closest('button');if(!t||!t.dataset.j)return;const p=P.find(x=>x.id==t.dataset.j);if(!p)return;$('jdlg').close();setView('map');if(map)map.jumpTo({center:[p.lng,p.lat],zoom:Math.max(map.getZoom(),13)});showCard(p)};
+/* ===== VOYAGE NC LOUIS + INFOS NC + DATES DES PHOTOS ===== */
+const TRIP='Voyage NC Louis';
+let lt='lieux',INF=null;
+function syncList(){const L=view==='list',a=L&&lt==='lieux';$('bar').style.display=a?'':'none';$('chips').style.display=a?'':'none';$('list').style.display=a?'':'none';
+$('voy').style.display=L&&lt==='voyage'?'block':'none';$('inf').style.display=L&&lt==='infos'?'block':'none';
+['lieux','voyage','infos'].forEach((k,i)=>{$(['s_l','s_v','s_i'][i]).className=k===lt?'':'alt'});
+if(L&&lt==='voyage')voyRender();if(L&&lt==='infos')infosShow()}
+$('s_l').onclick=()=>{lt='lieux';syncList()};$('s_v').onclick=()=>{lt='voyage';syncList()};$('s_i').onclick=()=>{lt='infos';syncList()};
+/* --- lecture de la date (et de la position) d'une photo --- */
+function exifInfo(buf){try{const v=new DataView(buf);if(v.getUint16(0)!==0xFFD8)return null;let o=2;
+while(o<v.byteLength-4){const m=v.getUint16(o);if(m===0xFFDA)break;const len=v.getUint16(o+2);if(m===0xFFE1&&v.getUint32(o+4)===0x45786966)return exifTiff(v,o+10);o+=2+len}}catch(e){}return null}
+function exifTiff(v,t){const le=v.getUint16(t)===0x4949,u16=p=>v.getUint16(p,le),u32=p=>v.getUint32(p,le);
+const ifd=off=>{const n=u16(t+off),r={};for(let i=0;i<n;i++){const e=t+off+2+i*12;r[u16(e)]={cnt:u32(e+4),p:e+8,off:u32(e+8)}}return r};
+const str=en=>{const p=en.cnt>4?t+en.off:en.p;let s='';for(let i=0;i<en.cnt-1;i++)s+=String.fromCharCode(v.getUint8(p+i));return s};
+const rat=(en,i)=>{const p=t+en.off+i*8;return u32(p)/u32(p+4)};
+const i0=ifd(u32(t+4));let ds=null,lat=null,lng=null;const ex=i0[0x8769]?ifd(i0[0x8769].off):null;
+if(ex&&ex[0x9003])ds=str(ex[0x9003]);else if(ex&&ex[0x9004])ds=str(ex[0x9004]);else if(i0[0x0132])ds=str(i0[0x0132]);
+if(i0[0x8825]){const g=ifd(i0[0x8825].off);if(g[2]&&g[4]){const f=en=>rat(en,0)+rat(en,1)/60+rat(en,2)/3600;lat=f(g[2]);lng=f(g[4]);
+if(g[1]&&String.fromCharCode(v.getUint8(g[1].p))==='S')lat=-lat;if(g[3]&&String.fromCharCode(v.getUint8(g[3].p))==='W')lng=-lng}}
+const m=ds&&ds.match(/^(\d{4}):(\d{2}):(\d{2})/);return{date:m?m[1]+'-'+m[2]+'-'+m[3]:null,lat,lng}}
+async function fileInfo(f){let inf=null;if(/jpe?g/i.test(f.type||'')||/\.jpe?g$/i.test(f.name||'')){try{inf=exifInfo(await f.slice(0,262144).arrayBuffer())}catch(e){}}
+if(!inf||!inf.date){const d=new Date(f.lastModified);inf=Object.assign(inf||{lat:null,lng:null},{date:d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'),approx:true})}return inf}
+const frD=(d,o)=>new Date(d+'T12:00:00').toLocaleDateString('fr-FR',o);
+function mergeDates(p,mn,mx,n,replace){const hi=x=>x||'';let a=mn,b=mx;if(!replace&&p.date){a=mn<p.date?mn:p.date;const pe=hi(p.dateEnd)||p.date;b=mx>pe?mx:pe}
+p.date=a;p.dateEnd=b!==a?b:'';p.nphotos=replace?n:(p.nphotos||0)+n}
+async function datePlace(id,files){const p=P.find(x=>x.id==id),st=$('v_st');if(!p||!files.length)return;if(st)st.textContent='Lecture de '+files.length+' fichier(s)…';
+const inf=await Promise.all([...files].map(fileInfo)),ds=inf.map(i=>i.date).sort();mergeDates(p,ds[0],ds[ds.length-1],files.length,true);save();render();voyRender();
+const s=$('v_st');if(s)s.textContent='✓ '+p.name+' : '+files.length+' photo(s)/vidéo(s), du '+frD(p.date,{day:'numeric',month:'long'})+(p.dateEnd?' au '+frD(p.dateEnd,{day:'numeric',month:'long'}):'')+(inf.some(i=>i.approx)?' (date du fichier pour certaines)':'')+'.'}
+async function importPhotos(files){const st=$('v_st');const inf=[];for(let i=0;i<files.length;i++){inf.push(await fileInfo(files[i]));if(st&&i%15===0)st.textContent='Lecture '+(i+1)+'/'+files.length+'…'}
+const acc=new Map(),groups=new Map();let nopos=0;
+inf.forEach(x=>{let t=null;if(x.lat!=null){let best=0.4;P.forEach(p=>{const d=dist(p,{lat:x.lat,lng:x.lng});if(d<best){best=d;t=p}})}
+else{const same=P.filter(p=>p.date&&p.date<=x.date&&(p.dateEnd||p.date)>=x.date);if(same.length===1)t=same[0]}
+if(t){const a=acc.get(t.id)||{p:t,mn:x.date,mx:x.date,n:0};if(x.date<a.mn)a.mn=x.date;if(x.date>a.mx)a.mx=x.date;a.n++;acc.set(t.id,a)}
+else if(x.lat!=null){const k=x.date+'|'+Math.round(x.lat*50)+'|'+Math.round(x.lng*50),g=groups.get(k)||{date:x.date,la:0,lo:0,n:0};g.la+=x.lat;g.lo+=x.lng;g.n++;groups.set(k,g)}else nopos++});
+acc.forEach(a=>mergeDates(a.p,a.mn,a.mx,a.n,false));let created=0;
+[...groups.values()].sort((a,b)=>a.date.localeCompare(b.date)).forEach((g,i)=>{P.push({id:Date.now()+i,name:'Étape du '+frD(g.date,{day:'numeric',month:'long'}),cat:'Étape',lat:g.la/g.n,lng:g.lo/g.n,note:'Créée à partir de '+g.n+' photo(s)/vidéo(s). Renommez cette étape.',links:'',ssid:'',pwd:'',share:false,date:g.date,dateEnd:'',nphotos:g.n});created++});
+save();render();voyRender();const s=$('v_st');if(s)s.textContent='✓ '+files.length+' fichier(s) : '+acc.size+' étape(s) mise(s) à jour, '+created+' créée(s)'+(nopos?', '+nopos+' sans position ni étape correspondante':'')+'.'}
+$('photo_in').onchange=async e=>{const fs=[...e.target.files],id=e.target.dataset.target;e.target.value='';if(!fs.length)return;if(id)await datePlace(id,fs);else await importPhotos(fs)};
+/* --- onglet Voyage --- */
+function stepCard(p,n){const d=p.date?(p.dateEnd?'du '+frD(p.date,{day:'numeric',month:'long'})+' au '+frD(p.dateEnd,{day:'numeric',month:'long'}):frD(p.date,{weekday:'long',day:'numeric',month:'long'})):'Sans date';
+return'<div class="card" style="margin:8px 0"><div class="meta">'+(n?'Étape '+n+' · ':'')+esc(d)+(p.nphotos?' · 📷 '+p.nphotos:'')+'</div><b>'+esc(p.name)+(hasAlbum(p)?' 📷':'')+'</b>'+
+(p.cat?'<div class="meta"><span class="dot" style="background:'+catColor(p.cat)+'"></span> '+esc(p.cat)+'</div>':'')+(p.note?'<div class="note" style="max-height:60px;overflow:auto">'+linkify(p.note)+'</div>':'')+
+'<div class="row">'+links(p.links)+'<button class="alt" data-j="'+p.id+'">📍 Voir</button>'+(FAMILY?'':'<button class="alt" data-d="'+p.id+'">📷 Dater</button><button class="alt" data-e2="'+p.id+'">✏️</button>')+'</div></div>'}
+function voyHTML(){const steps=P.filter(p=>p.date).sort((a,b)=>a.date.localeCompare(b.date)||(a.dateEnd||'').localeCompare(b.dateEnd||'')),und=P.filter(p=>!p.date);
+const first=steps.length?steps[0].date:'',last=steps.reduce((m,p)=>{const e=p.dateEnd||p.date;return e>m?e:m},first),nph=P.reduce((s,p)=>s+(p.nphotos||0),0);
+const dayNo=d=>Math.round((new Date(d+'T12:00:00')-new Date(first+'T12:00:00'))/864e5)+1;
+let h='<h2 style="margin:6px 0 2px">🧭 '+esc(TRIP)+'</h2><div class="meta">'+steps.length+' étape(s)'+(first?' · du '+frD(first,{day:'numeric',month:'long'})+' au '+frD(last,{day:'numeric',month:'long',year:'numeric'}):'')+(nph?' · '+nph+' photos/vidéos datées':'')+'</div>';
+if(!FAMILY)h+='<div class="row"><button id="v_imp">📷 Importer des photos pour dater ou créer des étapes</button></div>';
+h+='<div class="meta" id="v_st" style="margin:6px 0"></div>';
+let cur=0,n=0;steps.forEach(p=>{n++;const dn=dayNo(p.date);if(dn!==cur){cur=dn;h+='<div style="font-weight:700;margin-top:12px">Jour '+dn+' · '+esc(frD(p.date,{weekday:'long',day:'numeric',month:'long'}))+'</div>'}h+=stepCard(p,n)});
+if(!steps.length)h+='<div class="meta">Aucune étape datée pour l’instant.'+(FAMILY?'':' Importez des photos, ou renseignez la date de visite dans la fiche d’un lieu.')+'</div>';
+if(und.length&&!FAMILY)h+='<div style="font-weight:700;margin-top:14px">À dater ('+und.length+')</div>'+und.map(p=>stepCard(p,0)).join('');return h}
+function voyRender(){const e=$('voy');if(e)e.innerHTML=voyHTML()}
+$('voy').onclick=e=>{const t=e.target.closest('button');if(!t)return;
+if(t.id==='v_imp'){$('photo_in').dataset.target='';$('photo_in').click();return}
+if(t.dataset.d){$('photo_in').dataset.target=t.dataset.d;$('photo_in').click();return}
+if(t.dataset.e2){openForm(+t.dataset.e2);return}
+if(t.dataset.j){const p=P.find(x=>x.id==t.dataset.j);if(!p)return;setView('map');if(map)map.jumpTo({center:[p.lng,p.lat],zoom:Math.max(map.getZoom(),13)});showCard(p)}};
+/* --- onglet Infos NC --- */
+async function infosShow(){if(INF){infosRender();return}$('inf').innerHTML='<div class="meta">Chargement…</div>';
+try{const r=await fetch('infos.json');if(!r.ok)throw 0;INF=await r.json();infosRender()}catch(e){$('inf').innerHTML='<div class="meta">Les pages d’informations sont indisponibles pour le moment (connexion nécessaire la première fois).</div>'}}
+function infosRender(q){const Q=(typeof q==='string'?q:($('inf_q')?$('inf_q').value:'')).toLowerCase().trim();
+const S=INF.sections.filter(s=>!Q||(s.title+' '+s.html.replace(/<[^>]+>/g,' ')).toLowerCase().includes(Q));
+let h='<h2 style="margin:6px 0 2px">📚 La Nouvelle-Calédonie</h2><div class="meta">Synthèses rédigées pour ce carnet, mises à jour en '+esc(INF.updated)+'. Vérifiez les informations pratiques avant de partir.</div>'+
+'<input id="inf_q" placeholder="Rechercher dans les infos…" value="'+esc(Q)+'" style="margin:8px 0">';
+h+=S.map((s,i)=>'<details'+(Q&&S.length<4?' open':'')+'><summary>'+s.emoji+' '+esc(s.title)+'</summary><div class="inf-b">'+s.html+'</div></details>').join('')||'<div class="meta">Aucun résultat.</div>';
+const f=document.activeElement&&document.activeElement.id==='inf_q';$('inf').innerHTML=h;const i=$('inf_q');i.oninput=()=>{const p=i.selectionStart;infosRender(i.value);const n=$('inf_q');n.focus();try{n.setSelectionRange(p,p)}catch(x){}}}
 let KNOWN=null;
 function addPoiLayers(){try{if(!map||map.getLayer('poi')||!map.getSource('p'))return;const before=map.getLayer('pl')?'pl':undefined;
 map.addLayer({id:'poi',type:'circle',source:'p','source-layer':'pois',minzoom:11,paint:{'circle-radius':['interpolate',['linear'],['zoom'],11,2.5,16,6],'circle-color':POI_COLOR,'circle-stroke-color':'#ffffff','circle-stroke-width':1}},before);
@@ -552,7 +636,7 @@ function updateMe(){if(!map||!me)return;if(meMark)meMark.setLngLat([me.lng,me.la
 if(ensureLayers())map.getSource('acc').setData(me.acc>0?circ(me.lng,me.lat,Math.min(me.acc,500)):EMPTY)}
 function fit(){if(!map)return;if(!shown.length){map.jumpTo({center:[165.6,-21.3],zoom:6});return}
 const b=new maplibregl.LngLatBounds();shown.forEach(p=>b.extend([p.lng,p.lat]));map.fitBounds(b,{padding:80,maxZoom:13,duration:0})}
-function setView(v){view=v;document.body.classList.toggle('mapv',v==='map');$('list').style.display=v==='list'?'':'none';$('mw').style.display=v==='map'?'block':'none';$('tL').className=v==='list'?'':'alt';$('tM').className=v==='map'?'':'alt';
+function setView(v){view=v;document.body.classList.toggle('mapv',v==='map');syncList();$('mw').style.display=v==='map'?'block':'none';$('tL').className=v==='list'?'':'alt';$('tM').className=v==='map'?'':'alt';
 if(v==='map'){if(!map&&!initing)initMap();else if(map){map.resize();fit();draw()}}else render()}
 $('tL').onclick=()=>setView('list');$('tb').onclick=()=>setView('list');$('tM').onclick=()=>setView('map');
 $('zi').onclick=()=>map&&map.zoomIn();$('zo').onclick=()=>map&&map.zoomOut();$('zf').onclick=fit;$('zc').onclick=()=>{refreshDlg();$('cdlg').showModal()};$('cx').onclick=()=>$('cdlg').close();$('cc').onclick=chipClick;$('pg').onclick=poiClick;$('cl').onclick=colorClick;$('zk').onclick=poiToggleAll;
