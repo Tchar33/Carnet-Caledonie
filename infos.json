@@ -1,5 +1,5 @@
 {
- "v": 6,
+ "v": 7,
  "updated": "novembre 2026",
  "sections": [
   {
@@ -125,7 +125,7 @@
    "id": "preparer",
    "emoji": "🧳",
    "title": "Préparer son voyage",
-   "html": "<ul>\n<li><b>Formalités d’entrée :</b> elles dépendent de votre nationalité. Vérifiez avant de réserver avec la compagnie aérienne et le <a href=\"https://www.nouvelle-caledonie.gouv.fr\" target=\"_blank\" rel=\"noopener\">Haut-Commissariat</a>. Contrôlez aussi la durée de validité de vos papiers.</li>\n<li><b>Santé :</b> d’après les guides, aucun vaccin n’est obligatoire, mais les vaccins de base doivent être à jour. Demandez conseil à votre médecin ou à un centre de vaccinations internationales (voir <a href=\"https://www.pasteur.fr\" target=\"_blank\" rel=\"noopener\">Institut Pasteur</a>).</li>\n<li><b>Assurance :</b> prévoyez une assurance voyage avec rapatriement. Les Français peuvent s’inscrire sur le « Fil d’Ariane » (<a href=\"https://www.diplomatie.gouv.fr/fr/conseils-aux-voyageurs/\" target=\"_blank\" rel=\"noopener\">diplomatie.gouv.fr</a>).</li>\n<li><b>Argent :</b> franc Pacifique. Cartes acceptées en ville, mais gardez du liquide en brousse et dans les tribus, où les distributeurs sont rares.</li>\n<li><b>Électricité :</b> 220 à 240 V, prises de type européen.</li>\n<li><b>Téléphone et Internet :</b> les forfaits de métropole couvrent rarement le territoire. Il est courant de prendre une carte SIM ou un forfait prépayé local. Vérifiez les offres de l’opérateur local avant votre départ.</li>\n<li><b>Bagages utiles :</b> crème solaire, répulsif moustiques, chapeau, chaussures de marche, chaussons de corail, k-way, masque et tuba.</li>\n<li><b>Biosécurité :</b> les règles sur l’entrée de produits alimentaires, plantes et animaux sont strictes. Déclarez ce que vous transportez.</li>\n<li><b>Urgences :</b> 15 (SAMU), 17 (police), 18 (pompiers).</li></ul>",
+   "html": "<ul>\n<li><b>Formalités d’entrée :</b> elles dépendent de votre nationalité. Vérifiez avant de réserver avec la compagnie aérienne et le <a href=\"https://www.nouvelle-caledonie.gouv.fr\" target=\"_blank\" rel=\"noopener\">Haut-Commissariat</a>. Contrôlez aussi la durée de validité de vos papiers.</li>\n<li><b>Santé :</b> d’après les guides, aucun vaccin n’est obligatoire, mais les vaccins de base doivent être à jour. Demandez conseil à votre médecin ou à un centre de vaccinations internationales (voir <a href=\"https://www.pasteur.fr\" target=\"_blank\" rel=\"noopener\">Institut Pasteur</a>).</li>\n<li><b>Assurance :</b> prévoyez une assurance voyage avec rapatriement. Les Français peuvent s’inscrire sur le « Fil d’Ariane » (<a href=\"https://www.diplomatie.gouv.fr/fr/conseils-aux-voyageurs/\" target=\"_blank\" rel=\"noopener\">diplomatie.gouv.fr</a>).</li>\n<li><b>Argent :</b> franc Pacifique. Cartes acceptées en ville, mais gardez du liquide en brousse et dans les tribus, où les distributeurs sont rares.</li>\n<li><b>Électricité :</b> 220 à 240 V, prises de type européen.</li>\n<li><b>Téléphone et Internet :</b> les forfaits de métropole couvrent rarement le territoire. Il est courant de prendre une carte SIM ou un forfait prépayé local. Vérifiez les offres de l’opérateur local avant votre départ.</li>\n<li><b>Bagages utiles :</b> crème solaire, répulsif moustiques, chapeau, chaussures de marche, chaussons de corail, k-way, masque et tuba.</li>\n<li><b>Biosécurité :</b> les règles sur l’entrée de produits alimentaires, plantes et animaux sont strictes. Déclarez ce que vous transportez.</li>\n<li><b>Urgences :</b> 15 (SAMU), 17 (police), 18 (pompiers), 16 (secours en mer).</li></ul>",
    "chapter": "conseils"
   },
   {
@@ -218,6 +218,27 @@
    "title": "Géographie, lagon et nature",
    "html": "<p>La <b>Grande Terre</b> mesure environ 400 km de long pour une cinquantaine de large. Une chaîne de montagnes la traverse (le mont Panié culmine vers 1 630 mètres). La côte ouest est plus sèche, avec savanes et niaoulis, la côte est plus humide et verte, et le sud est marqué par la terre rouge des sols riches en nickel.</p>\n<p>Autour : l’<b>île des Pins</b>, les <b>îles Loyauté</b> (Ouvéa, Lifou, Maré, Tiga) et les îles Bélep, au nord.</p>\n<ul>\n<li><b>Le lagon</b> est l’un des plus vastes du monde, entouré d’une barrière récifale de plus de 1 500 km. Les « lagons de Nouvelle-Calédonie : diversité récifale et écosystèmes associés » sont inscrits au patrimoine mondial de l’UNESCO depuis 2008.</li>\n<li><b>Biodiversité :</b> une flore remarquable, avec une très forte proportion d’espèces endémiques (kaoris, araucarias, forêt sèche), des dugongs, des tortues et des baleines à bosse en hiver austral.</li>\n<li><b>Mer de Corail :</b> un très vaste parc naturel marin y a été créé en 2014.</li></ul>",
    "chapter": "activites"
+  },
+  {
+   "id": "grandsud-sites",
+   "emoji": "🧭",
+   "title": "Grand Sud : 21 sites repérés sur la carte",
+   "chapter": "activites",
+   "html": "<p>La carte « Grand Sud » de Sud Tourisme repère 21 sites, de A à U. À voir autour de Yaté, du Mont-Dore et de Prony :</p><ul><li><b>Autour du Mont-Dore :</b> le Mont-Dore (sommet) et la fontaine de Plum.</li><li><b>Parc de la Rivière Bleue :</b> le parc, la forêt noyée, la plaine du champ de bataille, les bois du sud.</li><li><b>Yaté :</b> le lac et le barrage de Yaté, les grottes de Lourdes d’Unia, la mission de Touaourou.</li><li><b>Goro et le sud-est :</b> la cascade de Goro, la réserve du cap N’Dua, l’usine de Goro (conservatoire de biodiversité).</li><li><b>Plaine des Lacs :</b> la plaine des Lacs, le Grand Lac et le lac en Huit.</li><li><b>Prony :</b> sources chaudes, aiguille, ancien village et cascade de l’Oasis.</li><li><b>Chutes de la Madeleine.</b></li></ul><p>La carte indique aussi les prestataires du Grand Sud (tribus, artisanat, excursions, hébergements, restaurants) : voir l’annuaire de cette rubrique.</p><p class='meta'>Source : carte « Grand Sud » de Sud Tourisme (document papier). Infos pratiques : <a href=\"https://www.sudtourisme.nc\" target=\"_blank\" rel=\"noopener\">sudtourisme.nc</a>.</p>"
+  },
+  {
+   "id": "gr-nc1",
+   "emoji": "🥾",
+   "title": "Le GR NC1 : de Prony à Dumbéa",
+   "chapter": "activites",
+   "html": "<p>Le sentier de grande randonnée GR NC1 relie Prony à Dumbéa sur plus de 100 km, en sept étapes balisées. Un refuge jalonne chaque étape.</p><ul><li><b>Étapes principales :</b> Prony, refuge des Néocallitropsis, Netcha, refuge du Ouénarou, refuge des Muletiers, refuge des Tristaniopsis, Mine Soleil, puis Dumbéa.</li><li>Le parcours traverse forêts, maquis minier, plaines et zones humides du Grand Sud.</li><li>Renseignez-vous sur chaque étape avant de partir (distance, dénivelé, refuge) : les crues peuvent rendre des creeks infranchissables.</li></ul><p class='meta'>Sources : carte « Grand Sud » de Sud Tourisme ; <a href=\"https://www.sudtourisme.nc/activites/randonnees-pedestres/\" target=\"_blank\" rel=\"noopener\">randonnées pédestres (Sud Tourisme)</a> ; <a href=\"https://www.sudtourisme.nc/activites/circuits-vtt/\" target=\"_blank\" rel=\"noopener\">circuits VTT (Sud Tourisme)</a>.</p>"
+  },
+  {
+   "id": "cartes-officielles",
+   "emoji": "📎",
+   "title": "Cartes et pages officielles (QR codes)",
+   "chapter": "conseils",
+   "html": "<ul><li><b>Nouvelle-Calédonie Tourisme :</b> carte routière et « Top 50 expériences ». Site : <a href=\"https://www.newcaledonie.travel\" target=\"_blank\" rel=\"noopener\">newcaledonie.travel</a>. Téléphone de l’office, d’après la carte : +687 24 20 80.</li><li><b>Sud Tourisme :</b> <a href=\"https://www.sudtourisme.nc\" target=\"_blank\" rel=\"noopener\">sudtourisme.nc</a> (numéro vert indiqué sur la carte : 05 05 15).</li><li><b>Randonnées pédestres du Grand Sud :</b> <a href=\"https://www.sudtourisme.nc/activites/randonnees-pedestres/\" target=\"_blank\" rel=\"noopener\">page officielle</a>.</li><li><b>Circuits VTT du Grand Sud :</b> <a href=\"https://www.sudtourisme.nc/activites/circuits-vtt/\" target=\"_blank\" rel=\"noopener\">page officielle</a>.</li><li><b>Parc provincial de la Rivière Bleue :</b> <a href=\"https://www.province-sud.nc/pandoreweb/app/aireProtegee/PPRB\" target=\"_blank\" rel=\"noopener\">fiche de la Province Sud</a>.</li></ul><p><b>Numéros d’urgence (indiqués sur la carte Grand Sud) :</b> 15 SAMU, 17 police, 18 pompiers, 16 secours en mer.</p><p class='meta'>Ces liens sont ceux des QR codes imprimés sur les cartes touristiques de Nouvelle-Calédonie Tourisme et de Sud Tourisme.</p>"
   }
  ],
  "subs": {
@@ -288,7 +309,8 @@
      "apercu",
      "climat",
      "preparer",
-     "liens"
+     "liens",
+     "cartes-officielles"
     ]
    },
    {
@@ -347,11 +369,28 @@
     "title": "Randonnée, cheval et aventure",
     "desc": "Sentiers, balades à cheval, VTT",
     "items": [
-     "randonnee"
+     "randonnee",
+     "gr-nc1"
     ],
     "ann": [
      "cheval",
      "aventure"
+    ]
+   },
+   {
+    "id": "grandsud",
+    "emoji": "🌋",
+    "title": "Grand Sud (carte Sud Tourisme)",
+    "desc": "Sites, tribus, artisans, hébergements, restaurants",
+    "items": [
+     "grandsud-sites"
+    ],
+    "ann": [
+     "gs-tribu",
+     "gs-artisanat",
+     "gs-excursion",
+     "gs-dormir",
+     "gs-manger"
     ]
    }
   ]

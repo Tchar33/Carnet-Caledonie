@@ -31,6 +31,36 @@
    "emoji": "🧗",
    "title": "Randonnée, VTT et aventure",
    "note": "Source : fiches officielles et annuaire Sud Tourisme. Consultez les règles d’accès des parcs provinciaux avant une randonnée en autonomie."
+  },
+  {
+   "id": "gs-tribu",
+   "emoji": "🛖",
+   "title": "Vie en tribu (Grand Sud)",
+   "note": "Source : carte « Grand Sud » de Sud Tourisme (rubrique Vie en tribu)."
+  },
+  {
+   "id": "gs-artisanat",
+   "emoji": "🎨",
+   "title": "Artisanat et produits locaux (Grand Sud)",
+   "note": "Source : carte « Grand Sud » de Sud Tourisme (rubrique Artisanat)."
+  },
+  {
+   "id": "gs-excursion",
+   "emoji": "🚐",
+   "title": "Excursions et transport (Grand Sud)",
+   "note": "Excursions au départ de votre hébergement. Source : carte « Grand Sud » de Sud Tourisme."
+  },
+  {
+   "id": "gs-dormir",
+   "emoji": "🛏️",
+   "title": "Dormir dans le Grand Sud",
+   "note": "Campings, chambres d’hôtes, gîtes et hôtels listés sur la carte « Grand Sud » de Sud Tourisme."
+  },
+  {
+   "id": "gs-manger",
+   "emoji": "🍽️",
+   "title": "Manger dans le Grand Sud",
+   "note": "Restaurants et tables d’hôtes listés sur la carte « Grand Sud » de Sud Tourisme."
   }
  ],
  "providers": [
@@ -585,7 +615,8 @@
    "summary": "Location de kayaks et paddles à emporter, sorties guidées, itinéraires avec roadbook et séjours itinérants.",
    "phones": [
     "+687 26 27 48",
-    "+687 95 15 93"
+    "+687 95 15 93",
+    "+687 78 94 46"
    ],
    "listing": "https://www.nouvellecaledonie.travel/offres/aventure-pulsion-kayak-et-paddle-a-noumea-noumea-fr-5528055/",
    "checked": "2026-11-24",
@@ -725,7 +756,10 @@
    "srcLabel": "l’annuaire officiel du tourisme",
    "lat": -22.32008,
    "lng": 166.82465,
-   "approx": false
+   "approx": false,
+   "phones": [
+    "+687 76 29 59"
+   ]
   },
   {
    "id": "hotel-restaurant-la-nera",
@@ -780,7 +814,10 @@
    "listing": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/tous-les-prestataires-dactivites-nautiques/",
    "checked": "2026-11-24",
    "source": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/tous-les-prestataires-dactivites-nautiques/",
-   "srcLabel": "l’annuaire officiel du tourisme"
+   "srcLabel": "l’annuaire officiel du tourisme",
+   "phones": [
+    "+687 79 32 60"
+   ]
   },
   {
    "id": "imagine-yacht-charter",
@@ -942,6 +979,456 @@
    "checked": "2026-11-24",
    "source": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
    "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "association-do-vee",
+   "name": "Association Do Vee",
+   "place": "Vie en tribu, Grand Sud",
+   "cat": "gs-tribu",
+   "summary": "Activité ou accueil en tribu.",
+   "phones": [
+    "+687 82 51 49"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "association-e-nga-ta-vuu",
+   "name": "Association E Nga Ta Vuu",
+   "place": "Vie en tribu, Grand Sud",
+   "cat": "gs-tribu",
+   "summary": "Activité ou accueil en tribu.",
+   "phones": [
+    "+687 84 52 24"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "association-netoro",
+   "name": "Association Netoro",
+   "place": "Vie en tribu, Grand Sud",
+   "cat": "gs-tribu",
+   "summary": "Activité ou accueil en tribu.",
+   "phones": [
+    "+687 96 45 74",
+    "+687 84 90 60"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "au-vieux-grimoire",
+   "name": "Au vieux grimoire",
+   "place": "Artisanat, Grand Sud",
+   "cat": "gs-artisanat",
+   "summary": "Artisanat et produits du terroir.",
+   "phones": [
+    "+687 81 07 15"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "cargo-des-arts",
+   "name": "Cargo des Arts",
+   "place": "Artisanat, Grand Sud",
+   "cat": "gs-artisanat",
+   "summary": "Artisanat et produits du terroir.",
+   "phones": [
+    "+687 97 74 68"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "distillerie-du-soleil",
+   "name": "Distillerie du Soleil",
+   "place": "Produits locaux, Grand Sud",
+   "cat": "gs-artisanat",
+   "summary": "Artisanat et produits du terroir.",
+   "phones": [
+    "+687 24 81 44"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "la-butineuse",
+   "name": "La Butineuse",
+   "place": "Taxi-boat, Grand Sud",
+   "cat": "mer",
+   "summary": "Liaison en taxi-boat.",
+   "phones": [
+    "+687 86 41 38"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "lhooq",
+   "name": "LHOOQ",
+   "place": "Taxi-boat, Grand Sud",
+   "cat": "mer",
+   "summary": "Liaison en taxi-boat.",
+   "phones": [
+    "+687 77 27 16"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "off-road-adventure-nc",
+   "name": "Off Road Adventure NC",
+   "place": "Excursion dans le Grand Sud",
+   "cat": "gs-excursion",
+   "summary": "Excursion dans le Grand Sud, départ depuis votre hébergement.",
+   "phones": [
+    "+687 98 77 77"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "oleti-tours",
+   "name": "Oleti Tours",
+   "place": "Excursion dans le Grand Sud",
+   "cat": "gs-excursion",
+   "summary": "Excursion dans le Grand Sud, départ depuis votre hébergement.",
+   "phones": [
+    "+687 98 24 74"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "smk-transport",
+   "name": "SMK Transport",
+   "place": "Excursion dans le Grand Sud",
+   "cat": "gs-excursion",
+   "summary": "Excursion dans le Grand Sud, départ depuis votre hébergement.",
+   "phones": [
+    "+687 96 45 35"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "toutazimut",
+   "name": "Toutazimut",
+   "place": "Excursion dans le Grand Sud",
+   "cat": "gs-excursion",
+   "summary": "Excursion dans le Grand Sud, départ depuis votre hébergement.",
+   "phones": [
+    "+687 91 51 65"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "va-vau-transport",
+   "name": "Va'Vau Transport",
+   "place": "Excursion dans le Grand Sud",
+   "cat": "gs-excursion",
+   "summary": "Excursion dans le Grand Sud, départ depuis votre hébergement.",
+   "phones": [
+    "+687 83 60 49"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "camp-des-kaoris",
+   "name": "Camp des Kaoris",
+   "place": "Camping, Grand Sud",
+   "cat": "gs-dormir",
+   "summary": "Camping.",
+   "phones": [
+    "+687 83 90 13"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "camping-chez-pierre",
+   "name": "Camping Chez Pierre",
+   "place": "Camping, Grand Sud",
+   "cat": "gs-dormir",
+   "summary": "Camping.",
+   "phones": [
+    "+687 41 75 95"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "camping-nekite",
+   "name": "Camping Nékité",
+   "place": "Camping, Grand Sud",
+   "cat": "gs-dormir",
+   "summary": "Camping.",
+   "phones": [
+    "+687 91 28 91",
+    "+687 74 06 13"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "camping-port-boise",
+   "name": "Camping Port Boisé",
+   "place": "Camping, Grand Sud",
+   "cat": "gs-dormir",
+   "summary": "Camping.",
+   "phones": [
+    "+687 84 63 14"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "camping-de-netcha",
+   "name": "Camping de Netcha",
+   "place": "Camping, Grand Sud",
+   "cat": "gs-dormir",
+   "summary": "Camping.",
+   "phones": [
+    "+687 45 99 78"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "camping-kwatea",
+   "name": "Camping Kwatéa",
+   "place": "Camping, Grand Sud",
+   "cat": "gs-dormir",
+   "summary": "Camping.",
+   "phones": [
+    "+687 96 89 50"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "camping-des-bois-du-sud",
+   "name": "Camping des Bois du Sud",
+   "place": "Camping, Grand Sud",
+   "cat": "gs-dormir",
+   "summary": "Camping.",
+   "phones": [
+    "+687 98 57 51"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "gite-iya",
+   "name": "Gîte Iya",
+   "place": "Hébergement, Grand Sud",
+   "cat": "gs-dormir",
+   "summary": "Hébergement.",
+   "phones": [
+    "+687 46 90 80",
+    "+687 74 06 90"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "escale-tropicale",
+   "name": "Escale Tropicale",
+   "place": "Hébergement, Grand Sud",
+   "cat": "gs-dormir",
+   "summary": "Hébergement.",
+   "phones": [
+    "+687 76 58 21"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "les-cases-de-plum",
+   "name": "Les Cases de Plum",
+   "place": "Hébergement, Grand Sud",
+   "cat": "gs-dormir",
+   "summary": "Hébergement.",
+   "phones": [
+    "+687 43 83 07",
+    "+687 99 17 18"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "les-gites-de-robinson",
+   "name": "Les Gîtes de Robinson",
+   "place": "Hébergement, Grand Sud",
+   "cat": "gs-dormir",
+   "summary": "Hébergement.",
+   "phones": [
+    "+687 81 60 44",
+    "+687 70 64 76"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "quietude",
+   "name": "Quiétude",
+   "place": "Hébergement, Grand Sud",
+   "cat": "gs-dormir",
+   "summary": "Hébergement.",
+   "phones": [
+    "+687 35 45 62",
+    "+687 78 28 99"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "le-chalet-de-wepeu",
+   "name": "Le Chalet de Wepeu",
+   "place": "Hébergement, Grand Sud",
+   "cat": "gs-dormir",
+   "summary": "Hébergement.",
+   "phones": [
+    "+687 94 63 74"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "va-vau-hebergement",
+   "name": "Va'Vau (hébergement)",
+   "place": "Hébergement, Grand Sud",
+   "cat": "gs-dormir",
+   "summary": "Hébergement.",
+   "phones": [
+    "+687 83 60 49"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "hotel-le-vallon-dore",
+   "name": "Hôtel Le Vallon Dore",
+   "place": "Hôtel, Grand Sud",
+   "cat": "gs-dormir",
+   "summary": "Hôtel.",
+   "phones": [
+    "+687 44 97 64",
+    "+687 76 86 66"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "kanua-tera-ecolodge",
+   "name": "Kanua Tera Ecolodge",
+   "place": "Hôtel, Grand Sud",
+   "cat": "gs-dormir",
+   "summary": "Hôtel.",
+   "phones": [
+    "+687 46 90 00"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "le-resto-du-sud",
+   "name": "Le Resto du Sud",
+   "place": "Restaurant, Grand Sud",
+   "cat": "gs-manger",
+   "summary": "Restaurant.",
+   "phones": [
+    "+687 43 02 44"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "restaurant-l-envergure",
+   "name": "Restaurant l'Envergure",
+   "place": "Restaurant, Grand Sud",
+   "cat": "gs-manger",
+   "summary": "Restaurant.",
+   "phones": [
+    "+687 26 27 17"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "restaurant-la-popotte",
+   "name": "Restaurant La Popotte",
+   "place": "Restaurant, Grand Sud",
+   "cat": "gs-manger",
+   "summary": "Restaurant.",
+   "phones": [
+    "+687 46 20 08"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "table-d-hote-du-grand-bleu",
+   "name": "Table d’hôte du Grand Bleu",
+   "place": "Table d’hôtes, Grand Sud",
+   "cat": "gs-manger",
+   "summary": "Table d’hôtes.",
+   "phones": [
+    "+687 43 03 47"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
+  },
+  {
+   "id": "table-d-hotes-de-saint-pierre",
+   "name": "Table d’hôtes de Saint-Pierre",
+   "place": "Table d’hôtes, Grand Sud",
+   "cat": "gs-manger",
+   "summary": "Table d’hôtes.",
+   "phones": [
+    "+687 53 89 52",
+    "+687 92 33 07"
+   ],
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc",
+   "srcLabel": "la carte « Grand Sud » de Sud Tourisme"
   }
  ]
 }
