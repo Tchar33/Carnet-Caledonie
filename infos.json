@@ -1,5 +1,5 @@
 {
- "v": 5,
+ "v": 6,
  "updated": "novembre 2026",
  "sections": [
   {
@@ -219,5 +219,141 @@
    "html": "<p>La <b>Grande Terre</b> mesure environ 400 km de long pour une cinquantaine de large. Une chaîne de montagnes la traverse (le mont Panié culmine vers 1 630 mètres). La côte ouest est plus sèche, avec savanes et niaoulis, la côte est plus humide et verte, et le sud est marqué par la terre rouge des sols riches en nickel.</p>\n<p>Autour : l’<b>île des Pins</b>, les <b>îles Loyauté</b> (Ouvéa, Lifou, Maré, Tiga) et les îles Bélep, au nord.</p>\n<ul>\n<li><b>Le lagon</b> est l’un des plus vastes du monde, entouré d’une barrière récifale de plus de 1 500 km. Les « lagons de Nouvelle-Calédonie : diversité récifale et écosystèmes associés » sont inscrits au patrimoine mondial de l’UNESCO depuis 2008.</li>\n<li><b>Biodiversité :</b> une flore remarquable, avec une très forte proportion d’espèces endémiques (kaoris, araucarias, forêt sèche), des dugongs, des tortues et des baleines à bosse en hiver austral.</li>\n<li><b>Mer de Corail :</b> un très vaste parc naturel marin y a été créé en 2014.</li></ul>",
    "chapter": "activites"
   }
- ]
+ ],
+ "subs": {
+  "culture": [
+   {
+    "id": "kanak",
+    "emoji": "🪶",
+    "title": "Comprendre la culture kanak",
+    "desc": "Savoir-vivre, aires, clans et langues",
+    "items": [
+     "kanak",
+     "coutume",
+     "aires",
+     "langues",
+     "vocabulaire"
+    ]
+   },
+   {
+    "id": "symboles",
+    "emoji": "🛖",
+    "title": "Lieux et symboles",
+    "desc": "La grande case et le centre Tjibaou",
+    "items": [
+     "case",
+     "tjibaou"
+    ]
+   },
+   {
+    "id": "histoire",
+    "emoji": "📜",
+    "title": "L’histoire du pays",
+    "desc": "Des premiers peuples à nos jours",
+    "items": [
+     "histoire",
+     "peuplement",
+     "colonisation",
+     "revoltes",
+     "guerre",
+     "accords"
+    ]
+   },
+   {
+    "id": "statut",
+    "emoji": "🏛️",
+    "title": "Statut politique et actualité",
+    "desc": "Institutions et débats en cours",
+    "items": [
+     "statut"
+    ]
+   },
+   {
+    "id": "cuisine",
+    "emoji": "🍲",
+    "title": "Gastronomie et traditions",
+    "desc": "Bougna, igname et partage",
+    "items": [
+     "cuisine"
+    ]
+   }
+  ],
+  "conseils": [
+   {
+    "id": "avant",
+    "emoji": "🧳",
+    "title": "Avant le départ",
+    "desc": "Découvrir le pays, le climat, les formalités",
+    "items": [
+     "apercu",
+     "climat",
+     "preparer",
+     "liens"
+    ]
+   },
+   {
+    "id": "surplace",
+    "emoji": "🚗",
+    "title": "Sur place",
+    "desc": "Se déplacer, téléphone et usages",
+    "items": [
+     "deplacements",
+     "route",
+     "telephone",
+     "coutume-visiteur"
+    ]
+   },
+   {
+    "id": "sante",
+    "emoji": "🩺",
+    "title": "Santé et sécurité",
+    "desc": "Soleil, mer, moustiques et lagon",
+    "items": [
+     "securite",
+     "lagon-risques"
+    ]
+   }
+  ],
+  "activites": [
+   {
+    "id": "visites",
+    "emoji": "🗺️",
+    "title": "Idées de visites",
+    "desc": "Les lieux et expériences à ne pas manquer",
+    "items": [
+     "visites",
+     "experiences",
+     "riviere-bleue",
+     "geo"
+    ]
+   },
+   {
+    "id": "mer",
+    "emoji": "🌊",
+    "title": "Mer et lagon",
+    "desc": "Plongée, kayak, sorties en bateau",
+    "items": [
+     "activites"
+    ],
+    "ann": [
+     "plongee",
+     "kayak",
+     "mer"
+    ]
+   },
+   {
+    "id": "nature",
+    "emoji": "🥾",
+    "title": "Randonnée, cheval et aventure",
+    "desc": "Sentiers, balades à cheval, VTT",
+    "items": [
+     "randonnee"
+    ],
+    "ann": [
+     "cheval",
+     "aventure"
+    ]
+   }
+  ]
+ }
 }
