@@ -352,9 +352,9 @@ function kIcon(em,col){const c=document.createElement('canvas');c.width=c.height
 x.beginPath();x.arc(24,24,21,0,6.2832);x.fillStyle=col;x.fill();x.lineWidth=3;x.strokeStyle='#ffffff';x.stroke();
 x.font='24px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText(em,24,26);return x.getImageData(0,0,48,48)}
 async function loadConnus(){try{if(!map||HAVE_K)return;const r=await fetch('connus.json');if(!r.ok)return;const j=await r.json();KT=j.k;
-const feats=j.d.map(q=>{const k=KT[q[2]];KCOUNT[k[2]]=(KCOUNT[k[2]]||0)+1;return{type:'Feature',geometry:{type:'Point',coordinates:[q[0],q[1]]},properties:{k:q[2],n:q[3],a:q[4],p:q[5],w:q[6],h:q[7],g:k[2],z:k[3],i:'k'+q[2]}}});
-try{const ra=await fetch('activites.json');if(ra.ok){const A=await ra.json();ACT=A;A.categories.forEach(c=>{if(!c.providers.length)return;const ki=KT.length;KT.push([c.title,c.emoji,'activites',11]);
-c.providers.forEach(p=>{if(p.lat==null)return;const f={type:'Feature',geometry:{type:'Point',coordinates:[p.lng,p.lat]},properties:{k:ki,n:p.name,a:p.place||'',p:p.phone||'',w:provLinks(p),h:p.hours||'',g:'activites',z:11,i:'k'+ki,pid:p.id}};feats.push(f);ACTF[p.id]=f;KCOUNT.activites=(KCOUNT.activites||0)+1})})}}catch(e){}
+const feats=j.d.map(q=>{const k=KT[q[2]];KCOUNT[k[2]]=(KCOUNT[k[2]]||0)+1;return{type:'Feature',geometry:{type:'Point',coordinates:[q[0],q[1]]},properties:{k:q[2],n:q[3],a:q[4],p:q[5],w:q[6],h:q[7],d:q[8]||'',g:k[2],z:k[3],i:'k'+q[2]}}});
+try{const ra=await fetch('activites.json');if(ra.ok){const A=await ra.json();ACT=A;A.categories.forEach(c=>{const L=A.providers.filter(p=>p.cat===c.id&&p.lat!=null);if(!L.length)return;const ki=KT.length;KT.push([c.title,c.emoji,'activites',11]);
+L.forEach(p=>{const f={type:'Feature',geometry:{type:'Point',coordinates:[p.lng,p.lat]},properties:{k:ki,n:p.name,a:(p.place||'')+(p.approx?' (position approximative)':''),p:(p.phones||[])[0]||'',w:provLinks(p),h:p.hours||'',d:'',g:'activites',z:11,i:'k'+ki,pid:p.id}};feats.push(f);ACTF[p.id]=f;KCOUNT.activites=(KCOUNT.activites||0)+1})})}}catch(e){}
 KT.forEach((k,i)=>{if(!map.hasImage('k'+i))map.addImage('k'+i,kIcon(k[1],GCOL[k[2]]||'#7f8c8d'),{pixelRatio:2})});
 map.addSource('k',{type:'geojson',data:{type:'FeatureCollection',features:feats}});
 KLAYERS=[];[9,11,13,15].forEach(z=>{const id='kp'+z;map.addLayer({id,type:'symbol',source:'k',minzoom:z,filter:['==',['get','z'],z],
@@ -368,9 +368,9 @@ const kinds=POI_GROUPS.filter(g=>POIEN.has(g.id)).flatMap(g=>g.kinds),inK=['in',
 const f=POIEN.has('autres')?['any',inK,unk]:inK;map.setFilter('poi',f);map.setFilter('poi-l',['all',f,['has','name']])}catch(e){}}
 function showKnown(f){const p=f.properties||{},c=f.geometry.coordinates;let name,label,em='',extra='',web='';
 if(p.k!==undefined&&KT[p.k]){const K=KT[p.k];name=p.n||K[0];label=K[0];em=K[1]+' ';web=p.w||'';
-const bits=[];if(p.a)bits.push('📍 '+esc(p.a));if(p.p)bits.push('📞 <a href="tel:'+esc(p.p.split(/[;,]/)[0].replace(/\s/g,''))+'">'+esc(p.p)+'</a>');if(p.h)bits.push('🕒 '+esc(p.h));
+const bits=[];if(p.a)bits.push('📍 '+esc(p.a));if(p.p)bits.push('📞 <a href="tel:'+esc(p.p.split(/[;,]/)[0].replace(/\s/g,''))+'">'+esc(p.p)+'</a>');if(p.h)bits.push('🕒 '+esc(p.h));if(p.d)bits.push('ℹ️ '+esc(p.d));
 extra=bits.length?'<div class="note" style="margin:6px 0">'+bits.join('<br>')+'</div>':'';
-KNOWN={name:p.n||'',lat:c[1],lng:c[0],kind:label,note:[p.a,p.p?'Tél. '+p.p:'',p.h?'Horaires : '+p.h:''].filter(Boolean).join('\n'),links:web}}
+KNOWN={name:p.n||'',lat:c[1],lng:c[0],kind:label,note:[p.a,p.p?'Tél. '+p.p:'',p.h?'Horaires : '+p.h:'',p.d||''].filter(Boolean).join('\n'),links:web}}
 else{name=p.name||'';label=kindLabel(p.kind);KNOWN={name:name,lat:c[1],lng:c[0],kind:label,note:'',links:''}}
 if(tmpMark){tmpMark.remove();tmpMark=null}const pc=$('pc');pc.style.display='block';
 pc.innerHTML='<b>'+em+esc(name||label)+'</b><div class="meta">'+esc(label)+'</div>'+extra+(web?'<div class="row">'+linksL(web)+'</div>':'')+'<div class="row">'+(p.pid?'<button onclick="openProvider(\''+esc(p.pid)+'\')">🧾 Prestations et tarifs</button>':'')+(FAMILY?'':'<button onclick="addKnown()">＋ Ajouter à mes lieux</button>')+'<a class="btn alt" href="https://www.google.com/maps/dir/?api=1&destination='+c[1]+','+c[0]+'" target="_blank" rel="noopener">↗️ Itinéraire</a><button class="alt" onclick="$(\'pc\').style.display=\'none\'">✕</button></div>'}
@@ -624,24 +624,25 @@ if(!INF){try{const r=await fetch('infos.json');if(!r.ok)throw 0;INF=await r.json
 if(CH==='activites'&&!ACT){try{const ra=await fetch('activites.json');if(ra.ok)ACT=await ra.json()}catch(e){}}
 chapRender('')}
 let PEND=null,ACT=null,ACTF={};
-const provLinks=p=>[p.web,p.facebook,p.instagram].filter(Boolean).join('\n');
-function provHTML(p){const tel=(p.phone||'').replace(/[^\d+]/g,'');
-const btn=(tel?'<a class="btn" href="tel:'+esc(tel)+'">📞 Appeler</a>':'')+(p.whatsapp?'<a class="btn alt" href="'+esc(p.whatsapp)+'" target="_blank" rel="noopener">💬 WhatsApp</a>':'')+(p.email?'<a class="btn alt" href="mailto:'+esc(p.email)+'">✉️ E-mail</a>':'')+(p.lat!=null?'<button class="alt" data-pv="'+esc(p.id)+'">📍 Carte</button>':'');
+const provLinks=p=>[p.web,p.facebook,p.instagram,p.listing].filter(Boolean).join('\n');
+function provHTML(p){const btn=(p.phones||[]).map(t=>'<a class="btn" href="tel:'+esc(t.replace(/[^\d+]/g,''))+'">📞 '+esc(t)+'</a>').join('')+(p.whatsapp?'<a class="btn alt" href="'+esc(p.whatsapp)+'" target="_blank" rel="noopener">💬 WhatsApp</a>':'')+(p.email?'<a class="btn alt" href="mailto:'+esc(p.email)+'">✉️ E-mail</a>':'')+(p.lat!=null?'<button class="alt" data-pv="'+esc(p.id)+'">📍 Carte</button>':'');
 const offers=(p.offers||[]).map(g=>'<div style="font-weight:700;margin-top:8px">'+esc(g.g)+'</div>'+g.items.map(i=>'<div class="of"><span>'+esc(i.n)+(i.d?'<small class="meta"> · '+esc(i.d)+'</small>':'')+'</span><b>'+esc(i.p||'')+'</b></div>').join('')).join('');
 const notes=(p.notes||[]).length?'<ul style="padding-left:18px;margin:6px 0">'+p.notes.map(n=>'<li>'+esc(n)+'</li>').join('')+'</ul>':'';
-return'<div class="card" id="prov_'+esc(p.id)+'" style="margin:8px 0"><b>'+esc(p.name)+'</b><div class="meta">📍 '+esc(p.place||'')+'</div><div style="margin:6px 0">'+esc(p.summary||'')+'</div>'+(p.hours?'<div class="meta">🕒 '+esc(p.hours)+'</div>':'')+
+const also=(p.also||[]).map(id=>{const c=ACT.categories.find(x=>x.id===id);return c?c.emoji+' '+c.title:''}).filter(Boolean);
+const src=p.source?'<a href="'+esc(p.source)+'" target="_blank" rel="noopener">'+esc(p.srcLabel||'le site du prestataire')+'</a>':esc(p.srcLabel||'le site du prestataire');
+return'<div class="card" id="prov_'+esc(p.id)+'" style="margin:8px 0"><b>'+esc(p.name)+'</b><div class="meta">📍 '+esc(p.place||'')+(p.approx?' · position approximative':'')+'</div><div style="margin:6px 0">'+esc(p.summary||'')+'</div>'+(also.length?'<div class="meta">Aussi : '+also.map(esc).join(' · ')+'</div>':'')+(p.hours?'<div class="meta">🕒 '+esc(p.hours)+'</div>':'')+
 '<div class="row">'+btn+'</div><div class="row">'+linksL(provLinks(p))+'</div>'+(offers?'<details><summary class="meta" style="margin-top:6px">Prestations et tarifs</summary>'+offers+notes+'</details>':'')+
-'<div class="meta" style="margin-top:6px">Relevé le '+esc(frD(p.checked,{day:'numeric',month:'long',year:'numeric'}))+' sur '+(p.source?'<a href="'+esc(p.source)+'" target="_blank" rel="noopener">le site du prestataire</a>':'le site du prestataire')+'. Tarifs et horaires à confirmer auprès du prestataire.</div></div>'}
-function annuaireHTML(Q){if(!ACT)return'';let h='';ACT.categories.forEach(c=>{const L=c.providers.filter(p=>!Q||JSON.stringify(p).toLowerCase().includes(Q));if(!L.length)return;
-h+='<details'+((Q||(PEND&&L.some(p=>p.id===PEND)))?' open':'')+'><summary>'+c.emoji+' '+esc(c.title)+' · '+L.length+'</summary>'+L.map(provHTML).join('')+'</details>'});
-return h?'<div style="font-weight:700;margin:8px 0 2px">🧾 Annuaire des prestataires</div><div class="meta" style="margin-bottom:6px">Informations relevées sur les sites des prestataires. Tarifs et horaires à confirmer auprès d’eux.</div>'+h+'<div style="font-weight:700;margin:16px 0 2px">💡 Idées et conseils</div>':''}
+'<div class="meta" style="margin-top:6px">Relevé le '+esc(frD(p.checked,{day:'numeric',month:'long',year:'numeric'}))+' d’après '+src+'. Tarifs et horaires à confirmer auprès du prestataire.</div></div>'}
+function annuaireHTML(Q){if(!ACT)return'';let h='';ACT.categories.forEach(c=>{const L=ACT.providers.filter(p=>(p.cat===c.id||(p.also||[]).includes(c.id))&&(!Q||JSON.stringify(p).toLowerCase().includes(Q)));if(!L.length)return;
+h+='<details'+((Q||(PEND&&L.some(p=>p.id===PEND)))?' open':'')+'><summary>'+c.emoji+' '+esc(c.title)+' · '+L.length+'</summary>'+(c.note?'<div class="meta" style="margin:4px 0">'+esc(c.note)+'</div>':'')+L.map(provHTML).join('')+'</details>'});
+return h?'<div style="font-weight:700;margin:8px 0 2px">🧾 Annuaire des prestataires ('+ACT.providers.length+')</div><div class="meta" style="margin-bottom:6px">Informations relevées auprès de sources officielles et des sites des prestataires. Tarifs et horaires à confirmer auprès d’eux.</div>'+h+'<div style="font-weight:700;margin:16px 0 2px">💡 Idées et conseils</div>':''}
 function chapRender(q){const Q=(q||'').toLowerCase().trim(),S=INF.sections.filter(s=>s.chapter===CH&&(!Q||(s.title+' '+s.html.replace(/<[^>]+>/g,' ')).toLowerCase().includes(Q)));
 const ann=CH==='activites'?annuaireHTML(Q):'';
 $('chap_b').innerHTML='<input id="chap_q" placeholder="Rechercher dans ce chapitre…" value="'+esc(Q)+'" style="margin:0 0 10px">'+ann+(S.map(s=>'<details'+(Q&&S.length<3?' open':'')+'><summary>'+s.emoji+' '+esc(s.title)+'</summary><div class="inf-b">'+s.html+'</div></details>').join('')||(ann?'':'<div class="meta">Aucun résultat.</div>'))+'<div class="meta" style="margin-top:14px">Synthèses rédigées pour ce carnet ('+esc(INF.updated)+'). Vérifiez les informations pratiques auprès des sites officiels.</div>';
 const i=$('chap_q');i.oninput=()=>{const p=i.selectionStart;chapRender(i.value);const n=$('chap_q');n.focus();try{n.setSelectionRange(p,p)}catch(x){}};
 if(PEND){const el=$('prov_'+PEND);PEND=null;if(el&&el.scrollIntoView)el.scrollIntoView({block:'start'})}}
 function openProvider(pid){PEND=pid;chapOpen('activites')}
-function showProviderOnMap(pid){let lat,lng;const f=ACTF[pid];if(f){lng=f.geometry.coordinates[0];lat=f.geometry.coordinates[1]}else if(ACT)ACT.categories.forEach(c=>c.providers.forEach(p=>{if(p.id===pid){lat=p.lat;lng=p.lng}}));
+function showProviderOnMap(pid){let lat,lng;const f=ACTF[pid];if(f){lng=f.geometry.coordinates[0];lat=f.geometry.coordinates[1]}else if(ACT)ACT.providers.forEach(p=>{if(p.id===pid){lat=p.lat;lng=p.lng}});
 if(lat==null)return;setMode(MODE);if(map){map.jumpTo({center:[lng,lat],zoom:14});if(f)showKnown(f)}}
 $('chap_b').onclick=e=>{const b=e.target.closest('button[data-pv]');if(b)showProviderOnMap(b.dataset.pv)};
 $('home').onclick=e=>{const b=e.target.closest('[data-go]');if(!b)return;const g=b.dataset.go;

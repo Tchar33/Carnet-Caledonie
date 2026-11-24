@@ -1,149 +1,917 @@
 {
- "v": 1,
+ "v": 2,
  "updated": "novembre 2026",
  "categories": [
   {
    "id": "plongee",
    "emoji": "🤿",
-   "title": "Plongée",
-   "providers": [
+   "title": "Plongée et snorkeling",
+   "note": "Source : brochure plongée de Nouvelle-Calédonie Tourisme (édition du 1er août 2025) et fiches officielles."
+  },
+  {
+   "id": "cheval",
+   "emoji": "🐎",
+   "title": "Randonnées à cheval",
+   "note": "Source : liste officielle de Nouvelle-Calédonie Tourisme (neuf structures) et annuaire Sud Tourisme."
+  },
+  {
+   "id": "kayak",
+   "emoji": "🛶",
+   "title": "Kayak, canoë, paddle et location",
+   "note": "Source : page officielle kayak de Nouvelle-Calédonie Tourisme. Vérifiez le type de location (à emporter ou sur place)."
+  },
+  {
+   "id": "mer",
+   "emoji": "🚤",
+   "title": "Sorties en mer et sports nautiques",
+   "note": "Source : annuaire nautique officiel et annuaire Sud Tourisme."
+  },
+  {
+   "id": "aventure",
+   "emoji": "🧗",
+   "title": "Randonnée, VTT et aventure",
+   "note": "Source : fiches officielles et annuaire Sud Tourisme. Consultez les règles d’accès des parcs provinciaux avant une randonnée en autonomie."
+  }
+ ],
+ "providers": [
+  {
+   "id": "scubaddict",
+   "name": "Scub'Addict",
+   "place": "Nouvelle-Calédonie (voir le site pour le lieu de départ)",
+   "cat": "plongee",
+   "summary": "Club de plongée : explorations, baptême et formations FFESSM, location et gonflage.",
+   "phones": [
+    "+687 78 08 88"
+   ],
+   "web": "http://scubaddict.nc",
+   "offers": [
     {
-     "id": "scubaddict",
-     "name": "Scub'Addict",
-     "place": "La Roche Percée, Bourail",
-     "lat": -21.63368,
-     "lng": 165.46929,
-     "summary": "Club de plongée de Bourail, avec des sorties à bord du bateau KUMA : explorations, baptêmes et formations FFESSM.",
-     "hours": "Tous les jours de 7 h 30 à 15 h ; plongées de nuit possibles",
-     "phone": "+687 78 08 88",
-     "whatsapp": "https://wa.me/687780888",
-     "email": "contact@scubaddict.nc",
-     "web": "http://scubaddict.nc/",
-     "facebook": "https://www.facebook.com/profile.php?id=61554321735391",
-     "instagram": "https://www.instagram.com/scubaddict_bourail/",
-     "source": "http://scubaddict.nc/activite-tarifs.html",
-     "checked": "2026-11-24",
-     "offers": [
+     "g": "Plongées",
+     "items": [
       {
-       "g": "Explorations",
-       "items": [
-        {
-         "n": "Exploration guidée, 2 plongées",
-         "p": "17 000 XPF",
-         "d": "guide, matériel et briefing inclus"
-        },
-        {
-         "n": "Exploration autonome non guidée, 2 plongées",
-         "p": "14 000 XPF",
-         "d": "plongeurs qualifiés ; équipement personnel non compris"
-        },
-        {
-         "n": "Plongée de nuit non guidée",
-         "p": "9 000 XPF",
-         "d": "par plongée"
-        },
-        {
-         "n": "Plongée de nuit guidée",
-         "p": "10 000 XPF",
-         "d": "par plongée"
-        },
-        {
-         "n": "Option Nitrox 32 %",
-         "p": "+ 2 000 XPF",
-         "d": "pour 2 plongées"
-        },
-        {
-         "n": "Réduction de groupe",
-         "p": "− 2 000 XPF",
-         "d": "par personne, dès 8 plongeurs"
-        }
-       ]
+       "n": "Exploration encadrée",
+       "p": "17 000 XPF"
       },
       {
-       "g": "Baptême",
-       "items": [
-        {
-         "n": "Baptême de plongée",
-         "p": "10 000 XPF",
-         "d": "20 minutes sous l’eau, 1 moniteur pour 1 participant, matériel prêté"
-        }
-       ]
+       "n": "Exploration en autonomie",
+       "p": "14 000 XPF"
       },
       {
-       "g": "Formations FFESSM",
-       "items": [
-        {
-         "n": "Niveau 1",
-         "p": "55 000 XPF",
-         "d": "5 plongées"
-        },
-        {
-         "n": "PE40",
-         "p": "45 000 XPF",
-         "d": "4 plongées"
-        },
-        {
-         "n": "PA20",
-         "p": "65 000 XPF",
-         "d": "6 plongées"
-        },
-        {
-         "n": "Niveau 2",
-         "p": "90 000 XPF",
-         "d": "10 plongées"
-        },
-        {
-         "n": "Niveau 3",
-         "p": "100 000 XPF",
-         "d": "10 plongées"
-        },
-        {
-         "n": "Nitrox simple",
-         "p": "25 000 XPF",
-         "d": "2 plongées"
-        }
-       ]
-      },
-      {
-       "g": "Location et gonflage",
-       "items": [
-        {
-         "n": "Combinaison, stab ou PMT",
-         "p": "500 XPF",
-         "d": "par élément"
-        },
-        {
-         "n": "Ordinateur ou parachute",
-         "p": "1 000 XPF",
-         "d": "par sortie"
-        },
-        {
-         "n": "Lampe",
-         "p": "500 XPF",
-         "d": "par sortie"
-        },
-        {
-         "n": "Gonflage d’un bloc à l’air",
-         "p": "800 à 900 XPF",
-         "d": "selon la taille du bloc"
-        },
-        {
-         "n": "Supplément Nitrox 32 %",
-         "p": "200 XPF",
-         "d": "par bloc"
-        }
-       ]
+       "n": "Baptême",
+       "p": "10 000 XPF"
       }
-     ],
-     "notes": [
-      "Sortie habituelle : 2 plongées, rendez-vous vers 7 h 30 devant le club, retour vers 13 h. Les horaires dépendent notamment de la marée.",
-      "Pour une exploration, il faut déjà avoir un niveau de plongée : le baptême n’en est pas un.",
-      "Documents demandés : carte de niveau, règlement intérieur signé, autorisation parentale pour les mineurs, certificat médical de moins d’un an ou questionnaire médical.",
-      "Formations : théorie, matériel et carte inclus. Licence FFESSM de 6 500 XPF si vous n’êtes pas licencié ; assurance non incluse.",
-      "Le gonflage demande une réépreuve du bloc à jour."
+     ]
+    },
+    {
+     "g": "Autres",
+     "items": [
+      {
+       "n": "Formations FFESSM, location de matériel et gonflage",
+       "p": "sur demande"
+      }
      ]
     }
+   ],
+   "checked": "2026-11-24",
+   "source": "http://scubaddict.nc",
+   "srcLabel": "le site du prestataire"
+  },
+  {
+   "id": "abyss-plongee",
+   "name": "Abyss Plongée",
+   "place": "Nouméa, Marina Port du Sud (position approximative du port)",
+   "cat": "plongee",
+   "summary": "Plongée bouteille.",
+   "phones": [
+    "+687 79 15 09"
+   ],
+   "web": "https://abyssnc.com",
+   "checked": "2026-11-24",
+   "source": "https://abyssnc.com",
+   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme",
+   "lat": -22.28409,
+   "lng": 166.4407,
+   "approx": true
+  },
+  {
+   "id": "atao-taxi-boat",
+   "name": "Atao Taxi Boat",
+   "place": "Nouméa, Port Moselle (position approximative du port)",
+   "cat": "plongee",
+   "summary": "Plongée bouteille, snorkeling guidé.",
+   "phones": [
+    "+687 70 65 00"
+   ],
+   "web": "https://ataotaxiboatnc.com",
+   "checked": "2026-11-24",
+   "source": "https://ataotaxiboatnc.com",
+   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme",
+   "lat": -22.27766,
+   "lng": 166.43955,
+   "approx": true
+  },
+  {
+   "id": "babou-cote-ocean",
+   "name": "Babou Côté Océan",
+   "place": "Hienghène, tribu de Koulnoué",
+   "cat": "plongee",
+   "also": [
+    "kayak"
+   ],
+   "summary": "Plongée bouteille, snorkeling guidé.",
+   "phones": [
+    "+687 42 83 59"
+   ],
+   "web": "https://babou-plongee.com",
+   "checked": "2026-11-24",
+   "source": "https://babou-plongee.com",
+   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme"
+  },
+  {
+   "id": "ouest-corail",
+   "name": "Ouest Corail",
+   "place": "Bourail, plage de Poé",
+   "cat": "plongee",
+   "summary": "Snorkeling guidé / bateau à fond de verre.",
+   "phones": [
+    "+687 77 60 59"
+   ],
+   "web": "https://ouest-corail.nc",
+   "checked": "2026-11-24",
+   "source": "https://ouest-corail.nc",
+   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme"
+  },
+  {
+   "id": "blue-caledonia-diving",
+   "name": "Blue Caledonia Diving",
+   "place": "Nouméa, Marina Port du Sud",
+   "cat": "plongee",
+   "summary": "Plongée bouteille, snorkeling guidé.",
+   "phones": [
+    "+687 98 13 86"
+   ],
+   "web": "https://bluecaledoniadiving.com",
+   "checked": "2026-11-24",
+   "source": "https://bluecaledoniadiving.com",
+   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme",
+   "lat": -22.28409,
+   "lng": 166.4407,
+   "approx": false
+  },
+  {
+   "id": "enjoy-diving",
+   "name": "Enjoy Diving",
+   "place": "Nouméa, Marina Port du Sud (position approximative du port)",
+   "cat": "plongee",
+   "summary": "Plongée bouteille.",
+   "phones": [
+    "+687 91 51 11"
+   ],
+   "web": "https://enjoy-diving.net",
+   "checked": "2026-11-24",
+   "source": "https://enjoy-diving.net",
+   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme",
+   "lat": -22.28409,
+   "lng": 166.4407,
+   "approx": true
+  },
+  {
+   "id": "iatok-diving-paradise",
+   "name": "Iatok Diving Paradise",
+   "place": "Nouméa, Port Moselle",
+   "cat": "plongee",
+   "summary": "Plongée bouteille.",
+   "phones": [
+    "+687 76 77 71"
+   ],
+   "web": "https://iatok-diving-noumea.com",
+   "checked": "2026-11-24",
+   "source": "https://iatok-diving-noumea.com",
+   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme",
+   "lat": -22.27888,
+   "lng": 166.43803,
+   "approx": false
+  },
+  {
+   "id": "kuare-croisieres",
+   "name": "Kuaré Croisières",
+   "place": "Nouméa",
+   "cat": "plongee",
+   "summary": "Plongée bouteille.",
+   "phones": [
+    "+687 77 10 90"
+   ],
+   "email": "astiphane@yahoo.fr",
+   "checked": "2026-11-24",
+   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme"
+  },
+  {
+   "id": "kunie-scuba-center",
+   "name": "Kunie Scuba Center",
+   "place": "Île des Pins, baie de Ouaméo",
+   "cat": "plongee",
+   "summary": "Plongée bouteille, snorkeling guidé.",
+   "phones": [
+    "+687 85 34 86"
+   ],
+   "listing": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/plongee/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/plongee/",
+   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme",
+   "lat": -22.58919,
+   "lng": 167.42559,
+   "approx": false
+  },
+  {
+   "id": "la-foa-plongee",
+   "name": "La Foa Plongée",
+   "place": "presqu’île de Ouano",
+   "cat": "plongee",
+   "summary": "Plongée bouteille.",
+   "phones": [
+    "+687 94 80 83"
+   ],
+   "email": "info@lafoaplongee.com",
+   "listing": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/plongee/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/plongee/",
+   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme"
+  },
+  {
+   "id": "lagoon-safaris",
+   "name": "Lagoon Safaris",
+   "place": "Lifou, Easo",
+   "cat": "plongee",
+   "summary": "Plongée bouteille, snorkeling guidé.",
+   "phones": [
+    "+687 89 43 20"
+   ],
+   "email": "lagoon.safaris@gmail.com",
+   "checked": "2026-11-24",
+   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme",
+   "lat": -20.78515,
+   "lng": 167.12381,
+   "approx": false
+  },
+  {
+   "id": "mobula-diving",
+   "name": "Mobula Diving",
+   "place": "Mont-Dore, Port Boulari",
+   "cat": "plongee",
+   "summary": "Plongée bouteille, snorkeling guidé.",
+   "phones": [
+    "+687 90 04 16"
+   ],
+   "web": "https://mobula-diving.nc",
+   "checked": "2026-11-24",
+   "source": "https://mobula-diving.nc",
+   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme",
+   "lat": -22.23339,
+   "lng": 166.52491,
+   "approx": false
+  },
+  {
+   "id": "odyssey-diving",
+   "name": "Odyssey Diving",
+   "place": "Nouméa, Port Moselle",
+   "cat": "plongee",
+   "summary": "Plongée bouteille, snorkeling guidé.",
+   "phones": [
+    "+687 98 86 75"
+   ],
+   "web": "https://odyssey-diving-nc.com",
+   "checked": "2026-11-24",
+   "source": "https://odyssey-diving-nc.com",
+   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme",
+   "lat": -22.27643,
+   "lng": 166.44107,
+   "approx": false
+  },
+  {
+   "id": "passion-lagon-poe",
+   "name": "Passion Lagon Poé",
+   "place": "Bourail",
+   "cat": "plongee",
+   "summary": "Snorkeling guidé.",
+   "phones": [
+    "+687 93 90 68"
+   ],
+   "web": "https://passionlagon.nc",
+   "checked": "2026-11-24",
+   "source": "https://passionlagon.nc",
+   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme"
+  },
+  {
+   "id": "tieti-diving",
+   "name": "Tiéti Diving",
+   "place": "Poindimié, hôtel Tiéti",
+   "cat": "plongee",
+   "summary": "Plongée bouteille.",
+   "phones": [
+    "+687 51 34 73"
+   ],
+   "web": "https://tieti-diving.com",
+   "checked": "2026-11-24",
+   "source": "https://tieti-diving.com",
+   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme"
+  },
+  {
+   "id": "vaqueros-rando",
+   "name": "Vaqueros Rando",
+   "place": "La Foa / Ouano",
+   "cat": "cheval",
+   "summary": "Balades de 2 à 4 h, propriété d’élevage, plage, mangrove et brousse. Réservation obligatoire.",
+   "phones": [
+    "+687 51 24 43"
+   ],
+   "listing": "https://www.nouvellecaledonie.travel/offres/vaqueros-rando-la-foa-fr-3914850/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/offres/vaqueros-rando-la-foa-fr-3914850/",
+   "srcLabel": "l’annuaire officiel du tourisme",
+   "offers": [
+    {
+     "g": "Balades à cheval",
+     "items": [
+      {
+       "n": "Balade de 2 h",
+       "p": "à partir de 7 000 XPF",
+       "d": "réservation obligatoire ; balades de 2 à 4 h"
+      }
+     ]
+    }
+   ],
+   "notes": [
+    "Tarifs publiés en 2026 sur la fiche officielle : à confirmer auprès du prestataire."
+   ],
+   "lat": -21.85503,
+   "lng": 165.82067,
+   "approx": false
+  },
+  {
+   "id": "la-foa-randonnees",
+   "name": "La Foa Randonnées",
+   "place": "La Foa",
+   "cat": "cheval",
+   "summary": "Demi-journée, journée, séjours de 2 jours ou plus, sorties vers le lagon et le Parc des Grandes Fougères.",
+   "phones": [
+    "+687 78 84 13"
+   ],
+   "listing": "https://www.nouvellecaledonie.travel/offres/la-foa-randonnees-la-foa-fr-3915675/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/offres/la-foa-randonnees-la-foa-fr-3915675/",
+   "srcLabel": "l’annuaire officiel du tourisme",
+   "offers": [
+    {
+     "g": "Randonnées à cheval",
+     "items": [
+      {
+       "n": "Demi-journée",
+       "p": "7 000 XPF"
+      },
+      {
+       "n": "Journée",
+       "p": "14 000 XPF"
+      }
+     ]
+    }
+   ],
+   "notes": [
+    "Tarifs publiés en 2026 sur la fiche officielle : à confirmer auprès du prestataire."
    ]
+  },
+  {
+   "id": "pocquereux-randonnees",
+   "name": "Pocquereux Randonnées",
+   "place": "La Foa",
+   "cat": "cheval",
+   "summary": "Randonnées équestres ; contacter le prestataire via la fiche touristique.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/nature-preservee/randonnees-a-cheval/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/nature-preservee/randonnees-a-cheval/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "lasbleiz-western-training",
+   "name": "Lasbleiz Western Training",
+   "place": "La Foa",
+   "cat": "cheval",
+   "summary": "Structure équestre référencée dans l’annuaire officiel.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/nature-preservee/randonnees-a-cheval/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/nature-preservee/randonnees-a-cheval/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "far-west-ranch-deva",
+   "name": "Far West Ranch Déva",
+   "place": "Bourail",
+   "cat": "cheval",
+   "summary": "Balades à cheval au Domaine de Déva et secteur de Poé.",
+   "listing": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "srcLabel": "l’annuaire officiel du tourisme",
+   "lat": -21.70164,
+   "lng": 165.69667,
+   "approx": false
+  },
+  {
+   "id": "club-hippique-la-criniere",
+   "name": "Club Hippique La Crinière",
+   "place": "Koumac",
+   "cat": "cheval",
+   "summary": "Prestataire équestre référencé dans l’annuaire officiel.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/nature-preservee/randonnees-a-cheval/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/nature-preservee/randonnees-a-cheval/",
+   "srcLabel": "l’annuaire officiel du tourisme",
+   "lat": -20.54841,
+   "lng": 164.31111,
+   "approx": false
+  },
+  {
+   "id": "kone-rando",
+   "name": "Koné Rando",
+   "place": "Koné",
+   "cat": "cheval",
+   "summary": "Randonnées équestres dans le secteur de Koné.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/nature-preservee/randonnees-a-cheval/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/nature-preservee/randonnees-a-cheval/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "centre-equestre-de-paita",
+   "name": "Centre équestre de Païta",
+   "place": "Païta",
+   "cat": "cheval",
+   "summary": "Prestataire équestre référencé dans l’annuaire officiel.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/nature-preservee/randonnees-a-cheval/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/nature-preservee/randonnees-a-cheval/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "yala-ranch",
+   "name": "Yala Ranch",
+   "place": "Dumbéa",
+   "cat": "cheval",
+   "summary": "Prestataire équestre référencé dans l’annuaire officiel.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/nature-preservee/randonnees-a-cheval/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/nature-preservee/randonnees-a-cheval/",
+   "srcLabel": "l’annuaire officiel du tourisme",
+   "lat": -22.12405,
+   "lng": 166.46961,
+   "approx": false
+  },
+  {
+   "id": "waves-seeker",
+   "name": "Waves Seeker",
+   "place": "La Foa",
+   "cat": "kayak",
+   "summary": "Kayak / activités nautiques référencés localement.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "poe-fun-loc",
+   "name": "Poé Fun Loc",
+   "place": "Bourail",
+   "cat": "kayak",
+   "summary": "Location / loisirs nautiques à Poé.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "srcLabel": "l’annuaire officiel du tourisme",
+   "lat": -21.61266,
+   "lng": 165.39761,
+   "approx": false
+  },
+  {
+   "id": "blue-pearl-snack-bar",
+   "name": "Blue Pearl Snack Bar",
+   "place": "plage de Poé, Bourail",
+   "cat": "kayak",
+   "summary": "Location kayak simple/double/triple et paddle. Tarifs publiés : kayak 1 h à partir de 1 300 XPF ; paddle 1 h à partir de 1 500 XPF.",
+   "phones": [
+    "+687 76 42 13"
+   ],
+   "listing": "https://www.nouvellecaledonie.travel/offres/blue-pearl-snack-bar-location-kayak-et-paddle-bourail-fr-3913893/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/offres/blue-pearl-snack-bar-location-kayak-et-paddle-bourail-fr-3913893/",
+   "srcLabel": "l’annuaire officiel du tourisme",
+   "offers": [
+    {
+     "g": "Location à la plage de Poé",
+     "items": [
+      {
+       "n": "Kayak, 1 h",
+       "p": "à partir de 1 300 XPF",
+       "d": "simple, double ou triple"
+      },
+      {
+       "n": "Paddle, 1 h",
+       "p": "à partir de 1 500 XPF"
+      }
+     ]
+    }
+   ],
+   "notes": [
+    "Tarifs publiés en 2026 sur la fiche officielle : à confirmer auprès du prestataire."
+   ]
+  },
+  {
+   "id": "chez-joss-kayak",
+   "name": "Chez Joss Kayak",
+   "place": "Bourail",
+   "cat": "kayak",
+   "summary": "Randonnées en kayak sur la Néra, la mangrove, la Roche Percée et Poé ; logistique et transferts inclus selon formule.",
+   "phones": [
+    "+687 44 06 88"
+   ],
+   "listing": "https://www.nouvellecaledonie.travel/offres/chez-joss-kayak-bourail-fr-5527696/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/offres/chez-joss-kayak-bourail-fr-5527696/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "deva-s-bike",
+   "name": "Deva’s Bike",
+   "place": "Bourail / Domaine de Déva",
+   "cat": "aventure",
+   "also": [
+    "kayak"
+   ],
+   "summary": "VTT et activités outdoor ; combiné kayak/VTT possible avec partenaires selon disponibilités.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "aventure-pulsion",
+   "name": "Aventure Pulsion",
+   "place": "Nouméa / Dumbéa",
+   "cat": "kayak",
+   "summary": "Location de kayaks et paddles à emporter, sorties guidées, itinéraires avec roadbook et séjours itinérants.",
+   "phones": [
+    "+687 26 27 48",
+    "+687 95 15 93"
+   ],
+   "listing": "https://www.nouvellecaledonie.travel/offres/aventure-pulsion-kayak-et-paddle-a-noumea-noumea-fr-5528055/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/offres/aventure-pulsion-kayak-et-paddle-a-noumea-noumea-fr-5528055/",
+   "srcLabel": "l’annuaire officiel du tourisme",
+   "lat": -22.26651,
+   "lng": 166.46995,
+   "approx": false
+  },
+  {
+   "id": "sud-loisirs",
+   "name": "Sud Loisirs",
+   "place": "Parc provincial de la Rivière Bleue, Yaté",
+   "cat": "aventure",
+   "also": [
+    "kayak"
+   ],
+   "summary": "Location VTT et kayak ; sorties pleine lune et combinés VTT/kayak.",
+   "phones": [
+    "+687 77 81 43"
+   ],
+   "listing": "https://www.nouvellecaledonie.travel/offres/sud-loisirs-location-de-vtt-kayak-au-parc-provincial-de-la-riviere-bleue-yate-fr-5527905/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/offres/sud-loisirs-location-de-vtt-kayak-au-parc-provincial-de-la-riviere-bleue-yate-fr-5527905/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "terraventure-nord",
+   "name": "Terraventure Nord",
+   "place": "Canala",
+   "cat": "aventure",
+   "also": [
+    "kayak"
+   ],
+   "summary": "Canyoning, VTT, kayak et randonnée pédestre encadrés.",
+   "phones": [
+    "+687 92 01 77"
+   ],
+   "listing": "https://www.nouvellecaledonie.travel/offres/terraventure-nord-canala-fr-4119085/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/offres/terraventure-nord-canala-fr-4119085/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "association-odyssee",
+   "name": "Association Odyssée",
+   "place": "Poindimié",
+   "cat": "kayak",
+   "summary": "Activités nautiques / kayak référencées par l’office du tourisme.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "camping-de-dallas",
+   "name": "Camping de Dallas",
+   "place": "Thio",
+   "cat": "kayak",
+   "summary": "Référencé parmi les prestataires kayak ; vérifier si location réservée aux campeurs.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "srcLabel": "l’annuaire officiel du tourisme",
+   "lat": -21.70515,
+   "lng": 166.39305,
+   "approx": false
+  },
+  {
+   "id": "camping-de-tipenga",
+   "name": "Camping de Tipenga",
+   "place": "Pouembout",
+   "cat": "kayak",
+   "summary": "Référencé dans l’annuaire kayak ; contacter l’établissement pour les modalités.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "zavy-loisirs-locations",
+   "name": "Zavy Loisirs Locations",
+   "place": "Lifou",
+   "cat": "kayak",
+   "summary": "Location de loisirs nautiques référencée à Lifou.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "centre-d-animation-nautique-de-hnaipole",
+   "name": "Centre d’animation nautique de Hnaipolë",
+   "place": "Lifou",
+   "cat": "kayak",
+   "summary": "Activités nautiques référencées à Lifou.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "canio",
+   "name": "CANIO",
+   "place": "Ouvéa",
+   "cat": "kayak",
+   "summary": "Centre d’animation nautique Iaai ; activités nautiques.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "accueil-en-tribu-xwacoo",
+   "name": "Accueil en tribu Xwacöö",
+   "place": "Thio",
+   "cat": "kayak",
+   "summary": "Référencé dans l’annuaire kayak ; demander si prêt/location de matériel sur place.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "prony-s-paradise",
+   "name": "Prony’s Paradise",
+   "place": "Mont-Dore",
+   "cat": "kayak",
+   "summary": "Référencé dans l’annuaire kayak ; vérifier l’accès à la location pour les non-résidents.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "srcLabel": "l’annuaire officiel du tourisme",
+   "lat": -22.32008,
+   "lng": 166.82465,
+   "approx": false
+  },
+  {
+   "id": "hotel-restaurant-la-nera",
+   "name": "Hôtel Restaurant La Néra",
+   "place": "Bourail",
+   "cat": "kayak",
+   "summary": "Référencé dans l’annuaire kayak ; contacter l’établissement pour disponibilité.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "noumea-sup-school",
+   "name": "Nouméa Sup School",
+   "place": "Nouméa",
+   "cat": "kayak",
+   "summary": "Activités nautiques et sports de glisse ; consulter l’annuaire pour le détail de l’offre.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/sports-de-glisse/kayak/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "dal-ocean",
+   "name": "Dal’Océan",
+   "place": "Nouméa",
+   "cat": "mer",
+   "summary": "Taxi-boat et charter.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/tous-les-prestataires-dactivites-nautiques/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/tous-les-prestataires-dactivites-nautiques/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "abaca-croisieres",
+   "name": "Abaca Croisières",
+   "place": "Nouméa",
+   "cat": "mer",
+   "summary": "Croisières et sorties en mer.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/tous-les-prestataires-dactivites-nautiques/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/tous-les-prestataires-dactivites-nautiques/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "casy-express",
+   "name": "Casy Express",
+   "place": "Mont-Dore / îlot Casy",
+   "cat": "mer",
+   "summary": "Journée ou bivouac sur l’îlot Casy.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/tous-les-prestataires-dactivites-nautiques/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/tous-les-prestataires-dactivites-nautiques/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "imagine-yacht-charter",
+   "name": "Imagine Yacht Charter",
+   "place": "Nouméa",
+   "cat": "mer",
+   "summary": "Location / charter de yacht.",
+   "listing": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "dimitri-waterprof",
+   "name": "Dimitri Waterprof",
+   "place": "Nouméa",
+   "cat": "mer",
+   "summary": "Sports nautiques et activités tractées.",
+   "listing": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "glisse-attitude",
+   "name": "Glisse Attitude",
+   "place": "Nouméa",
+   "cat": "mer",
+   "summary": "École de kitesurf.",
+   "listing": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/tous-les-prestataires-dactivites-nautiques/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/activites/lagon-paradisiaque/tous-les-prestataires-dactivites-nautiques/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "vakarm-kite-school",
+   "name": "Vakarm Kite School",
+   "place": "Nouméa",
+   "cat": "mer",
+   "summary": "Kitesurf.",
+   "listing": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "locajet",
+   "name": "Locajet",
+   "place": "Nouméa",
+   "cat": "mer",
+   "summary": "Jet-ski (à confirmer auprès du prestataire).",
+   "listing": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "srcLabel": "l’annuaire officiel du tourisme",
+   "notes": [
+    "Offre à confirmer auprès du prestataire."
+   ]
+  },
+  {
+   "id": "mabo-jet",
+   "name": "Mabo Jet",
+   "place": "Nouméa",
+   "cat": "mer",
+   "summary": "Loisirs nautiques motorisés / flyboard (à confirmer).",
+   "listing": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "srcLabel": "l’annuaire officiel du tourisme",
+   "notes": [
+    "Offre à confirmer auprès du prestataire."
+   ],
+   "lat": -22.23922,
+   "lng": 166.4071,
+   "approx": false
+  },
+  {
+   "id": "tina-bikes",
+   "name": "Tina Bikes",
+   "place": "Nouméa",
+   "cat": "aventure",
+   "summary": "Location VTT et vélos à assistance électrique aux Boucles de Tina.",
+   "phones": [
+    "+687 74 11 00"
+   ],
+   "listing": "https://www.nouvellecaledonie.travel/offres/tina-bikes-noumea-fr-6469807/",
+   "checked": "2026-11-24",
+   "source": "https://www.nouvellecaledonie.travel/offres/tina-bikes-noumea-fr-6469807/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "caledonia-canyoning",
+   "name": "Calédonia Canyoning",
+   "place": "secteur Nouméa / Sud",
+   "cat": "aventure",
+   "summary": "Canyoning et sorties encadrées.",
+   "listing": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "la-belle-verte-canopy-tours",
+   "name": "La Belle Verte Canopy Tours",
+   "place": "Païta",
+   "cat": "aventure",
+   "summary": "Parcours aventure / accrobranche.",
+   "listing": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "srcLabel": "l’annuaire officiel du tourisme",
+   "lat": -22.09254,
+   "lng": 166.33486,
+   "approx": false
+  },
+  {
+   "id": "dzumac-tour",
+   "name": "Dzumac Tour",
+   "place": "Dumbéa",
+   "cat": "aventure",
+   "summary": "Excursions et activités nature / randonnée.",
+   "listing": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "noumea-skydive",
+   "name": "Nouméa Skydive",
+   "place": "Bourail",
+   "cat": "aventure",
+   "summary": "Parachutisme.",
+   "listing": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "srcLabel": "l’annuaire officiel du tourisme",
+   "lat": -21.60996,
+   "lng": 165.40178,
+   "approx": false
+  },
+  {
+   "id": "instinct-paramoteur",
+   "name": "Instinct Paramoteur",
+   "place": "Bourail",
+   "cat": "aventure",
+   "summary": "Paramoteur / découverte aérienne.",
+   "listing": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "srcLabel": "l’annuaire officiel du tourisme"
+  },
+  {
+   "id": "haut-vol",
+   "name": "Haut Vol",
+   "place": "Nouméa",
+   "cat": "aventure",
+   "summary": "Activités aériennes / vols découverte.",
+   "listing": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "checked": "2026-11-24",
+   "source": "https://www.sudtourisme.nc/laissez-vous-guider/inspirations/prestataires-dactivites/",
+   "srcLabel": "l’annuaire officiel du tourisme"
   }
  ]
 }
