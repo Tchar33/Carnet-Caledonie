@@ -91,7 +91,8 @@
    "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme",
    "lat": -22.28409,
    "lng": 166.4407,
-   "approx": true
+   "approx": true,
+   "facebook": "https://www.facebook.com/abyssplongeenc/"
   },
   {
    "id": "atao-taxi-boat",
@@ -108,7 +109,8 @@
    "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme",
    "lat": -22.27766,
    "lng": 166.43955,
-   "approx": true
+   "approx": true,
+   "facebook": "https://www.facebook.com/ATAOtaxiboat/"
   },
   {
    "id": "babou-cote-ocean",
@@ -125,7 +127,9 @@
    "web": "https://babou-plongee.com",
    "checked": "2026-11-24",
    "source": "https://babou-plongee.com",
-   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme"
+   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme",
+   "facebook": "https://www.facebook.com/Babou.Cote.Ocean/",
+   "email": "info@babou-plongee.com"
   },
   {
    "id": "ouest-corail",
@@ -139,7 +143,9 @@
    "web": "https://ouest-corail.nc",
    "checked": "2026-11-24",
    "source": "https://ouest-corail.nc",
-   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme"
+   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme",
+   "facebook": "https://www.facebook.com/ouestcorailnc/",
+   "email": "contact@ouest-corail.nc"
   },
   {
    "id": "blue-caledonia-diving",
@@ -156,7 +162,9 @@
    "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme",
    "lat": -22.28409,
    "lng": 166.4407,
-   "approx": false
+   "approx": false,
+   "facebook": "https://www.facebook.com/BlueCaledoniaDiving/",
+   "email": "blue.caledonia.diving@gmail.com"
   },
   {
    "id": "enjoy-diving",
@@ -173,7 +181,8 @@
    "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme",
    "lat": -22.28409,
    "lng": 166.4407,
-   "approx": true
+   "approx": true,
+   "facebook": "https://www.facebook.com/EnjoydivingNc/"
   },
   {
    "id": "iatok-diving-paradise",
@@ -190,7 +199,9 @@
    "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme",
    "lat": -22.27888,
    "lng": 166.43803,
-   "approx": false
+   "approx": false,
+   "facebook": "https://www.facebook.com/IatokDivingParadise/",
+   "instagram": "https://www.instagram.com/iatokdiving/"
   },
   {
    "id": "kuare-croisieres",
@@ -220,7 +231,9 @@
    "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme",
    "lat": -22.58919,
    "lng": 167.42559,
-   "approx": false
+   "approx": false,
+   "facebook": "https://www.facebook.com/PlongeeIledesPins/",
+   "email": "kuniescuba@canl.nc"
   },
   {
    "id": "la-foa-plongee",
@@ -268,7 +281,8 @@
    "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme",
    "lat": -22.23339,
    "lng": 166.52491,
-   "approx": false
+   "approx": false,
+   "facebook": "https://www.facebook.com/mobuladiving/"
   },
   {
    "id": "odyssey-diving",
@@ -285,7 +299,8 @@
    "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme",
    "lat": -22.27643,
    "lng": 166.44107,
-   "approx": false
+   "approx": false,
+   "facebook": "https://www.facebook.com/p/Odyssey-Diving-New-Caledonia-100057687570034/"
   },
   {
    "id": "passion-lagon-poe",
@@ -299,7 +314,8 @@
    "web": "https://passionlagon.nc",
    "checked": "2026-11-24",
    "source": "https://passionlagon.nc",
-   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme"
+   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme",
+   "facebook": "https://www.facebook.com/poepassionlagon/"
   },
   {
    "id": "tieti-diving",
@@ -313,7 +329,10 @@
    "web": "https://tieti-diving.com",
    "checked": "2026-11-24",
    "source": "https://tieti-diving.com",
-   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme"
+   "srcLabel": "la brochure plongée de Nouvelle-Calédonie Tourisme",
+   "facebook": "https://www.facebook.com/p/Ti%C3%A9ti-Diving-100063537608703/",
+   "instagram": "https://www.instagram.com/tietidiving/",
+   "email": "contact@tieti-diving.com"
   },
   {
    "id": "vaqueros-rando",
@@ -345,7 +364,10 @@
    ],
    "lat": -21.85503,
    "lng": 165.82067,
-   "approx": false
+   "approx": false,
+   "facebook": "https://www.facebook.com/vaqueros.rando/",
+   "email": "contact@vaquerosrando.nc",
+   "web": "https://vaquerosrando.nc"
   },
   {
    "id": "la-foa-randonnees",
@@ -388,7 +410,9 @@
    "listing": "https://www.nouvellecaledonie.travel/activites/nature-preservee/randonnees-a-cheval/",
    "checked": "2026-11-24",
    "source": "https://www.nouvellecaledonie.travel/activites/nature-preservee/randonnees-a-cheval/",
-   "srcLabel": "l’annuaire officiel du tourisme"
+   "srcLabel": "l’annuaire officiel du tourisme",
+   "facebook": "https://www.facebook.com/pocquereux.randonnees",
+   "email": "pocq.rando@gmail.com"
   },
   {
    "id": "lasbleiz-western-training",
@@ -488,7 +512,9 @@
    "srcLabel": "l’annuaire officiel du tourisme",
    "lat": -21.61266,
    "lng": 165.39761,
-   "approx": false
+   "approx": false,
+   "facebook": "https://www.facebook.com/Po%C3%A9-Fun-Loc-1630620500576184/",
+   "email": "poefunloc@gmail.com"
   },
   {
    "id": "blue-pearl-snack-bar",
@@ -567,7 +593,10 @@
    "srcLabel": "l’annuaire officiel du tourisme",
    "lat": -22.26651,
    "lng": 166.46995,
-   "approx": false
+   "approx": false,
+   "facebook": "https://www.facebook.com/Aventure-Pulsion-kayak-146143225543425/",
+   "email": "aventure@canl.nc",
+   "web": "https://aventurepulsion.com"
   },
   {
    "id": "sud-loisirs",
@@ -584,7 +613,8 @@
    "listing": "https://www.nouvellecaledonie.travel/offres/sud-loisirs-location-de-vtt-kayak-au-parc-provincial-de-la-riviere-bleue-yate-fr-5527905/",
    "checked": "2026-11-24",
    "source": "https://www.nouvellecaledonie.travel/offres/sud-loisirs-location-de-vtt-kayak-au-parc-provincial-de-la-riviere-bleue-yate-fr-5527905/",
-   "srcLabel": "l’annuaire officiel du tourisme"
+   "srcLabel": "l’annuaire officiel du tourisme",
+   "facebook": "https://www.facebook.com/sudloisirsnc/"
   },
   {
    "id": "terraventure-nord",
