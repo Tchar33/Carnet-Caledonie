@@ -7,7 +7,15 @@
    "emoji": "🪶",
    "title": "Culture kanak et savoir-vivre",
    "html": "<p>Les Kanak, premiers habitants de l’archipel, vivent selon une organisation coutumière : clans, chefferies, tribus et conseil des anciens. La terre, les ancêtres et la parole donnée y occupent une place essentielle.</p>\n<ul>\n<li><b>La coutume :</b> avant de visiter une tribu ou un lieu coutumier, on demande l’autorisation à la personne responsable, souvent le chef ou son représentant. On accompagne la démarche d’un <b>geste coutumier</b> : un petit présent, comme une étoffe (« manou ») ou une somme symbolique, accepté avec respect.</li>\n<li><b>Tenue et comportement :</b> habillez-vous sobrement, évitez le monokini, parlez calmement et ne photographiez pas sans demander.</li>\n<li><b>Lieux à respecter :</b> champs d’ignames, sentiers et sites sacrés ou tabous : ne traversez pas sans y être invité.</li>\n<li><b>L’igname :</b> plante nourricière et symbole, célébrée lors des fêtes des premières ignames, en général de février à avril.</li>\n<li><b>Art et architecture :</b> la case ronde et sa flèche faîtière sculptée, les masques, la danse du <b>pilou</b>.</li></ul>\n<p>À Nouméa, le <b>Centre culturel Tjibaou</b>, conçu par l’architecte Renzo Piano, est un lieu majeur pour découvrir cette culture. La population comprend aussi des Européens, des Wallisiens et Futuniens, des Tahitiens, des Vietnamiens, des Indonésiens et d’autres communautés.</p>",
-   "chapter": "culture"
+   "chapter": "culture",
+   "img": [
+    {
+     "f": "Casse tête MHNT ETH AC NC 33 Nouvelle Calédonie.jpg",
+     "a": "Muséum de Toulouse",
+     "l": "CC BY-SA",
+     "t": "Casse-tête kanak du XIXe siècle (collection du Muséum de Toulouse)"
+    }
+   ]
   },
   {
    "id": "aires",
@@ -35,14 +43,30 @@
    "emoji": "🛖",
    "title": "La grande case, la flèche faîtière et les bambous gravés",
    "chapter": "culture",
-   "html": "<p>La <b>grande case</b> kanak est ronde, bâtie autour d’un poteau central et couronnée d’une <b>flèche faîtière</b>. C’est le lieu de la parole et des décisions du clan.</p>\n<ul>\n<li><b>Le poteau central</b> évoque l’aîné, le chef. Les poteaux du pourtour évoquent les clans associés à la chefferie.</li>\n<li><b>La flèche faîtière</b> est sculptée dans le bois de houp. Elle comprend trois parties : le pied, le motif (un visage tourné vers l’allée qui mène à la case) et l’aiguille. Elle évoque les ancêtres, et c’est l’emblème du groupe qui la possède. Des conques étaient enfilées sur l’aiguille, symbole du souffle de la parole.</li>\n<li><b>Les chambranles</b> sont les poteaux sculptés de l’entrée, gardiens du seuil de la case.</li>\n<li><b>Les bambous gravés</b> sont des références identitaires. Le dessin, gravé à angles droits à cause des fibres du bambou, raconte des histoires de clans et, parfois, l’arrivée des Européens.</li>\n<li>L’ampleur de la grande case indique en général l’étendue de l’autorité du chef.</li>\n<li>La <b>monnaie kanak</b>, objet traditionnel de fibres et de coquillages, accompagne les échanges coutumiers.</li></ul>\n<p><b>À voir :</b> le <b>Mwâ Ka</b>, un totem de 12 mètres surmonté d’une grande case, face au Musée de la Nouvelle-Calédonie à Nouméa, dont les sculptures représentent les huit aires coutumières. Des flèches faîtières et d’autres objets sont exposés au musée et au centre culturel Tjibaou.</p><p class=\"meta\">Sources : <a href=\"https://denc.gouv.nc/sites/default/files/documents/histoire_des_arts_-_fiches_ressources_nouvelle-caledonie_-_1.pdf\" target=\"_blank\" rel=\"noopener\">Fiches ressources, Direction de l’enseignement (DENC)</a> · <a href=\"https://museenouvellecaledonie.gouv.nc\" target=\"_blank\" rel=\"noopener\">Musée de la Nouvelle-Calédonie</a></p>"
+   "html": "<p>La <b>grande case</b> kanak est ronde, bâtie autour d’un poteau central et couronnée d’une <b>flèche faîtière</b>. C’est le lieu de la parole et des décisions du clan.</p>\n<ul>\n<li><b>Le poteau central</b> évoque l’aîné, le chef. Les poteaux du pourtour évoquent les clans associés à la chefferie.</li>\n<li><b>La flèche faîtière</b> est sculptée dans le bois de houp. Elle comprend trois parties : le pied, le motif (un visage tourné vers l’allée qui mène à la case) et l’aiguille. Elle évoque les ancêtres, et c’est l’emblème du groupe qui la possède. Des conques étaient enfilées sur l’aiguille, symbole du souffle de la parole.</li>\n<li><b>Les chambranles</b> sont les poteaux sculptés de l’entrée, gardiens du seuil de la case.</li>\n<li><b>Les bambous gravés</b> sont des références identitaires. Le dessin, gravé à angles droits à cause des fibres du bambou, raconte des histoires de clans et, parfois, l’arrivée des Européens.</li>\n<li>L’ampleur de la grande case indique en général l’étendue de l’autorité du chef.</li>\n<li>La <b>monnaie kanak</b>, objet traditionnel de fibres et de coquillages, accompagne les échanges coutumiers.</li></ul>\n<p><b>À voir :</b> le <b>Mwâ Ka</b>, un totem de 12 mètres surmonté d’une grande case, face au Musée de la Nouvelle-Calédonie à Nouméa, dont les sculptures représentent les huit aires coutumières. Des flèches faîtières et d’autres objets sont exposés au musée et au centre culturel Tjibaou.</p><p class=\"meta\">Sources : <a href=\"https://denc.gouv.nc/sites/default/files/documents/histoire_des_arts_-_fiches_ressources_nouvelle-caledonie_-_1.pdf\" target=\"_blank\" rel=\"noopener\">Fiches ressources, Direction de l’enseignement (DENC)</a> · <a href=\"https://museenouvellecaledonie.gouv.nc\" target=\"_blank\" rel=\"noopener\">Musée de la Nouvelle-Calédonie</a></p>",
+   "img": [
+    {
+     "f": "Kanak case.JPG",
+     "a": "Bruno Ménétrier",
+     "l": "domaine public",
+     "t": "Case kanak traditionnelle à Lifou"
+    }
+   ]
   },
   {
    "id": "tjibaou",
    "emoji": "🏛️",
    "title": "Mélanésia 2000 et le Centre culturel Tjibaou",
    "chapter": "culture",
-   "html": "<ul>\n<li><b>Mélanésia 2000 :</b> en septembre 1975, un grand festival des arts mélanésiens est organisé à Nouméa sous l’impulsion de Jean-Marie Tjibaou, sur la presqu’île de Tina. Il réunit pour la première fois des Kanak venus de toute la Nouvelle-Calédonie et marque un moment clé de la reconnaissance de la culture kanak.</li>\n<li><b>L’ADCK</b> (Agence de développement de la culture kanak) naît des accords de Matignon de 1988. Elle porte le projet d’un grand centre culturel, sur le site même du festival.</li>\n<li><b>Le Centre culturel Tjibaou :</b> concours d’architecture en 1991, construction de 1993 à 1998, inauguration le 5 mai 1998. L’architecte est Renzo Piano, qui a travaillé avec l’anthropologue Alban Bensa et l’ADCK. Le centre porte le nom de Jean-Marie Tjibaou, assassiné en 1989.</li>\n<li><b>L’architecture :</b> dix grandes cases stylisées, regroupées en trois villages et habillées de bois d’iroko, entourées de jardins et d’un sentier kanak, à environ 8 km du centre de Nouméa.</li>\n<li><b>Sur place :</b> expositions, spectacles de danse et de musique, médiathèques. Vérifiez les horaires et les tarifs sur le site de l’ADCK.</li></ul><p class=\"meta\">Sources : <a href=\"https://en.wikipedia.org/wiki/Jean-Marie_Tjibaou_Cultural_Centre\" target=\"_blank\" rel=\"noopener\">Wikipédia (en)</a> · <a href=\"http://www.adck.nc\" target=\"_blank\" rel=\"noopener\">ADCK</a> · <a href=\"https://press.anu.edu.au/downloads/press/p12791/pdf/8_Murphy.pdf\" target=\"_blank\" rel=\"noopener\">B. Murphy, ANU Press</a></p>"
+   "html": "<ul>\n<li><b>Mélanésia 2000 :</b> en septembre 1975, un grand festival des arts mélanésiens est organisé à Nouméa sous l’impulsion de Jean-Marie Tjibaou, sur la presqu’île de Tina. Il réunit pour la première fois des Kanak venus de toute la Nouvelle-Calédonie et marque un moment clé de la reconnaissance de la culture kanak.</li>\n<li><b>L’ADCK</b> (Agence de développement de la culture kanak) naît des accords de Matignon de 1988. Elle porte le projet d’un grand centre culturel, sur le site même du festival.</li>\n<li><b>Le Centre culturel Tjibaou :</b> concours d’architecture en 1991, construction de 1993 à 1998, inauguration le 5 mai 1998. L’architecte est Renzo Piano, qui a travaillé avec l’anthropologue Alban Bensa et l’ADCK. Le centre porte le nom de Jean-Marie Tjibaou, assassiné en 1989.</li>\n<li><b>L’architecture :</b> dix grandes cases stylisées, regroupées en trois villages et habillées de bois d’iroko, entourées de jardins et d’un sentier kanak, à environ 8 km du centre de Nouméa.</li>\n<li><b>Sur place :</b> expositions, spectacles de danse et de musique, médiathèques. Vérifiez les horaires et les tarifs sur le site de l’ADCK.</li></ul><p class=\"meta\">Sources : <a href=\"https://en.wikipedia.org/wiki/Jean-Marie_Tjibaou_Cultural_Centre\" target=\"_blank\" rel=\"noopener\">Wikipédia (en)</a> · <a href=\"http://www.adck.nc\" target=\"_blank\" rel=\"noopener\">ADCK</a> · <a href=\"https://press.anu.edu.au/downloads/press/p12791/pdf/8_Murphy.pdf\" target=\"_blank\" rel=\"noopener\">B. Murphy, ANU Press</a></p>",
+   "img": [
+    {
+     "f": "Tjibaou cultural center-Commons transfer 2012-11-20.jpg",
+     "a": "Fanny Schertzer",
+     "l": "CC BY-SA",
+     "t": "Le Centre culturel Tjibaou, œuvre de Renzo Piano"
+    }
+   ]
   },
   {
    "id": "vocabulaire",
@@ -70,7 +94,15 @@
    "emoji": "⚓",
    "title": "Colonisation, bagne et nickel (1853-1946)",
    "chapter": "culture",
-   "html": "<ul><li><b>24 septembre 1853 :</b> sur ordre de Napoléon III, le contre-amiral Febvrier-Despointes prend possession de l’archipel. La Nouvelle-Calédonie reste une colonie jusqu’en 1946.</li><li><b>1864 :</b> arrivée du premier convoi de forçats, la colonie devient pénitentiaire. Des condamnés politiques suivent : révoltés kabyles (1874), déportés de la Commune (de 1872 à 1880), dont Louise Michel. Les transports de forçats cessent en 1897 et l’administration pénitentiaire s’achève en 1924.</li><li><b>1864 :</b> la découverte du nickel lance l’exploitation minière, qui attire aussi des travailleurs asiatiques (Japonais, Indonésiens, Vietnamiens) puis d’autres communautés.</li><li><b>Terres :</b> l’administration délimite et cantonne les terres kanak dans des réserves, au profit des concessions de colons et du domaine pénitentiaire. C’est l’une des causes majeures des révoltes.</li><li><b>1887 :</b> instauration du <b>régime de l’indigénat</b>, qui encadre la vie des Kanak et les soumet à des sanctions spécifiques. Il prend fin en 1946.</li></ul><p>Le <b>fort Teremba</b> (La Foa), ancienne prison de 1871, et le <b>musée de la Ville de Nouméa</b> permettent de se plonger dans cette période.</p><p class='meta'>Sources : <a href=\"https://www.ieom.fr/IMG/rapport_annuel_ieom_nouvelle-caledonie_2020/index-22.html\" target=\"_blank\" rel=\"noopener\">IEOM</a>, <a href=\"https://www.ieom.fr/IMG/rapport_annuel_ieom_nouvelle-caledonie_2020/index-23.html\" target=\"_blank\" rel=\"noopener\">IEOM (suite)</a>, <a href=\"https://horizon.documentation.ird.fr/exl-doc/pleins_textes/divers16-08/010023259.pdf\" target=\"_blank\" rel=\"noopener\">Atlas de la Nouvelle-Calédonie (IRD), planche 22</a>.</p>"
+   "html": "<ul><li><b>24 septembre 1853 :</b> sur ordre de Napoléon III, le contre-amiral Febvrier-Despointes prend possession de l’archipel. La Nouvelle-Calédonie reste une colonie jusqu’en 1946.</li><li><b>1864 :</b> arrivée du premier convoi de forçats, la colonie devient pénitentiaire. Des condamnés politiques suivent : révoltés kabyles (1874), déportés de la Commune (de 1872 à 1880), dont Louise Michel. Les transports de forçats cessent en 1897 et l’administration pénitentiaire s’achève en 1924.</li><li><b>1864 :</b> la découverte du nickel lance l’exploitation minière, qui attire aussi des travailleurs asiatiques (Japonais, Indonésiens, Vietnamiens) puis d’autres communautés.</li><li><b>Terres :</b> l’administration délimite et cantonne les terres kanak dans des réserves, au profit des concessions de colons et du domaine pénitentiaire. C’est l’une des causes majeures des révoltes.</li><li><b>1887 :</b> instauration du <b>régime de l’indigénat</b>, qui encadre la vie des Kanak et les soumet à des sanctions spécifiques. Il prend fin en 1946.</li></ul><p>Le <b>fort Teremba</b> (La Foa), ancienne prison de 1871, et le <b>musée de la Ville de Nouméa</b> permettent de se plonger dans cette période.</p><p class='meta'>Sources : <a href=\"https://www.ieom.fr/IMG/rapport_annuel_ieom_nouvelle-caledonie_2020/index-22.html\" target=\"_blank\" rel=\"noopener\">IEOM</a>, <a href=\"https://www.ieom.fr/IMG/rapport_annuel_ieom_nouvelle-caledonie_2020/index-23.html\" target=\"_blank\" rel=\"noopener\">IEOM (suite)</a>, <a href=\"https://horizon.documentation.ird.fr/exl-doc/pleins_textes/divers16-08/010023259.pdf\" target=\"_blank\" rel=\"noopener\">Atlas de la Nouvelle-Calédonie (IRD), planche 22</a>.</p>",
+   "img": [
+    {
+     "f": "Canaques, c. 1870.jpg",
+     "a": "lithographie ancienne (Garnier / Dufrenoy)",
+     "l": "domaine public",
+     "t": "« Canaques », lithographie vers 1870"
+    }
+   ]
   },
   {
    "id": "revoltes",
