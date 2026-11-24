@@ -1,5 +1,5 @@
 {
- "v": 4,
+ "v": 5,
  "updated": "novembre 2026",
  "sections": [
   {
@@ -129,6 +129,13 @@
    "chapter": "conseils"
   },
   {
+   "id": "coutume-visiteur",
+   "emoji": "🎁",
+   "title": "Faire la coutume : le geste du visiteur",
+   "chapter": "conseils",
+   "html": "<p>Pour entrer sur des terres de tribu, visiter un lieu considéré comme tabou ou dormir chez l’habitant, on « fait la coutume » en signe de respect.</p><ul><li>On présente un petit présent au chef ou à la personne qui accueille, accompagné de quelques mots : traditionnellement un morceau d’étoffe, un petit billet, parfois du tabac ou des vivres.</li><li>Le geste compte plus que la valeur du cadeau. Un hébergeur ou un guide local vous indique l’usage à suivre.</li><li>Demandez l’autorisation avant d’entrer, de photographier ou de marcher sur un site coutumier.</li><li>Dans les îles, on se salue volontiers dans la rue : un bonjour est de mise.</li></ul><p class='meta'>Sources : <a href=\"https://www.newcaledonia.travel/en/traditions\" target=\"_blank\" rel=\"noopener\">Nouvelle-Calédonie Tourisme</a>, <a href=\"https://www.lonelyplanet.fr/article/8-experiences-vivre-en-nouvelle-caledonie\" target=\"_blank\" rel=\"noopener\">Lonely Planet</a>, <a href=\"https://lepetitjournal.com/nouvelle-caledonie/comprendre-nouvelle-caledonie/top-10-coutumes-locales-nouvelle-caledonie-322958\" target=\"_blank\" rel=\"noopener\">lepetitjournal.com</a>.</p>"
+  },
+  {
    "id": "deplacements",
    "emoji": "🚗",
    "title": "Se déplacer",
@@ -136,11 +143,32 @@
    "chapter": "conseils"
   },
   {
+   "id": "route",
+   "emoji": "🚗",
+   "title": "Louer une voiture et conduire",
+   "chapter": "conseils",
+   "html": "<ul><li><b>Louer :</b> les loueurs demandent en général 21 ans minimum et deux ans de permis (vérifiez chez le vôtre). Les routes sont souvent étroites.</li><li><b>Règles :</b> mêmes principes qu’en France (conduite à droite, priorité à droite). <b>Les limites de vitesse varient selon les sources</b> : respectez les panneaux et demandez au loueur.</li><li><b>Distances :</b> prévoyez large, faites le plein dès que possible en brousse, et ne comptez pas sur le réseau mobile partout.</li><li>Pour le guidage hors ligne, utilisez l’appli : la carte fonctionne sans réseau, le calcul d’itinéraire demande une connexion.</li></ul><p class='meta'>Sources : <a href=\"https://www.sixt.fr/location-voiture/nouvelle-caledonie/\" target=\"_blank\" rel=\"noopener\">Sixt</a>, <a href=\"https://www.autoeurope.fr/guides-conduite-nouvelle-caledonie/\" target=\"_blank\" rel=\"noopener\">Auto Europe</a>, <a href=\"https://www.expat.com/fr/guide/oceanie/nouvelle-caledonie/18594-conduire-en-nouvelle-caledonie.html\" target=\"_blank\" rel=\"noopener\">Expat.com</a>.</p>"
+  },
+  {
+   "id": "telephone",
+   "emoji": "📶",
+   "title": "Téléphone, SIM et Wi-Fi",
+   "chapter": "conseils",
+   "html": "<ul><li>Le seul opérateur mobile est <b>Mobilis</b> (OPT-NC), avec la couverture la plus étendue, surtout sur la Grande Terre.</li><li>Pour un séjour court, l’OPT propose une carte prépayée « Tourism Card », sans abonnement, réservée aux visiteurs étrangers de moins de 3 mois. Offre décrite dans une fiche de 2021 : <b>vérifiez les conditions actuelles</b> sur opt.nc.</li><li>Des eSIM de voyage utilisent le réseau Mobilis ; comparez avant de partir.</li><li>Des bornes Wi-Fi publiques existent à Nouméa et dans les centres des communes.</li></ul><p class='meta'>Sources : <a href=\"https://www.expat.com/fr/guide/oceanie/nouvelle-caledonie/18593-communiquer-en-nouvelle-caledonie.html\" target=\"_blank\" rel=\"noopener\">Expat.com</a>, <a href=\"https://www.opt.nc/sites/serviciel/files/media/file/FI_TourismeCard_0.pdf\" target=\"_blank\" rel=\"noopener\">OPT-NC (Tourism Card)</a>, <a href=\"https://bonforfait.fr/forfait-mobile/voyage-nouvelle-caledonie\" target=\"_blank\" rel=\"noopener\">Bonforfait</a>.</p>"
+  },
+  {
    "id": "securite",
    "emoji": "🛡️",
    "title": "Sécurité, mer et santé sur place",
    "html": "<ul>\n<li><b>Soleil :</b> les UV sont forts toute l’année. Crème, chapeau et eau en quantité.</li>\n<li><b>Mer :</b> respectez les consignes locales de baignade. Des requins fréquentent la région, et on trouve aussi des méduses et des poissons-pierres. Ne touchez pas les coquillages et les coraux (certains sont venimeux ou coupants).</li>\n<li><b>Ciguatera :</b> certains poissons de récif peuvent provoquer une intoxication. Demandez conseil sur place avant de manger du poisson de récif, surtout les gros prédateurs.</li>\n<li><b>Moustiques :</b> la dengue circule parfois sur le territoire. Utilisez un répulsif, surtout au lever et au coucher du soleil.</li>\n<li><b>Eau :</b> le robinet est généralement potable en ville, mais renseignez-vous ailleurs.</li>\n<li><b>Cyclones :</b> pendant la saison chaude, suivez les alertes locales et les consignes de sécurité.</li>\n<li><b>Corail et coquillages :</b> leur prélèvement et leur sortie du territoire sont réglementés ou interdits.</li>\n<li><b>Sécurité générale :</b> les guides décrivent le territoire comme plutôt sûr, mais des tensions politiques ont existé en 2024. Consultez les « Conseils aux voyageurs » avant le départ et pendant le séjour.</li></ul>",
    "chapter": "conseils"
+  },
+  {
+   "id": "lagon-risques",
+   "emoji": "🪼",
+   "title": "Lagon : méduses, requins et poisson (ciguatera)",
+   "chapter": "conseils",
+   "html": "<ul><li><b>Cuboméduses :</b> des alertes ont déjà été émises (2018, puis février 2026 entre la passe de Dumbéa et la passe de Uitoé). Les autorités recommandent alors de limiter la baignade dans la zone concernée. Consultez les communiqués de la DASS et de la sécurité civile.</li><li><b>Requins :</b> des zones de baignade surveillées existent près de Nouméa. Nagez en groupe, évitez les pêcheurs et les poissons chassés ou blessés, et ne nourrissez pas les requins.</li><li><b>Ciguatera (« la gratte ») :</b> intoxication due à certains poissons de récif. Demandez toujours conseil localement avant d’en manger ; la DASS publie un guide pratique.</li><li>Portez des sandales pour marcher dans l’eau (poissons-pierres, coraux).</li></ul><p><b>Vérifiez l’état des alertes avant la baignade</b> : elles sont temporaires.</p><p class='meta'>Sources : <a href=\"https://securite-civile.gouv.nc/sites/default/files/documents/2026.02.12%20CP%20Alerte%20aux%20cubom%C3%A9duses.pdf\" target=\"_blank\" rel=\"noopener\">Sécurité civile NC (alerte 2026)</a>, <a href=\"https://dass.gouv.nc/sites/default/files/atoms/files/la_faune_du_lagon.pdf\" target=\"_blank\" rel=\"noopener\">DASS-NC : la faune du lagon</a>, <a href=\"https://dass.gouv.nc/sites/default/files/atoms/files/guide_pratique_ciguatera.pdf\" target=\"_blank\" rel=\"noopener\">DASS-NC : guide ciguatera</a>, <a href=\"https://voyage.gc.ca/destinations/nouvelle-caledonie\" target=\"_blank\" rel=\"noopener\">Voyage.gc.ca</a>.</p>"
   },
   {
    "id": "liens",
@@ -155,6 +183,27 @@
    "title": "Activités nautiques et de plein air",
    "chapter": "activites",
    "html": "\n<ul>\n<li><b>Snorkeling et plongée :</b> le lagon offre des sites accessibles depuis Nouméa, les îlots proches, l’île des Pins et les Loyauté. Passez par un professionnel agréé pour la plongée avec bouteille.</li>\n<li><b>Baignade et piscines naturelles :</b> par exemple la piscine naturelle d’Oro, à l’île des Pins, souvent rejointe en pirogue. Renseignez-vous sur les marées et les courants avant de vous baigner.</li>\n<li><b>Randonnée :</b> sentiers du Parc de la Rivière Bleue, du Parc des Grandes Fougères ou du mont Panié. Partez avec de l’eau, prévenez un proche, et évitez de marcher après de fortes pluies : les rivières montent vite.</li>\n<li><b>Voile, catamaran et bateau :</b> sorties à la journée vers les îlots du lagon, ou croisières de plusieurs jours.</li>\n<li><b>Kitesurf et planche à voile :</b> la côte ouest, vers Bourail, est réputée pour le vent et les plans d’eau.</li>\n<li><b>Kayak et paddle :</b> pour explorer baies calmes et mangroves, de préférence avec un guide au début.</li>\n<li><b>Observation des baleines à bosse :</b> de juillet à septembre, surtout dans le sud. Choisissez un opérateur qui respecte les distances d’approche.</li>\n<li><b>Pêche :</b> en mer ou en rivière. Renseignez-vous sur les règles locales, les périodes et les zones protégées.</li>\n<li><b>Équitation et vie en brousse :</b> randonnées à cheval et séjours dans des élevages, surtout sur la côte ouest.</li>\n<li><b>Culture :</b> visites de tribus avec un hébergement ou un guide local, centres culturels, musées et marchés.</li></ul>\n<p><b>Conseils :</b> utilisez une crème solaire respectueuse du corail, ne touchez pas aux coraux ni aux animaux marins, et vérifiez la météo marine avant toute sortie en mer.</p>"
+  },
+  {
+   "id": "randonnee",
+   "emoji": "🥾",
+   "title": "Randonner : GR, parcs et précautions",
+   "chapter": "activites",
+   "html": "<ul><li><b>Grandes randonnées :</b> deux sentiers balisés, le <b>GR NC1</b> au sud (environ 120 km à travers le Grand Sud, jusqu’à Dumbéa) et le <b>GR NC2</b> au nord.</li><li><b>Mont Panié :</b> point culminant, d’environ 1 629 m, au nord de Hienghène.</li><li><b>Avant de partir :</b> consultez la météo (meteo.nc), préférez le temps sec, car les sentiers glissent vite. Certains creeks deviennent infranchissables en crue. Ne vous engagez pas sur un sentier non balisé ou une propriété privée.</li><li>Des guides diplômés et une agence spécialisée proposent des sorties encadrées.</li></ul><p class='meta'>Sources : <a href=\"https://trade.newcaledonia.travel/wp-content/uploads/2020/09/Randonnées_NC_2020_A2_web.pdf\" target=\"_blank\" rel=\"noopener\">Nouvelle-Calédonie Tourisme (brochure)</a>, <a href=\"https://www.randozone.com/trekking/nouvelle-caledonie/\" target=\"_blank\" rel=\"noopener\">Randozone</a>, <a href=\"https://www.ffrandonnee.fr/s-informer/actualites/randonner-en-nouvelle-caledonie\" target=\"_blank\" rel=\"noopener\">FFRandonnée</a>, <a href=\"https://www.province-sud.nc/sites/default/files/tr2-etape-7-mine-soleil-barrage-de-dumbea-2020-print.pdf\" target=\"_blank\" rel=\"noopener\">Province Sud (fiche de sentier)</a>.</p>"
+  },
+  {
+   "id": "riviere-bleue",
+   "emoji": "🌲",
+   "title": "Parc provincial de la Rivière Bleue",
+   "chapter": "activites",
+   "html": "<p>Situé à Yaté, à environ une heure de Nouméa, ce parc créé en 1980 couvre environ 22 000 hectares de maquis minier, de forêt dense et de zones humides. Il est inscrit à la convention de Ramsar depuis 2014. Il abrite le cagou et des kaoris géants.</p><ul><li>Randonnées de difficulté variée, dont un parcours accessible aux personnes handicapées (environ 900 m).</li><li>VTT et kayak avec location sur place ; camping possible.</li><li>Vestiges d’exploitations minières et forestières, dont un pont classé monument historique provincial.</li><li>Guide ornithologue spécialisé dans le parc (voir l’annuaire des prestataires).</li></ul><p>Renseignez-vous sur les horaires et conditions d’accès auprès du parc ou de la Province Sud.</p><p class='meta'>Sources : <a href=\"https://www.routard.com/fr/guide/oceanie/nouvelle-caledonie/province-sud/parc-de-la-riviere-bleue\" target=\"_blank\" rel=\"noopener\">Routard</a>, <a href=\"https://www.province-sud.nc/sites/default/files/Webmaster/BAT%20A4%20National%20Geographic%20PPRB%20FR.pdf\" target=\"_blank\" rel=\"noopener\">Province Sud</a>, <a href=\"https://www.france.fr/fr/article/nouvelle-caledonie-que-faire-que-voir/\" target=\"_blank\" rel=\"noopener\">France.fr</a>.</p>"
+  },
+  {
+   "id": "experiences",
+   "emoji": "⭐",
+   "title": "Expériences à vivre",
+   "chapter": "activites",
+   "html": "<ul><li><b>Baie d’Upi (île des Pins) :</b> en pirogue traditionnelle, l’un des sites les plus spectaculaires de l’île.</li><li><b>Ouvéa :</b> nurserie de requins dans l’atoll.</li><li><b>Côte Oubliée et falaises de Lindéralique :</b> à explorer en kayak.</li><li><b>Snorkeling encadré :</b> à Nouméa ou à Hienghène.</li><li><b>Équitation :</b> il y aurait environ un cheval pour 20 habitants ; la vie de brousse se découvre à cheval.</li><li><b>Tribus :</b> séjours et visites, dans le respect de la coutume (voir « Faire la coutume »).</li></ul><p class='meta'>Sources : <a href=\"https://www.france.fr/fr/nouvelle-caledonie/liste/nouvelle-caledonie-que-faire-que-voir\" target=\"_blank\" rel=\"noopener\">France.fr</a>, <a href=\"https://www.lonelyplanet.fr/destinations/oceanie-pacifique/nouvelle-caledonie/que-faire\" target=\"_blank\" rel=\"noopener\">Lonely Planet</a>, <a href=\"https://www.france.fr/fr/nouvelle-caledonie\" target=\"_blank\" rel=\"noopener\">France.fr</a>.</p>"
   },
   {
    "id": "visites",
