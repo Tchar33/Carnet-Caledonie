@@ -384,6 +384,18 @@ const GCOL={};POI_UI.forEach(g=>GCOL[g.id]=g.color);
 function kIcon(em,col){const c=document.createElement('canvas');c.width=c.height=48;const x=c.getContext('2d');
 x.beginPath();x.arc(24,24,21,0,6.2832);x.fillStyle=col;x.fill();x.lineWidth=3;x.strokeStyle='#ffffff';x.stroke();
 x.font='24px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText(em,24,26);return x.getImageData(0,0,48,48)}
+async function loadSentiers(){try{if(!map||map.getSource('sent'))return;const r=await fetch('sentiers.json');if(!r.ok)return;SENT=await r.json();
+map.addSource('sent',{type:'geojson',data:SENT});
+map.addLayer({id:'sent-c',type:'line',source:'sent',filter:['==',['geometry-type'],'LineString'],layout:{'line-cap':'round','line-join':'round'},paint:{'line-color':'#ffffff','line-width':['interpolate',['linear'],['zoom'],9,4,14,9]}});
+map.addLayer({id:'sent',type:'line',source:'sent',filter:['==',['geometry-type'],'LineString'],layout:{'line-cap':'round','line-join':'round'},paint:{'line-color':['get','c'],'line-width':['interpolate',['linear'],['zoom'],9,2,14,5]}});
+map.addLayer({id:'sent-p',type:'circle',source:'sent',filter:['==',['geometry-type'],'Point'],minzoom:12,paint:{'circle-radius':['interpolate',['linear'],['zoom'],12,3,16,6],'circle-color':'#ffffff','circle-stroke-color':'#12302b','circle-stroke-width':2}});
+try{map.addLayer({id:'sent-l',type:'symbol',source:'sent',filter:['==',['geometry-type'],'LineString'],minzoom:10,layout:{'symbol-placement':'line','text-field':['get','n'],'text-font':['Noto Sans Regular'],'text-size':12},paint:{'text-color':'#12302b','text-halo-color':'#ffffff','text-halo-width':1.5}});
+map.addLayer({id:'sent-pl',type:'symbol',source:'sent',filter:['==',['geometry-type'],'Point'],minzoom:13,layout:{'text-field':['get','n'],'text-font':['Noto Sans Regular'],'text-size':11,'text-offset':[0,1.2],'text-anchor':'top','text-optional':true},paint:{'text-color':'#12302b','text-halo-color':'#ffffff','text-halo-width':1.3}})}catch(e){}}catch(e){}}
+function sentFeat(id){return SENT&&SENT.features.find(f=>f.geometry.type==='LineString'&&f.properties.id===id)}
+function showSentier(f){const p=f.properties||{};const L=p.id?f:sentFeat(p.sid);const q=(L&&L.properties)||p;const pc=$('pc');if(tmpMark){tmpMark.remove();tmpMark=null}pc.style.display='block';
+pc.innerHTML='<b>🥾 '+esc(p.n||q.n)+'</b><div class="meta">'+(p.id?'':esc(q.n)+'<br>')+esc(q.km||'')+' · '+esc(q.t||'')+' · '+esc(q.df||'')+' · D+ '+esc(q.dp||'')+'</div><div class="row"><button onclick="openFiche(\''+esc(q.fiche||'')+'\')">📖 Fiche du sentier</button></div>'}
+function openFiche(id){PENDF=id;chapOpen('activites')}
+function showSentierOnMap(id){const f=sentFeat(id);if(!f)return;setMode(MODE);if(map){const c=f.geometry.coordinates;let a=[1e9,1e9,-1e9,-1e9];c.forEach(x=>{a=[Math.min(a[0],x[0]),Math.min(a[1],x[1]),Math.max(a[2],x[0]),Math.max(a[3],x[1])]});map.fitBounds([[a[0],a[1]],[a[2],a[3]]],{padding:50,duration:0});showSentier(f)}}
 async function loadConnus(){try{if(!map||HAVE_K)return;const r=await fetch('connus.json');if(!r.ok)return;const j=await r.json();KT=j.k;
 const feats=j.d.map(q=>{const k=KT[q[2]];KCOUNT[k[2]]=(KCOUNT[k[2]]||0)+1;return{type:'Feature',geometry:{type:'Point',coordinates:[q[0],q[1]]},properties:{k:q[2],n:q[3],a:q[4],p:q[5],w:q[6],h:q[7],d:q[8]||'',g:k[2],z:k[3],i:'k'+q[2]}}});
 try{const ra=await fetch('activites.json');if(ra.ok){const A=await ra.json();ACT=A;A.categories.forEach(c=>{const L=A.providers.filter(p=>p.cat===c.id&&p.lat!=null);if(!L.length)return;const ki=KT.length;KT.push([c.title,c.emoji,'activites',11]);
@@ -656,7 +668,7 @@ async function chapOpen(k){CH=k;SUB='';$('home').style.display='none';$('chap').
 if(!INF){try{const r=await fetch('infos.json');if(!r.ok)throw 0;INF=await r.json()}catch(e){$('chap_b').innerHTML='<div class="meta">Contenu indisponible pour le moment (connexion nécessaire la première fois).</div>';return}}
 if(CH==='activites'&&!ACT){try{const ra=await fetch('activites.json');if(ra.ok)ACT=await ra.json()}catch(e){}}
 chapRender('')}
-let PEND=null,ACT=null,ACTF={};
+let PEND=null,PENDF=null,SENT=null,ACT=null,ACTF={};
 const provLinks=p=>[p.web,p.facebook,p.instagram,p.listing].filter(Boolean).join('\n');
 function provHTML(p){const btn=(p.phones||[]).map(t=>'<a class="btn" href="tel:'+esc(t.replace(/[^\d+]/g,''))+'">📞 '+esc(t)+'</a>').join('')+(p.whatsapp?'<a class="btn alt" href="'+esc(p.whatsapp)+'" target="_blank" rel="noopener">💬 WhatsApp</a>':'')+(p.email?'<a class="btn alt" href="mailto:'+esc(p.email)+'">✉️ E-mail</a>':'')+(p.lat!=null?'<button class="alt" data-pv="'+esc(p.id)+'">📍 Carte</button>':'');
 const offers=(p.offers||[]).map(g=>'<div style="font-weight:700;margin-top:8px">'+esc(g.g)+'</div>'+g.items.map(i=>'<div class="of"><span>'+esc(i.n)+(i.d?'<small class="meta"> · '+esc(i.d)+'</small>':'')+'</span><b>'+esc(i.p||'')+'</b></div>').join('')).join('');
@@ -668,13 +680,14 @@ return'<div class="card" id="prov_'+esc(p.id)+'" style="margin:8px 0"><b>'+esc(p
 '<div class="meta" style="margin-top:6px">Relevé le '+esc(frD(p.checked,{day:'numeric',month:'long',year:'numeric'}))+' d’après '+src+'. Tarifs et horaires à confirmer auprès du prestataire.</div></div>'}
 let SUB='';
 function subsOf(){return(INF&&INF.subs&&INF.subs[CH])||[]}
-function ficheHTML(s,open){return'<details class="fi"'+(open?' open':'')+'><summary><span class="fe">'+s.emoji+'</span><span>'+esc(s.title)+'</span></summary><div class="inf-b">'+s.html+'</div></details>'}
+function ficheHTML(s,open){return'<details class="fi" id="fi_'+s.id+'"'+(open||s.id===PENDF?' open':'')+'><summary><span class="fe">'+s.emoji+'</span><span>'+esc(s.title)+'</span></summary><div class="inf-b">'+s.html+'</div></details>'}
 function annCats(ids,Q){if(!ACT||!ids||!ids.length)return'';let h='';
 ids.forEach(id=>{const c=ACT.categories.find(x=>x.id===id);if(!c)return;const L=ACT.providers.filter(p=>(p.cat===id||(p.also||[]).includes(id))&&(!Q||JSON.stringify(p).toLowerCase().includes(Q)));if(!L.length)return;
 h+='<details class="fi"'+((Q||(PEND&&L.some(p=>p.id===PEND)))?' open':'')+'><summary><span class="fe">'+c.emoji+'</span><span>'+esc(c.title)+' <small class="meta">· '+L.length+'</small></span></summary>'+(c.note?'<div class="meta">'+esc(c.note)+'</div>':'')+L.map(provHTML).join('')+'</details>'});
 return h?'<div class="sec-t">🧾 Prestataires</div><div class="meta" style="margin-bottom:8px">Informations relevées auprès de sources officielles et des sites des prestataires. Tarifs et horaires à confirmer auprès d’eux.</div>'+h:''}
 function chapRender(q){const Q=(q||'').toLowerCase().trim(),subs=subsOf(),all=INF.sections.filter(s=>s.chapter===CH);
 if(PEND&&!SUB&&ACT){const p=ACT.providers.find(x=>x.id===PEND),sb=p&&subs.find(x=>(x.ann||[]).includes(p.cat));if(sb)SUB=sb.id}
+if(PENDF&&!SUB){const sb=subs.find(x=>(x.items||[]).includes(PENDF));if(sb)SUB=sb.id}
 const cur=(!Q&&SUB)?subs.find(x=>x.id===SUB):null;if(!cur)SUB='';
 $('chap_h').textContent=cur?'← '+CHAPT[CH][1]:'← Accueil';
 let h='<input id="chap_q" placeholder="🔍 Rechercher dans ce chapitre…" value="'+esc(Q)+'">';
@@ -687,11 +700,12 @@ else{h+='<div class="subh">'+cur.emoji+' '+esc(cur.title)+'</div><div class="met
 h+='<div class="meta" style="margin-top:16px">Synthèses rédigées pour ce carnet ('+esc(INF.updated)+'). Vérifiez les informations pratiques auprès des sites officiels.</div>';
 $('chap_b').innerHTML=h;
 const i=$('chap_q');i.oninput=()=>{const p=i.selectionStart;chapRender(i.value);const n=$('chap_q');n.focus();try{n.setSelectionRange(p,p)}catch(x){}};
+if(PENDF){const e2=$('fi_'+PENDF);PENDF=null;if(e2&&e2.scrollIntoView)e2.scrollIntoView({block:'start'})}
 if(PEND){const el=$('prov_'+PEND);if(el){PEND=null;if(el.scrollIntoView)el.scrollIntoView({block:'start'})}}}
 function openProvider(pid){PEND=pid;chapOpen('activites')}
 function showProviderOnMap(pid){let lat,lng;const f=ACTF[pid];if(f){lng=f.geometry.coordinates[0];lat=f.geometry.coordinates[1]}else if(ACT)ACT.providers.forEach(p=>{if(p.id===pid){lat=p.lat;lng=p.lng}});
 if(lat==null)return;setMode(MODE);if(map){map.jumpTo({center:[lng,lat],zoom:14});if(f)showKnown(f)}}
-$('chap_b').onclick=e=>{const t=e.target.closest('[data-sub]');if(t){SUB=t.dataset.sub;chapRender('');$('chap').scrollTop=0;return}const b=e.target.closest('button[data-pv]');if(b)showProviderOnMap(b.dataset.pv)};
+$('chap_b').onclick=e=>{const t=e.target.closest('[data-sub]');if(t){SUB=t.dataset.sub;chapRender('');$('chap').scrollTop=0;return}const b=e.target.closest('button[data-pv]');if(b)showProviderOnMap(b.dataset.pv);const b2=e.target.closest('button[data-ps]');if(b2)showSentierOnMap(b2.dataset.ps)};
 $('home').onclick=e=>{const b=e.target.closest('[data-go]');if(!b)return;const g=b.dataset.go;
 if(g==='voyage'||g==='carte')setMode(g);else if(CHAPT[g])chapOpen(g);else if(g==='monnaie')fxOpen();else if(g==='aide')$('zh').onclick()};
 $('chap_h').onclick=()=>{if(SUB&&!($('chap_q')&&$('chap_q').value)){SUB='';chapRender('');$('chap').scrollTop=0}else openHome()};$('hm').onclick=openHome;$('tH').onclick=openHome;
@@ -737,10 +751,11 @@ map.touchZoomRotate.disableRotation();map.on('dragstart',()=>{if(nav)nav.follow=
 try{map.addControl(new maplibregl.ScaleControl({maxWidth:110,unit:'metric'}),'bottom-left')}catch(e){}
 ['0-255','256-511','8192-8447'].forEach(r=>{try{fetch('https://protomaps.github.io/basemaps-assets/fonts/Noto%20Sans%20Regular/'+r+'.pbf').catch(()=>{})}catch(e){}});
 map.on('zoom',()=>mapEl.classList.toggle('z9',map.getZoom()>=9));
+function sentHit(e){try{if(!map.getLayer('sent'))return false;const g=map.queryRenderedFeatures([[e.point.x-12,e.point.y-12],[e.point.x+12,e.point.y+12]],{layers:['sent-p','sent']});if(!g.length)return false;showSentier(g[0]);return true}catch(x){return false}}
 map.on('click',e=>{sel=null;let fs=[];try{const ly=HAVE_K?KLAYERS:(map.getLayer('poi')?['poi']:[]);fs=ly.length?map.queryRenderedFeatures([[e.point.x-14,e.point.y-14],[e.point.x+14,e.point.y+14]],{layers:ly}):[]}catch(x){}
-if(fs.length)showKnown(fs[0]);else if(!FAMILY)dropPin(e.lngLat);else $('pc').style.display='none';draw()});
+if(fs.length)showKnown(fs[0]);else if(sentHit(e))draw();else if(!FAMILY)dropPin(e.lngLat);else $('pc').style.display='none';draw()});
 await Promise.race([new Promise(r=>map.once('load',r)),new Promise(r=>setTimeout(r,8000))]);
-ms.textContent=note;ms.style.display=note?'block':'none';addPoiLayers();await loadConnus();addRoadLabels();applyPoi();fit();draw();maybeCenter()}
+ms.textContent=note;ms.style.display=note?'block':'none';addPoiLayers();await loadConnus();await loadSentiers();addRoadLabels();applyPoi();fit();draw();maybeCenter()}
 catch(e){ms.textContent='Carte indisponible : '+(e.message||e)}
 initing=false}
 let tmpMark=null;
