@@ -426,7 +426,7 @@
    "emoji": "🗺️",
    "title": "Carte des aires linguistiques",
    "chapter": "culture",
-   "html": "<p>La carte colore les huit aires coutumières, qui regroupent chacune une ou plusieurs langues : Hoot ma Whaap, Paicî-Cèmuhî, Ajië-Aro, Xârâcùù, Djubéa-Kaponé, puis Nengone (Maré), Drehu (Lifou) et Iaai (Ouvéa).</p><p><button data-pl=\"1\">🗺️ Afficher la carte des langues</button></p><p class=\"meta\"><b>Découpage indicatif.</b> Je ne dispose pas des limites officielles : chaque zone est tracée par proximité avec les communes de l’aire (Voronoï), donc les frontières sont approximatives, surtout dans l’intérieur. Les aires ne suivent pas exactement les limites des communes, et plusieurs langues peuvent se parler dans une même aire. Sources : liste des communes par aire (CEFAN, Sénat coutumier) et liste des langues (« Langues et cité » n° 26).</p>"
+   "html": "<p>La carte colore les huit aires coutumières, qui regroupent chacune une ou plusieurs langues : Hoot ma Whaap, Paicî-Cèmuhî, Ajië-Aro, Xârâcùù, Djubéa-Kaponé, puis Nengone (Maré), Drehu (Lifou) et Iaai (Ouvéa).</p><p><button data-pl=\"1\">🗺️ Afficher la carte des langues</button></p><p>Pour une carte plus précise avec les mots et les prononciations, voir la fiche suivante, KaLiA.</p><p class=\"meta\"><b>Découpage indicatif.</b> Je ne dispose pas des limites officielles : chaque zone est tracée par proximité avec les communes de l’aire (Voronoï), donc les frontières sont approximatives, surtout dans l’intérieur. Les aires ne suivent pas exactement les limites des communes, et plusieurs langues peuvent se parler dans une même aire. Sources : liste des communes par aire (CEFAN, Sénat coutumier) et liste des langues (« Langues et cité » n° 26).</p>"
   },
   {
    "id": "dikala",
@@ -434,6 +434,13 @@
    "title": "DiKaLa : le portail des langues kanak",
    "chapter": "culture",
    "html": "<p>Portail en ligne de l’Université de la Nouvelle-Calédonie, gratuit, pour le grand public comme pour les chercheurs.</p><ul><li><b>LexiKa</b> : dictionnaire comparatif qui regroupe 27 dictionnaires (environ 87 700 mots), à chercher en langue kanak ou en français.</li><li><b>KaLia</b> : carte linguistique avec plus de 200 mots du quotidien, à écouter et à comparer d’une langue à l’autre.</li><li><b>ArKa</b> : archives numérisées de documents patrimoniaux.</li></ul><p><a class=\"btn\" href=\"https://dikala.unc.nc/\" target=\"_blank\" rel=\"noopener\">🌐 Ouvrir DiKaLa</a></p><p class=\"meta\">Nécessite une connexion. Les conditions d’utilisation des contenus sont à consulter sur le site. Source : page d’accueil de dikala.unc.nc.</p>"
+  },
+  {
+   "id": "kalia",
+   "emoji": "🎧",
+   "title": "KaLiA : la carte interactive des langues (DiKaLa)",
+   "chapter": "culture",
+   "html": "<p>Carte interactive du vocabulaire de base des langues kanak, éditée par le projet <b>DiKaLa</b> de l’Université de la Nouvelle-Calédonie : chaque couleur est une aire linguistique, et un mot s’affiche dans chaque langue là où elle est parlée. Les prononciations s’écoutent d’un clic.</p>\n<p><a class=\"btn\" href=\"https://dikala.unc.nc/kalia\" target=\"_blank\" rel=\"noopener\">🌐 Ouvrir KaLiA dans le navigateur</a></p>\n<details><summary class=\"meta\" style=\"margin:8px 0\">Afficher KaLiA ici (connexion nécessaire)</summary>\n<div class=\"meta\" style=\"margin:6px 0\">Carte : KaLiA, projet DiKaLa, Université de la Nouvelle-Calédonie (dikala.unc.nc). Affichage direct du site d’origine, sans copie.</div>\n<iframe src=\"https://dikala.unc.nc/kalia\" title=\"KaLiA – DiKaLa, Université de la Nouvelle-Calédonie\" loading=\"lazy\" referrerpolicy=\"no-referrer\" sandbox=\"allow-scripts allow-same-origin allow-popups\" style=\"width:100%;height:70vh;border:1px solid var(--bd);border-radius:12px;background:#fff\"></iframe>\n<div class=\"meta\" style=\"margin-top:6px\">Si le cadre reste vide, le site n’autorise pas l’affichage intégré : utilisez le bouton ci-dessus.</div></details>\n<p class=\"meta\">Source et crédits : DiKaLa, Université de la Nouvelle-Calédonie, avec l’ANR et l’Académie des langues kanak ; la couche « Tribus » s’appuie sur des données de la province Nord (Licence Ouverte). Le site signale que des erreurs peuvent subsister. Conditions de réutilisation : voir les pages « Licences » et « Mentions légales » du site.</p>"
   }
  ],
  "subs": {
@@ -458,6 +465,7 @@
      "langues",
      "aires",
      "langues-carte",
+     "kalia",
      "langues-mots",
      "dikala"
     ],
