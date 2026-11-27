@@ -413,6 +413,27 @@
    "title": "Sentier de la Grande Cascade (Rivière Bleue)",
    "chapter": "activites",
    "html": "<p>Marche en forêt primaire sur une ancienne piste forestière, jusqu’à une cascade fraîche. Une grande partie du parcours est commune avec le GR NC1 (double balisage).</p><ul><li><b>Distance</b> : 15,7 km aller-retour · <b>durée</b> : 5 h · <b>D+</b> 1 033 m · altitude 234 à 404 m</li><li><b>Cotation</b> : peu difficile (technicité 3, risque 3)</li><li><b>Parking</b> : Pont Pérignon (alt. 170 m), puis navette payante ou VTT personnel (26 km A/R) jusqu’au départ, à 400 m au nord de l’ancien refuge.</li><li><b>Repères sur le tracé</b> : lieu-dit La Tranchée, première et deuxième corne du Diable, Grande Cascade.</li><li><b>Difficultés</b> : long parcours forestier, traversées de creeks, fin très accidentée (roches, racines).</li></ul><p>Contacts : antenne du Grand Sud à Yaté <a href=\"tel:462065\">46 20 65</a> ; courriel parcrivierebleue@province-sud.nc.</p><p><button data-ps=\"grande-cascade\">🗺️ Voir le tracé sur la carte</button></p><p class=\"meta\">Source : fiche « Sentier de la Grande Cascade » (province Sud) et trace GPX officielle. À confirmer avant le départ.</p>"
+  },
+  {
+   "id": "langues-mots",
+   "emoji": "💬",
+   "title": "Quelques mots pour comparer les langues",
+   "chapter": "culture",
+   "html": "<p>Un même mot change d’une langue à l’autre : les langues kanak ne se comprennent pas entre elles. Voici quatre langues parmi les plus parlées. Remarquez que « bonjour » se dit pareil à Lifou et à Maré (bozu), mais autrement dans le Centre (Paicî) et à Houaïlou (Ajië).</p><table><tr><th></th><th>Paicî</th><th>Ajië</th><th>Drehu</th><th>Nengone</th></tr><tr><td>Bonjour</td><td>boyou</td><td>âriké</td><td>bozu</td><td>bozu</td></tr><tr><td>Merci</td><td>olé héti</td><td>ëi</td><td>oleti</td><td>orengo</td></tr><tr><td>Au revoir</td><td>undouîou (à demain)</td><td>gaara</td><td>edrae hë</td><td>ha eked</td></tr><tr><td>Comment ça va ?</td><td>–</td><td>âriké na e ?</td><td>hape ue lai ?</td><td>ha ilo ?</td></tr></table><p>« Oleti » (merci en drehu) est passé dans le français calédonien : vous l’entendrez partout.</p><p><b>Compter en nengone (Maré)</b> : sa (1), rewe (2), tini (3), ece (4), sedong (5), sedong ne sa (6), sedong ne rew (7), sedong ne tin (8), sedong ne ec (9), ruenin (10).</p><p class=\"meta\">Orthographes simplifiées, recueillies dans des guides de voyage et des documents scolaires : elles varient selon les sources, et les accents ne sont pas tous rendus. Pour une graphie exacte, consultez le dictionnaire DiKaLa. Sources : guide Evaneos « vocabulaire de survie » ; fiche « Comptons jusqu’à 10 en langues kanak » (Nouvelle-Calédonie, enseignement).</p>"
+  },
+  {
+   "id": "langues-carte",
+   "emoji": "🗺️",
+   "title": "Carte des aires linguistiques",
+   "chapter": "culture",
+   "html": "<p>La carte colore les huit aires coutumières, qui regroupent chacune une ou plusieurs langues : Hoot ma Whaap, Paicî-Cèmuhî, Ajië-Aro, Xârâcùù, Djubéa-Kaponé, puis Nengone (Maré), Drehu (Lifou) et Iaai (Ouvéa).</p><p><button data-pl=\"1\">🗺️ Afficher la carte des langues</button></p><p class=\"meta\"><b>Découpage indicatif.</b> Je ne dispose pas des limites officielles : chaque zone est tracée par proximité avec les communes de l’aire (Voronoï), donc les frontières sont approximatives, surtout dans l’intérieur. Les aires ne suivent pas exactement les limites des communes, et plusieurs langues peuvent se parler dans une même aire. Sources : liste des communes par aire (CEFAN, Sénat coutumier) et liste des langues (« Langues et cité » n° 26).</p>"
+  },
+  {
+   "id": "dikala",
+   "emoji": "📚",
+   "title": "DiKaLa : le portail des langues kanak",
+   "chapter": "culture",
+   "html": "<p>Portail en ligne de l’Université de la Nouvelle-Calédonie, gratuit, pour le grand public comme pour les chercheurs.</p><ul><li><b>LexiKa</b> : dictionnaire comparatif qui regroupe 27 dictionnaires (environ 87 700 mots), à chercher en langue kanak ou en français.</li><li><b>KaLia</b> : carte linguistique avec plus de 200 mots du quotidien, à écouter et à comparer d’une langue à l’autre.</li><li><b>ArKa</b> : archives numérisées de documents patrimoniaux.</li></ul><p><a class=\"btn\" href=\"https://dikala.unc.nc/\" target=\"_blank\" rel=\"noopener\">🌐 Ouvrir DiKaLa</a></p><p class=\"meta\">Nécessite une connexion. Les conditions d’utilisation des contenus sont à consulter sur le site. Source : page d’accueil de dikala.unc.nc.</p>"
   }
  ],
  "subs": {
@@ -421,14 +442,26 @@
     "id": "kanak",
     "emoji": "🪶",
     "title": "Comprendre la culture kanak",
-    "desc": "Savoir-vivre, aires, clans et langues",
+    "desc": "Savoir-vivre, clans et coutume",
     "items": [
      "kanak",
      "coutume",
-     "aires",
-     "langues",
      "vocabulaire"
     ]
+   },
+   {
+    "id": "parler",
+    "emoji": "🗣️",
+    "title": "Les langues kanak",
+    "desc": "Aires, carte, mots à comparer, dictionnaire",
+    "items": [
+     "langues",
+     "aires",
+     "langues-carte",
+     "langues-mots",
+     "dikala"
+    ],
+    "ann": []
    },
    {
     "id": "symboles",
