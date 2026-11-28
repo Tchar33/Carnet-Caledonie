@@ -130,6 +130,23 @@ dialog{max-height:88dvh;overflow:auto}
 #chap .fi .inf-b{font-size:16px;line-height:1.65;padding:10px 16px 14px}
 #chap .fi>.card{margin:10px 12px}#chap .fi>.meta{margin:8px 16px}
 .tile{background:#fff;color:#12302b;border:1px solid #c9d4d0;box-shadow:0 2px 8px #0002;opacity:1}.tile b{color:#12302b}.tile small{color:#46534f}.tile .ch{color:#0a7c6e}
+
+/* ===== Tortue : menu de la carte ===== */
+#mw #tt{position:absolute;right:10px;top:calc(10px + env(safe-area-inset-top,0px));width:62px;height:62px;padding:0;margin:0;flex:none;border:0!important;border-radius:50%;background:rgba(255,255,255,.55)!important;-webkit-backdrop-filter:blur(6px)!important;backdrop-filter:blur(6px)!important;box-shadow:0 3px 10px #0005;z-index:6;cursor:pointer;display:grid;place-items:center;-webkit-tap-highlight-color:transparent}
+#mw #tt svg{display:block;overflow:visible;filter:drop-shadow(0 1px 1px #0003)}
+body:not(.ttc) #mw #tt{background:rgba(255,255,255,.85)!important}
+.tt-fl,.tt-fr{will-change:transform;animation:ttflap 1.15s cubic-bezier(.45,0,.55,1) infinite alternate}
+.tt-f1.tt-fl{transform-origin:24px 26px}.tt-f1.tt-fr{transform-origin:40px 26px;animation-name:ttflapr}
+.tt-f2.tt-fl{transform-origin:26px 46px;animation-delay:-.575s}.tt-f2.tt-fr{transform-origin:38px 46px;animation-name:ttflapr;animation-delay:-.575s}
+@keyframes ttflap{from{transform:rotate(-15deg)}to{transform:rotate(13deg)}}
+@keyframes ttflapr{from{transform:rotate(15deg)}to{transform:rotate(-13deg)}}
+#mw .ctl2{position:absolute;right:10px;top:calc(80px + env(safe-area-inset-top,0px));display:flex;gap:6px;z-index:4}
+#mw .ctl2 button{width:42px;height:42px;padding:0;font-size:20px}
+#mw .ctl{top:calc(134px + env(safe-area-inset-top,0px))}
+body.ttc #mw .ctl,body.ttc #mw #hm,body.ttc #mw #tb,body.ttc.mapv .fab{display:none!important}
+body.ttc #gps{left:10px!important}
+body:not(.ttc) #mw .ctl,body:not(.ttc) #mw #hm,body:not(.ttc) #mw #tb,body:not(.ttc).mapv .fab{animation:ttpop .24s ease-out}
+@keyframes ttpop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" crossorigin="anonymous"></script>
@@ -791,6 +808,10 @@ const b=new maplibregl.LngLatBounds();shown.forEach(p=>b.extend([p.lng,p.lat]));
 function setView(v){view=v;document.body.classList.toggle('mapv',v==='map');syncList();$('mw').style.display=v==='map'?'block':'none';$('tL').className=v==='list'?'':'alt';$('tM').className=v==='map'?'':'alt';
 if(v==='map'){if(!map&&!initing)initMap();else if(map){map.resize();fit();draw()}}else render()}
 $('tL').onclick=()=>setView('list');$('tb').onclick=()=>setView('list');$('tM').onclick=()=>setView('map');
+(function(){const mw=$('mw');if(!mw||$('tt'))return;const tt=document.createElement('button');tt.id='tt';tt.type='button';tt.setAttribute('aria-label','Menu de la carte');tt.setAttribute('aria-expanded','false');tt.innerHTML='<svg viewBox="0 0 64 64" width="60" height="60" aria-hidden="true" focusable="false"><g class="tt-fl tt-f1"><path d="M23 26C14 22 8 14 7 8c7 1 15 5 20 13z" fill="#4aa585" stroke="#0f3d2e" stroke-width="1.6" stroke-linejoin="round"/></g><g class="tt-fr tt-f1"><path d="M41 26c9-4 15-12 16-18-7 1-15 5-20 13z" fill="#4aa585" stroke="#0f3d2e" stroke-width="1.6" stroke-linejoin="round"/></g><g class="tt-fl tt-f2"><path d="M25 46c-6 3-10 8-11 13 6-1 11-4 14-9z" fill="#4aa585" stroke="#0f3d2e" stroke-width="1.6" stroke-linejoin="round"/></g><g class="tt-fr tt-f2"><path d="M39 46c6 3 10 8 11 13-6-1-11-4-14-9z" fill="#4aa585" stroke="#0f3d2e" stroke-width="1.6" stroke-linejoin="round"/></g><path d="M32 60l-3-8h6z" fill="#4aa585" stroke="#0f3d2e" stroke-width="1.4" stroke-linejoin="round"/><ellipse cx="32" cy="34" rx="16" ry="19" fill="#2f8f6b" stroke="#0f3d2e" stroke-width="2"/><path d="M32 22l8 4.5v9L32 40l-8-4.5v-9z M32 22v-6 M40 26.500l6-3 M40 35.500l6 3 M32 40v7 M24 35.500l-6 3 M24 26.500l-6-3" fill="none" stroke="#0f3d2e" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" opacity=".85"/><circle cx="32" cy="12" r="7" fill="#4aa585" stroke="#0f3d2e" stroke-width="1.8"/><circle cx="29.500" cy="10.500" r="1.300" fill="#0f3d2e"/><circle cx="34.500" cy="10.500" r="1.300" fill="#0f3d2e"/></svg>';mw.insertBefore(tt,mw.firstChild);
+const c2=document.createElement('div');c2.className='ctl2';mw.insertBefore(c2,mw.firstChild.nextSibling);['zc','zk'].forEach(i=>{const b=$(i);if(b)c2.appendChild(b)});
+const set=o=>{document.body.classList.toggle('ttc',!o);tt.setAttribute('aria-expanded',o?'true':'false');try{localStorage.setItem('carnet-tt',o?'1':'0')}catch(e){}};
+let o=false;try{o=localStorage.getItem('carnet-tt')==='1'}catch(e){}set(o);tt.onclick=()=>set(document.body.classList.contains('ttc'))})();
 $('zi').onclick=()=>map&&map.zoomIn();$('zo').onclick=()=>map&&map.zoomOut();$('zf').onclick=fit;$('zc').onclick=openFilters;$('cx').onclick=()=>$('cdlg').close();$('cc').onclick=chipClick;$('tg').onclick=chipClick;$('pg').onclick=poiClick;$('cl').onclick=colorClick;$('zk').onclick=poiToggleAll;
 $('zl').onclick=()=>{if(nav)nav.follow=true;const go=()=>{if(map&&me)map.flyTo({center:[me.lng,me.lat],zoom:Math.max(map.getZoom(),14)})};if(me)go();else locate(go)};
 

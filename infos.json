@@ -433,14 +433,56 @@
    "emoji": "📚",
    "title": "DiKaLa : le portail des langues kanak",
    "chapter": "culture",
-   "html": "<p>Portail en ligne de l’Université de la Nouvelle-Calédonie, gratuit, pour le grand public comme pour les chercheurs.</p><ul><li><b>LexiKa</b> : dictionnaire comparatif qui regroupe 27 dictionnaires (environ 87 700 mots), à chercher en langue kanak ou en français.</li><li><b>KaLia</b> : carte linguistique avec plus de 200 mots du quotidien, à écouter et à comparer d’une langue à l’autre.</li><li><b>ArKa</b> : archives numérisées de documents patrimoniaux.</li></ul><p><a class=\"btn\" href=\"https://dikala.unc.nc/\" target=\"_blank\" rel=\"noopener\">🌐 Ouvrir DiKaLa</a></p><p class=\"meta\">Nécessite une connexion. Les conditions d’utilisation des contenus sont à consulter sur le site. Source : page d’accueil de dikala.unc.nc.</p>"
+   "html": "<p>Portail en ligne de l’Université de la Nouvelle-Calédonie, gratuit, pour le grand public comme pour les chercheurs.</p><ul><li><b>LexiKa</b> : dictionnaire comparatif qui regroupe 27 dictionnaires (environ 87 700 mots), à chercher en langue kanak ou en français.</li><li><b>KaLiA</b> : carte linguistique avec plus de 200 mots du quotidien, à écouter et à comparer d’une langue à l’autre.</li><li><b>ArKa</b> : archives numérisées de documents patrimoniaux.</li></ul><p>👉 Site : <b>dikala.unc.nc</b> (à saisir dans votre navigateur ; connexion nécessaire).</p><p class=\"meta\">À citer ainsi : « DiKaLa — Dictionnaire Kanak en Ligne (2026). Université de la Nouvelle-Calédonie, projet ANR-24-CE54-6877. Données sous licence CC BY-NC-SA 4.0. » Usage non commercial uniquement ; audio sous tous droits réservés.</p>"
   },
   {
    "id": "kalia",
    "emoji": "🎧",
    "title": "KaLiA : la carte interactive des langues (DiKaLa)",
    "chapter": "culture",
-   "html": "<p>Carte interactive du vocabulaire de base des langues kanak, éditée par le projet <b>DiKaLa</b> de l’Université de la Nouvelle-Calédonie : chaque couleur est une aire linguistique, et un mot s’affiche dans chaque langue là où elle est parlée. Les prononciations s’écoutent d’un clic.</p>\n<p><a class=\"btn\" href=\"https://dikala.unc.nc/kalia\" target=\"_blank\" rel=\"noopener\">🌐 Ouvrir KaLiA dans le navigateur</a></p>\n<details><summary class=\"meta\" style=\"margin:8px 0\">Afficher KaLiA ici (connexion nécessaire)</summary>\n<div class=\"meta\" style=\"margin:6px 0\">Carte : KaLiA, projet DiKaLa, Université de la Nouvelle-Calédonie (dikala.unc.nc). Affichage direct du site d’origine, sans copie.</div>\n<iframe src=\"https://dikala.unc.nc/kalia\" title=\"KaLiA – DiKaLa, Université de la Nouvelle-Calédonie\" loading=\"lazy\" referrerpolicy=\"no-referrer\" sandbox=\"allow-scripts allow-same-origin allow-popups\" style=\"width:100%;height:70vh;border:1px solid var(--bd);border-radius:12px;background:#fff\"></iframe>\n<div class=\"meta\" style=\"margin-top:6px\">Si le cadre reste vide, le site n’autorise pas l’affichage intégré : utilisez le bouton ci-dessus.</div></details>\n<p class=\"meta\">Source et crédits : DiKaLa, Université de la Nouvelle-Calédonie, avec l’ANR et l’Académie des langues kanak ; la couche « Tribus » s’appuie sur des données de la province Nord (Licence Ouverte). Le site signale que des erreurs peuvent subsister. Conditions de réutilisation : voir les pages « Licences » et « Mentions légales » du site.</p>"
+   "html": "<p>Carte interactive du vocabulaire de base des langues kanak, éditée par le projet <b>DiKaLa</b> de l’Université de la Nouvelle-Calédonie : chaque couleur est une aire linguistique, et un mot s’affiche dans chaque langue là où elle est parlée. Les prononciations s’écoutent d’un clic sur le site.</p><p>👉 À consulter sur le site <b>dikala.unc.nc/kalia</b> (à saisir dans votre navigateur ; connexion nécessaire).</p><p class=\"meta\">Source : DiKaLa, Université de la Nouvelle-Calédonie, avec l’ANR et l’Académie des langues kanak. Contenus (hors audio) sous licence CC BY-NC-SA 4.0 : usage non commercial, citation obligatoire. Les enregistrements audio sont sous tous droits réservés. Le lien cliquable sera ajouté après accord de l’université.</p>"
+  },
+  {
+   "id": "rec-bougna",
+   "emoji": "🍌",
+   "title": "Bougna au four (version maison)",
+   "chapter": "culture",
+   "html": "<p>Le plat des fêtes kanak, traditionnellement cuit dans un four de pierres chaudes. Cette version simplifiée se fait dans une cocotte, pour 4 personnes.</p><p><b>Ingrédients</b></p><ul><li>4 cuisses de poulet (ou 500 g de poulet ou de poisson)</li><li>1 à 2 patates douces</li><li>250 g d’igname et 250 g de taro</li><li>2 bananes poingo ou bananes vertes</li><li>2 à 3 tomates, 2 oignons nouveaux, du persil</li><li>Lait de coco (les recettes vont de 20 cl à 80 cl selon la cocotte)</li><li>Sel, poivre, feuilles de bananier (ou papier cuisson)</li></ul><p><b>Préparation</b></p><ol><li>Garnissez le fond de la cocotte de feuilles de bananier légèrement passées à la flamme, en les laissant dépasser largement.</li><li>Déposez en premier la patate douce, l’igname et le taro en morceaux. Salez, poivrez.</li><li>Ajoutez le poulet, le persil, les tomates, les bananes et les oignons. Salez, poivrez de nouveau.</li><li>Versez le lait de coco, rabattez les feuilles vers le centre et fermez avec le couvercle.</li><li>Enfournez environ 1 h 15. Servez directement dans la cocotte.</li></ol><p><b>La version traditionnelle</b> : le paquet de feuilles de bananier est ficelé, placé sous des pierres chauffées sur un feu de bois, et cuit à l’étouffée. Le mot vient du drehu « puhnya », le paquet.</p><p class=\"meta\">Recette reformulée à partir de : Les Nouvelles Calédoniennes (Graines de saveurs), Qooq (bougna spécialité calédonienne) et la fiche « Mon bougna » du site de l’enseignement calédonien. Quantités indicatives, à ajuster selon votre goût.</p>"
+  },
+  {
+   "id": "rec-poisson-cru",
+   "emoji": "🐟",
+   "title": "Poisson cru au lait de coco",
+   "chapter": "culture",
+   "html": "<p>Le plat préféré des Calédoniens, selon la presse locale : du poisson « cuit » par le citron vert, puis nappé de lait de coco.</p><p><b>Ingrédients</b></p><ul><li>Du poisson très frais à chair ferme (thon, bonite…), coupé en petits dés</li><li>5 petits citrons verts, 4 gousses d’ail</li><li>Gros sel, 50 cl de lait de coco</li><li>Au choix : tomates, concombre, oignon, carotte coupés fin</li></ul><p><b>Préparation</b></p><ol><li>Mettez les dés de poisson à mariner dans le jus de citron vert avec l’ail et le sel, au frais, le temps que la chair blanchisse.</li><li>Égouttez, ajoutez les légumes coupés finement.</li><li>Versez le lait de coco juste avant de servir, pour garder la fraîcheur.</li></ol><p><b>Variante calédonienne au soyo</b> : remplacez le lait de coco par 1 cuillère à café d’huile et 3 cuillères à soupe de sauce soja, sans sel. Ne mangez du poisson cru que très frais et de provenance sûre (risque de ciguatera sur certains poissons de récif : demandez conseil sur place).</p><p class=\"meta\">Recette reformulée à partir de : Le Petit Journal Nouvelle-Calédonie (« Poisson cru au lait de coco ») et Outremers 360 pour la méthode. Quantités indicatives, à ajuster selon votre goût.</p>"
+  },
+  {
+   "id": "rec-citrouille",
+   "emoji": "🎃",
+   "title": "Crème de citrouille au lait de coco",
+   "chapter": "culture",
+   "html": "<p>Une soupe douce et facile, pour 4 personnes.</p><p><b>Ingrédients</b></p><ul><li>500 g de citrouille en dés</li><li>1 oignon émincé, un morceau de gingembre râpé</li><li>400 ml de lait de coco, de l’eau, du sel</li></ul><p><b>Préparation</b></p><ol><li>Faites revenir l’oignon et le gingembre, ajoutez la citrouille et laissez-la devenir fondante.</li><li>Versez un peu d’eau et poursuivez jusqu’à ce que la citrouille soit bien cuite.</li><li>Ajoutez le lait de coco, mixez jusqu’à obtenir une crème lisse. Rectifiez l’assaisonnement.</li></ol><p class=\"meta\">Recette reformulée à partir de : Les Nouvelles Calédoniennes (Graines de saveurs). Quantités indicatives, à ajuster selon votre goût.</p>"
+  },
+  {
+   "id": "rec-manioc",
+   "emoji": "🍰",
+   "title": "Gâteau de manioc",
+   "chapter": "culture",
+   "html": "<p>Un dessert très répandu, dense et moelleux, à base de manioc râpé et de lait de coco.</p><p><b>Ingrédients</b></p><ul><li>Environ 1 kg de manioc cru, épluché et râpé</li><li>1 boîte de lait de coco</li><li>Sucre ou miel à votre goût (certaines recettes ajoutent des œufs, du beurre et de la vanille)</li></ul><p><b>Préparation</b></p><ol><li>Mélangez le manioc râpé, le lait de coco et le sucre ou le miel.</li><li>Versez dans un moule bien graissé.</li><li>Faites cuire au four environ 45 minutes. Une version plus riche se termine par un glaçage fait avec le jus du manioc, remis au four 15 minutes.</li></ol><p>Se garde bien et se transporte facilement : pratique pour un pique-nique de randonnée.</p><p class=\"meta\">Recette reformulée à partir de : Les Nouvelles Calédoniennes (« gâteau de manioc à la vanille ») ; les proportions exactes varient beaucoup d’une famille à l’autre. Quantités indicatives, à ajuster selon votre goût.</p>"
+  },
+  {
+   "id": "rec-vaisi",
+   "emoji": "🥥",
+   "title": "Vaïsi à la banane poingo",
+   "chapter": "culture",
+   "html": "<p>Dessert d’origine wallisienne, devenu un classique calédonien : des boulettes de tapioca ou de farine de manioc dans un caramel au lait de coco.</p><p><b>Ingrédients</b></p><ul><li>Farine de manioc (ou tapioca)</li><li>Banane poingo bien mûre</li><li>Lait de coco, sucre blanc</li></ul><p><b>Préparation</b></p><ol><li>Mélangez la farine de manioc et la banane écrasée pour former des boulettes.</li><li>Faites brunir le sucre dans une cocotte, versez doucement le lait de coco.</li><li>Ajoutez les boulettes et laissez cuire dans le caramel au lait de coco.</li></ol><p>La banane poingo, plus petite et plus charnue que la banane dessert, s’appelle aussi banane farine, banane plantain ou banane cochon selon les régions.</p><p class=\"meta\">Recette reformulée à partir de : La 1ère Nouvelle-Calédonie, rubrique « Recettes calédoniennes ». Quantités indicatives, à ajuster selon votre goût.</p>"
+  },
+  {
+   "id": "plats-gouter",
+   "emoji": "🍽️",
+   "title": "Plats à goûter sur place",
+   "chapter": "culture",
+   "html": "<ul><li><b>Civet de cerf</b> : le cerf est très apprécié en Grande Terre, en civet, en brochettes ou en salade ; on le trouve souvent dans les gîtes tribaux, avec du riz.</li><li><b>Bami</b> : nouilles sautées aux légumes, à la viande ou au poisson, héritage des Javanais, devenues un plat de base.</li><li><b>Rougail</b> : préparation de piment, mangue ou tomates, venue de La Réunion, pour relever les plats.</li><li><b>Salade de papaye verte</b> râpée et <b>achards de légumes</b> : fréquents en accompagnement.</li><li><b>Nems, porc au caramel, po’e polynésien</b> : très présents sur les tables calédoniennes.</li><li><b>Crabe de cocotier</b>, surtout aux îles Loyauté, souvent servi avec une sauce aux pourpiers.</li><li><b>Langouste et bulime de l’île des Pins</b>.</li></ul><p class=\"meta\">Sources : Nouvelle-Calédonie Tourisme (fiches gastronomie), Routard, La 1ère Nouvelle-Calédonie, Elle &amp; Vire (influences culinaires).</p>"
   }
  ],
  "subs": {
@@ -510,7 +552,13 @@
     "title": "Gastronomie et traditions",
     "desc": "Bougna, igname et partage",
     "items": [
-     "cuisine"
+     "cuisine",
+     "rec-bougna",
+     "rec-poisson-cru",
+     "rec-citrouille",
+     "rec-manioc",
+     "rec-vaisi",
+     "plats-gouter"
     ]
    }
   ],
